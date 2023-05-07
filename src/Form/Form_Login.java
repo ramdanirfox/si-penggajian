@@ -208,7 +208,7 @@ public class Form_Login extends javax.swing.JFrame {
         try {
           // URL url16 = new URL("http://i.stack.imgur.com/m0KKu.png");
 //          File fileGambar = new File("src/assets/ss.png");
-          URL res = getClass().getResource("/Icon/gif/16x16/dkt.gif");
+          URL res = getClass().getResource("/Icon/gif/16x16/dktbig.gif");
 //          gambar = ImageIO.read(url16);
           gambar = ImageIO.read(res);
         }
