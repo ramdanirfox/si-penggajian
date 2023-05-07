@@ -7,7 +7,10 @@ package Form;
 import java.sql.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.net.URL;
 import koneksiDB.koneksi;
+import javax.imageio.ImageIO;
 /**
  *
  * @author ramdanirfox
@@ -18,6 +21,7 @@ public class Form_Login extends javax.swing.JFrame {
      * Creates new form Form_Login
      */
     public Form_Login() {
+        fnGetResource();
         initComponents();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
@@ -44,7 +48,9 @@ public class Form_Login extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
         setBackground(new java.awt.Color(255, 255, 255));
+        setIconImage(gambar);
         setResizable(false);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -197,7 +203,22 @@ public class Form_Login extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void fnGetResource() {
+        try {
+          // URL url16 = new URL("http://i.stack.imgur.com/m0KKu.png");
+//          File fileGambar = new File("src/assets/ss.png");
+          URL res = getClass().getResource("/Icon/gif/16x16/dkt.gif");
+//          gambar = ImageIO.read(url16);
+          gambar = ImageIO.read(res);
+        }
+        catch (Exception e) {
+            
+        }
+    }
 
+    
+    private java.awt.Image gambar;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
