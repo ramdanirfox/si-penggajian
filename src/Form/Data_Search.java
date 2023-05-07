@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 /**
  *
- * @author syahrul
+ * @author ramdanirfox
  */
 public class Data_Search extends javax.swing.JFrame {
     private DefaultTableModel model;

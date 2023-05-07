@@ -1,5 +1,5 @@
-# Java-tugas
-Aplikasi Penggajian Karyawan tugas matkul Pemrograman Desktop (+ JasperReport)
+# Tugas Pemrograman Visual
+Aplikasi Penggajian Karyawan tugas matkul Pemrograman Visuak 
 <br/>
 Screenshot
 ![snp1](https://user-images.githubusercontent.com/34033084/112110959-284ff600-8be6-11eb-8316-ff8bda214701.JPG)

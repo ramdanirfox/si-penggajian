@@ -20,7 +20,7 @@ import net.sf.jasperreports.view.*;
 
 /**
  *
- * @author syahrul
+ * @author ramdanirfox
  */
 public class Lap_Karyawan extends javax.swing.JFrame {
     JasperReport jasperReport;

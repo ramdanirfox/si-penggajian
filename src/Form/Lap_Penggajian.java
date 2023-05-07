@@ -19,7 +19,7 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.*;
 /**
  *
- * @author syahrul
+ * @author ramdanirfox
  */
 public class Lap_Penggajian extends javax.swing.JFrame {
     JasperReport jasperReport;

@@ -8,18 +8,26 @@ import java.sql.*;
 import javax.swing.*;
 /**
  *
- * @author syahrul
+ * @author ramdanirfox
  */
 public class koneksi extends javax.swing.JFrame {
     private static Connection conn;
     public static Connection getKoneksi(){
+        
         String host = "jdbc:mysql://localhost/penggajian",
                user = "root",
                pass = "";
         try{
+            try {
+            Class.forName("com.mysql.jdbc.Driver");    
+            }
+            catch (Exception e) {
+               JOptionPane.showMessageDialog(null, "Gagal Driver!" + e.getMessage());    
+            }
+         
             conn = (Connection) DriverManager.getConnection(host,user,pass);                
         }catch(SQLException err){
-            JOptionPane.showMessageDialog(null, "Gagal Koneksi!");
+            JOptionPane.showMessageDialog(null, "Gagal Koneksi!" + err.getMessage());
         }
         return conn;
     }

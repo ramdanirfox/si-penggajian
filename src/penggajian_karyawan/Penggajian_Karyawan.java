@@ -6,7 +6,7 @@
 package penggajian_karyawan;
 /**
  *
- * @author syahrul
+ * @author ramdanirfox
  */
 public class Penggajian_Karyawan {
     /**
