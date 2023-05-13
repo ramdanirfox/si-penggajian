@@ -4,6 +4,7 @@
  */
 package Form;
 
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
@@ -19,7 +20,10 @@ public class Form_Cuti extends javax.swing.JFrame {
     public Form_Cuti() {
         initComponents();
         Seticon();
-        
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = getSize();
+        setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+
     }
 
     /**
@@ -340,8 +344,8 @@ public class Form_Cuti extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        int konf = JOptionPane.showConfirmDialog(null, "Yakin Ingin menutup Form?","Konfirmasi",JOptionPane.YES_NO_OPTION);
-        if(konf == JOptionPane.YES_OPTION){
+        int konf = JOptionPane.showConfirmDialog(null, "Yakin Ingin menutup Form?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (konf == JOptionPane.YES_OPTION) {
             this.dispose();
         }
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -416,9 +420,8 @@ public class Form_Cuti extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser tg1;
     // End of variables declaration//GEN-END:variables
 
-          private void Seticon() {
-       setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Icon/gif/16x16/dktbig.gif")));
-}
-
+    private void Seticon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Icon/gif/16x16/dktbig.gif")));
     }
 
+}

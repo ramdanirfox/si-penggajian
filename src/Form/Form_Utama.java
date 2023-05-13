@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Form;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,7 +21,10 @@ public class Form_Utama extends javax.swing.JFrame {
     public Form_Utama() {
         initComponents();
         Seticon();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = getSize();
+        setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
         updateInfo();
     }
 
@@ -45,7 +49,6 @@ public class Form_Utama extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
         mUtama = new javax.swing.JMenuBar();
         mData = new javax.swing.JMenu();
         dKaryawan = new javax.swing.JMenuItem();
@@ -62,6 +65,7 @@ public class Form_Utama extends javax.swing.JFrame {
         mKeluar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setLocation(new java.awt.Point(160, 30));
         setSize(new java.awt.Dimension(500, 300));
 
@@ -74,7 +78,7 @@ public class Form_Utama extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(9, 150, 212));
 
-        jPanel1.setBackground(new java.awt.Color(236, 252, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Form"));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -218,7 +222,7 @@ public class Form_Utama extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(236, 252, 255));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Laporan"));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -251,17 +255,6 @@ public class Form_Utama extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(97, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 62, Short.MAX_VALUE)
         );
 
         mData.setText("DATA");
@@ -396,9 +389,7 @@ public class Form_Utama extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(321, 321, 321)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -406,7 +397,7 @@ public class Form_Utama extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(68, 68, 68)
                                 .addComponent(user)))))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -417,9 +408,7 @@ public class Form_Utama extends javax.swing.JFrame {
                 .addComponent(user)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
@@ -582,7 +571,6 @@ public class Form_Utama extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JMenuItem lKaryawan;
     private javax.swing.JMenuItem lPenggajian;
     private javax.swing.JMenu mData;
