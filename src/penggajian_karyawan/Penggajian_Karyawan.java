@@ -9,11 +9,20 @@ package penggajian_karyawan;
  * @author ramdanirfox
  */
 public class Penggajian_Karyawan {
+    private static String userId;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
+    }
+    
+    public void setUserInfo(String id) {
+        userId = id;
+    }
+    
+    public String getUserInfo() {
+        return userId;
     }
     
 }
