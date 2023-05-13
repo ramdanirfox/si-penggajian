@@ -11,6 +11,7 @@ import java.io.File;
 import java.net.URL;
 import koneksiDB.koneksi;
 import javax.imageio.ImageIO;
+import penggajian_karyawan.*;
 /**
  *
  * @author ramdanirfox
@@ -158,6 +159,9 @@ public class Form_Login extends javax.swing.JFrame {
             rsLogin.next();
             rsLogin.last(); 
             if (rsLogin.getRow()==1){
+                String id = rsLogin.getString(1);
+                String nama = rsLogin.getString(2);
+                Penggajian_Karyawan.setUserInfo(id, nama);
                 JOptionPane.showMessageDialog(null, "Login Berhasil!");
                 new Form_Utama().setVisible(true); 
                 this.dispose();

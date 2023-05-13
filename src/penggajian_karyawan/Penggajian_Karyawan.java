@@ -10,6 +10,7 @@ package penggajian_karyawan;
  */
 public class Penggajian_Karyawan {
     private static String userId;
+    private static String userName;
     /**
      * @param args the command line arguments
      */
@@ -17,12 +18,17 @@ public class Penggajian_Karyawan {
         // TODO code application logic here
     }
     
-    public void setUserInfo(String id) {
+    public static void setUserInfo(String id, String name) {
         userId = id;
+        userName = name;
     }
     
-    public String getUserInfo() {
+    public static String getUserId() {
         return userId;
+    }
+    
+    public static String getUsername() {
+        return userName;
     }
     
 }
