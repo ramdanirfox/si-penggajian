@@ -22,6 +22,7 @@ public class Form_Kehadiran extends javax.swing.JFrame {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
+        Seticon();
     }
 
     /**
@@ -348,4 +349,9 @@ public class Form_Kehadiran extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jbt1;
     // End of variables declaration//GEN-END:variables
+   private void Seticon() {
+       setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Icon/gif/16x16/dktbig.gif")));
+    }
 }
+
+

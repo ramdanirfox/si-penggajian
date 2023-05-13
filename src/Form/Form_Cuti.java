@@ -4,6 +4,7 @@
  */
 package Form;
 
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +18,8 @@ public class Form_Cuti extends javax.swing.JFrame {
      */
     public Form_Cuti() {
         initComponents();
+        Seticon();
+        
     }
 
     /**
@@ -218,9 +221,9 @@ public class Form_Cuti extends javax.swing.JFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jButton2)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jButton3)
                         .addComponent(jButton4))
                     .addComponent(breset))
@@ -412,4 +415,10 @@ public class Form_Cuti extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser tg;
     private com.toedter.calendar.JDateChooser tg1;
     // End of variables declaration//GEN-END:variables
+
+          private void Seticon() {
+       setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Icon/gif/16x16/dktbig.gif")));
 }
+
+    }
+
