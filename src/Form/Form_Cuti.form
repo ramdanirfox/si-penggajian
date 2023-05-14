@@ -94,7 +94,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="jbt1" min="-2" pref="138" max="-2" attributes="0"/>
+                                          <Component id="nm" min="-2" pref="138" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -146,7 +146,7 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jbt1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="nm" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton6" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -194,7 +194,7 @@
             <Property name="text" type="java.lang.String" value="Kode Cuti"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jbt1">
+        <Component class="javax.swing.JTextField" name="nm">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>

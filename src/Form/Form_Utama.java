@@ -74,7 +74,7 @@ public class Form_Utama extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(9, 150, 212));
 
         jPanel1.setBackground(new java.awt.Color(48, 167, 220));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Form", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Form", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/icons8-attendance-30.png"))); // NOI18N
@@ -218,10 +218,10 @@ public class Form_Utama extends javax.swing.JFrame {
         );
 
         jPanel2.setBackground(new java.awt.Color(48, 167, 220));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Laporan", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Laporan", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(255, 255, 255))); // NOI18N
 
         lapSlipGaji.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lapSlipGaji.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/icons8-attendance-30.png"))); // NOI18N
+        lapSlipGaji.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/icons8-print-30.png"))); // NOI18N
         lapSlipGaji.setText("Cetak Slip Gaji");
         lapSlipGaji.setToolTipText("Masuk");
         lapSlipGaji.setAutoscrolls(true);
@@ -302,7 +302,7 @@ public class Form_Utama extends javax.swing.JFrame {
             }
         });
 
-        dKaryawan.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        dKaryawan.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
         dKaryawan.setText("Data Karyawan");
         dKaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

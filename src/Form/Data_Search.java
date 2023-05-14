@@ -15,8 +15,9 @@ import java.awt.*;
  */
 public class Data_Search extends javax.swing.JFrame {
     private DefaultTableModel model;
-    public Form_Lembur fL = null;
+    public Form_Lembur  fL = null;
     private static Statement st;
+ 
 
     public Data_Search() {
         initComponents();
@@ -211,6 +212,7 @@ public class Data_Search extends javax.swing.JFrame {
         fL.jbtKry = tbl.getValueAt(tabelKry, 6).toString();
         fL.golKry = tbl.getValueAt(tabelKry, 7).toString();
         fL.itemTerpilih();
+       
         this.dispose();
     }//GEN-LAST:event_tblMouseClicked
 

@@ -43,6 +43,9 @@ public class Form_Lembur extends javax.swing.JFrame {
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
         Seticon();
     }
+    class One{
+        Form_Kehadiran fK;
+    }
     public void getData(){
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();

@@ -25,7 +25,19 @@ public class Form_Cuti extends javax.swing.JFrame {
         setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
 
     }
-
+    public String idKry;
+ 
+    public String getidKry() {
+        return idKry;
+    }
+    
+    
+  public void itemTerpilih(){                              
+        Data_Search3 DS = new Data_Search3();
+        DS.fC = this;
+        nm.setText(idKry);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,7 +51,7 @@ public class Form_Cuti extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jbt = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jbt1 = new javax.swing.JTextField();
+        nm = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -168,7 +180,7 @@ public class Form_Cuti extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jbt1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(nm, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addGap(50, 50, 50)
@@ -204,7 +216,7 @@ public class Form_Cuti extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jButton6))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,8 +326,8 @@ public class Form_Cuti extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        Data_Search2 DS = new Data_Search2();
-        //        DS.fP = this;
+        Data_Search3 DS = new Data_Search3();
+           DS.fC = this;
         DS.setVisible(true);
         DS.setResizable(false);
         //        gp.requestFocus();
@@ -415,7 +427,7 @@ public class Form_Cuti extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jbt;
-    private javax.swing.JTextField jbt1;
+    private javax.swing.JTextField nm;
     private com.toedter.calendar.JDateChooser tg;
     private com.toedter.calendar.JDateChooser tg1;
     // End of variables declaration//GEN-END:variables
