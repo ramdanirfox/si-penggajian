@@ -129,9 +129,6 @@ private DefaultTableModel model;
         } catch (ParseException ex) {
             Logger.getLogger(Form_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-       //tgl_cuti.setDate(""+model.getValueAt(i, 3));
-        //tgl_masuk.setDate(""+model.getValueAt(i, 4));*/
     }
     public void update(){
         loadData();

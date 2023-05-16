@@ -81,13 +81,13 @@
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="bsave" min="-2" max="-2" attributes="0"/>
+                          <Component id="save" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="bupdate" min="-2" max="-2" attributes="0"/>
+                          <Component id="upd" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="breset" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="bdelete" min="-2" max="-2" attributes="0"/>
+                          <Component id="del" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="bexit" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -96,17 +96,17 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="fjumlah" min="-2" pref="138" max="-2" attributes="0"/>
+                                  <Component id="jumlah" min="-2" pref="138" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="fid" min="-2" pref="138" max="-2" attributes="0"/>
+                                  <Component id="nm" min="-2" pref="138" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                                  <Component id="fkode" min="-2" pref="138" max="-2" attributes="0"/>
+                                  <Component id="tunjanganID" min="-2" pref="138" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -115,8 +115,8 @@
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="ftanggal" max="32767" attributes="0"/>
-                                      <Component id="fjenis" pref="136" max="32767" attributes="0"/>
+                                      <Component id="tanggal" max="32767" attributes="0"/>
+                                      <Component id="cbjenis" pref="136" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                               </Group>
@@ -134,36 +134,36 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="fkode" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="tunjanganID" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="fid" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="nm" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton6" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="fjenis" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cbjenis" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                      <Component id="ftanggal" min="-2" max="-2" attributes="0"/>
+                      <Component id="tanggal" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="fjumlah" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jumlah" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="45" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                          <Component id="bsave" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="bupdate" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="bdelete" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="save" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="upd" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="del" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="bexit" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="breset" min="-2" max="-2" attributes="0"/>
@@ -174,14 +174,14 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="fkode">
+        <Component class="javax.swing.JTextField" name="tunjanganID">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="text" type="java.lang.String" value="Kode Tunjangan"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="fid">
+        <Component class="javax.swing.JTextField" name="nm">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -209,16 +209,16 @@
             <Property name="text" type="java.lang.String" value="Tanggal"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="fjumlah">
+        <Component class="javax.swing.JTextField" name="jumlah">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
             <Property name="text" type="java.lang.String" value="Jumlah"/>
           </Properties>
         </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="ftanggal">
+        <Component class="com.toedter.calendar.JDateChooser" name="tanggal">
         </Component>
-        <Component class="javax.swing.JButton" name="bsave">
+        <Component class="javax.swing.JButton" name="save">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Icon/gif/16x16/Save.gif"/>
@@ -228,11 +228,11 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bsaveMouseClicked"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bsaveActionPerformed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="saveMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="bupdate">
+        <Component class="javax.swing.JButton" name="upd">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Icon/gif/16x16/Modify.gif"/>
@@ -242,10 +242,10 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bupdateActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="bdelete">
+        <Component class="javax.swing.JButton" name="del">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Icon/gif/16x16/Delete.gif"/>
@@ -255,7 +255,7 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bdeleteActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="delActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bexit">
@@ -284,7 +284,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bresetActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="fjenis">
+        <Component class="javax.swing.JComboBox" name="cbjenis">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
@@ -349,7 +349,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="ftabel">
+            <Component class="javax.swing.JTable" name="tbl">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="4">
@@ -360,6 +360,9 @@
                   </Table>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
