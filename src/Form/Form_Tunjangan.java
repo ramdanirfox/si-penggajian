@@ -55,11 +55,10 @@ public class Form_Tunjangan extends javax.swing.JFrame {
     public void getData(){
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
-        //String k = (String)ktg.getSelectedItem();
-        //String c = cr.getText();
+       String cariitem = cr.getText();
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM tunjangan";
+            String sql = "SELECT * FROM tunjangan where tunjanganID like '%" + cariitem + "%' or karyawanID like '%" + cariitem + "%' order by tunjanganID asc";
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
                 Object[] obj = new Object[5];
@@ -111,6 +110,7 @@ public class Form_Tunjangan extends javax.swing.JFrame {
         cbjenis.setSelectedItem(null);
         tanggal.setDate(null);
         jumlah.setText(null);
+        cr.setText("");
     }
       public void selectData(){
         int i = tbl.getSelectedRow();
@@ -121,7 +121,6 @@ public class Form_Tunjangan extends javax.swing.JFrame {
         nm.setText(""+model.getValueAt(i, 1));
          tunjanganID.setText(""+model.getValueAt(i, 0));
         cbjenis.setSelectedItem(""+model.getValueAt(i, 2));
-       //  vJumlah = Integer.valueOf(""+model.getValueAt(i, 4));
          try {
           
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse((String)model.getValueAt(i, 3));
@@ -213,7 +212,7 @@ public class Form_Tunjangan extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl = new javax.swing.JTable();
-        fcari = new javax.swing.JTextField();
+        cr = new javax.swing.JTextField();
         bcari = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -415,7 +414,7 @@ public class Form_Tunjangan extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(fcari, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cr, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bcari)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -425,7 +424,7 @@ public class Form_Tunjangan extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bcari))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -551,22 +550,22 @@ del.setEnabled(false);
         });
     }
     
-    private void fnKosong() {
+   /* private void fnKosong() {
     nm.setText("");
     tunjanganID.setText("");
     cbjenis.setSelectedItem(null);
-    fcari.setText("");
+    cr.setText("");
     tanggal.setDateFormatString("");
     jumlah.setText("");
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bcari;
     private javax.swing.JButton bexit;
     private javax.swing.JButton breset;
     private javax.swing.JComboBox<String> cbjenis;
+    private javax.swing.JTextField cr;
     private javax.swing.JButton del;
-    private javax.swing.JTextField fcari;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

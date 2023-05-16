@@ -13,8 +13,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DateFormatter;
@@ -26,7 +31,7 @@ import koneksiDB.koneksi;
  */
 public class Form_Kehadiran extends javax.swing.JFrame {
 private DefaultTableModel model;
-String vNm;
+String vNm,vwktM,vtglM,vwktP,vtglP;
 private static Statement st;
     /**
      * Creates new form Form_Kehadiran
@@ -34,11 +39,18 @@ private static Statement st;
     public Form_Kehadiran() {
         initComponents();
         model = new DefaultTableModel();
+       tbl.setModel(model);
+        bupdate.setEnabled(false);
+        bdelete.setEnabled(false);
+        model.addColumn("karyawanID");
+        model.addColumn("jam_masuk");
+        model.addColumn("jam_pulang");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
         Seticon();
         initListener();
+        getData();
     }
    
  
@@ -270,6 +282,11 @@ private static Statement st;
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl);
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
@@ -286,13 +303,13 @@ private static Statement st;
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fcari, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton7)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(fcari, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton7))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,9 +318,9 @@ private static Statement st;
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -352,17 +369,17 @@ private static Statement st;
     }//GEN-LAST:event_bsaveActionPerformed
 
     private void bupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bupdateActionPerformed
-        //        update();
-        //        jButton1.setEnabled(true);
-        //        jButton2.setEnabled(false);
-        //        jButton3.setEnabled(false);
+        update();
+        bsave.setEnabled(true);
+        bupdate.setEnabled(false);
+bdelete.setEnabled(false);
     }//GEN-LAST:event_bupdateActionPerformed
 
     private void bdeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bdeleteActionPerformed
-        //        delete();
-        //        jButton1.setEnabled(true);
-        //        jButton2.setEnabled(false);
-        //        jButton3.setEnabled(false);
+         delete();
+bsave.setEnabled(true);
+     bupdate.setEnabled(false);
+        bdelete.setEnabled(false);
     }//GEN-LAST:event_bdeleteActionPerformed
 
     private void bexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bexitActionPerformed
@@ -399,6 +416,13 @@ private static Statement st;
         // TODO add your handling code here:
         this.jamPulang.setDateTimeStrict(LocalDateTime.now());
     }//GEN-LAST:event_bSekarangPulangActionPerformed
+
+    private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
+         selectData();
+        bsave.setEnabled(false);
+        bupdate.setEnabled(true);
+        bdelete.setEnabled(true);
+    }//GEN-LAST:event_tblMouseClicked
 
     /**
      * @param args the command line arguments
@@ -438,8 +462,8 @@ private static Statement st;
     private void initListener() {
     jamPulang.addDateTimeChangeListener(new DateTimeChangeListener() {
             public void dateOrTimeChanged(DateTimeChangeEvent event) {
-                String wkt = event.getTimePicker().getText();
-                String tgl = event.getDatePicker().getText();
+                String wkt = jamPulang.getTimePicker().getText();
+                String tgl = jamPulang.getDatePicker().getText();
                 System.out.println("Tanggal terpilih pulang " + tgl + " " + wkt );
 //                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
             }
@@ -457,13 +481,34 @@ private static Statement st;
         });
     }
     
-    private void fnKosong() {
-        fidkaryawan.setText("");
-        fcari.setText("");
-        jamPulang.setDateTimeStrict(null);
-        jamMasuk2.setDateTimeStrict(null);
-    };
-    
+  
+    public void getData(){
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        //String k = (String)ktg.getSelectedItem();
+        String cariitem = fcari.getText();
+        try{
+            st = (Statement) koneksi.getKoneksi().createStatement();
+            String sql = "SELECT * FROM kehadiran where karyawanID like '%" + cariitem + "%' order by karyawanID asc";
+            ResultSet res = st.executeQuery(sql);
+            while(res.next()){
+                Object[] obj = new Object[3];
+                obj[0] = res.getString("karyawanID");
+                obj[1] = res.getString("jam_masuk");
+                obj[2] = res.getString("jam_pulang");
+                model.addRow(obj);
+            }
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, err.getMessage());
+        }
+    }
+     public void loadData(){
+        vNm = fidkaryawan.getText();
+         vwktM = jamMasuk2.getTimePicker().getText();
+            vtglM = jamMasuk2.getDatePicker().getText();
+                  vwktP = jamPulang.getTimePicker().getText();
+                 vtglP = jamPulang.getDatePicker().getText();
+    }
     private void save() {
         try{
         String sql = "INSERT INTO kehadiran (karyawanID,jam_masuk,jam_pulang)"
@@ -483,25 +528,58 @@ private static Statement st;
             JOptionPane.showMessageDialog(null, "Data Gagal DiSimpan!\n" + err.getMessage());
         }
     }
-    
-    public void getData(){
-        model.getDataVector().removeAllElements();
-        model.fireTableDataChanged();
-        //String k = (String)ktg.getSelectedItem();
-        String c = fcari.getText();
+      private void fnKosong() {
+        fidkaryawan.setText("");
+        fcari.setText("");
+        jamPulang.setDateTimeStrict(null);
+        jamMasuk2.setDateTimeStrict(null);
+    };
+      public void selectData(){
+        int i = tbl.getSelectedRow();
+        if(i == -1){
+            JOptionPane.showMessageDialog(null, "Tidak ada data terpilih!");
+            return;
+        }
+        fidkaryawan.setText(""+model.getValueAt(i, 0));
+       
+          
+    }
+      public void update(){
+        loadData();
         try{
-            st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM kehadiran WHERE karyawanID like '%"+c+"%'";
-            ResultSet res = st.executeQuery(sql);
-            while(res.next()){
-                Object[] obj = new Object[3];
-                obj[0] = res.getString("karyawanID");
-                obj[1] = res.getString("jam_masuk");
-                obj[2] = res.getString("jam_pulang");
-                model.addRow(obj);
-            }
+           st = (Statement)koneksi.getKoneksi().createStatement();
+           String sql = "update kehadiran set karyawanID='"+vNm+"',"
+                   + "jam_masuk='"+jamMasuk2+"',"
+                   + "jam_pulang='"+jamPulang+"' where karyawanID='"+vNm+"'";
+        PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
+        p.executeUpdate();
+        getData();
+        fnKosong();
+        fidkaryawan.requestFocus();
+        JOptionPane.showMessageDialog(null, "Data Berhasil DiUpdate");
         }catch(SQLException err){
-            JOptionPane.showMessageDialog(null, err.getMessage());
+            JOptionPane.showMessageDialog(null, "Data Gagal DiUpdate!");
+            fnKosong();
+        }
+    }
+      public void delete(){
+        loadData();
+        int psn = JOptionPane.showConfirmDialog(null, "Anda yakin ingin menghapus data ini?","Konfirmasi",
+                JOptionPane.OK_CANCEL_OPTION);
+        if(psn == JOptionPane.OK_OPTION){
+            try{
+                st = (Statement) koneksi.getKoneksi().createStatement();
+                String sql = "Delete From kehadiran Where karyawanID='"+vNm+"'";
+                PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareCall(sql);
+                p.executeUpdate();
+                getData();
+                fnKosong();
+                fidkaryawan.requestFocus();
+                JOptionPane.showMessageDialog(null, "Data Berhasil DiHapus");
+            }catch(SQLException err){
+                JOptionPane.showMessageDialog(null, "Data Gagal DiHapus!");
+                fnKosong();
+            } 
         }
     }
 

@@ -54,11 +54,10 @@ private DefaultTableModel model;
     public void getData(){
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
-        //String k = (String)ktg.getSelectedItem();
-        String c = cr.getText();
+        String cariitem = cr.getText();
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM cuti";
+            String sql = "SELECT * FROM cuti where cutiID like '%" + cariitem + "%' or karyawanID like '%" + cariitem + "%' order by cutiID asc";
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
                 Object[] obj = new Object[5];
@@ -110,6 +109,7 @@ private DefaultTableModel model;
         txtalasan.setText(null);
         tgl_cuti.setDate(null);
         tgl_masuk.setDate(null);
+         cr.setText("");
     }
     public void selectData(){
         int i = tbl.getSelectedRow();
