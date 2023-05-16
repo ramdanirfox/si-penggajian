@@ -215,8 +215,9 @@ public class Form_Tunjangan extends javax.swing.JFrame {
         cr = new javax.swing.JTextField();
         bcari = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Form Tunjangan");
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Form Tunjangan");
