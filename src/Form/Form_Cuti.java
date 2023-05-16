@@ -33,7 +33,6 @@ private DefaultTableModel model;
         initComponents();
         model = new DefaultTableModel();
         tbl.setModel(model);
-        getData();
         upd.setEnabled(false);
         del.setEnabled(false);
         model.addColumn("cutiID");
@@ -45,7 +44,7 @@ private DefaultTableModel model;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
-
+        getData();
     }
     public String idKry;
  
@@ -59,10 +58,10 @@ private DefaultTableModel model;
         String c = cr.getText();
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM cuti WHERE cutiID like '%"+c+"%'";
+            String sql = "SELECT * FROM cuti";
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
-                Object[] obj = new Object[10];
+                Object[] obj = new Object[5];
                 obj[0] = res.getString("cutiID");
                 obj[1] = res.getString("karyawanID");
                 obj[2] = res.getString("alasan");
@@ -112,36 +111,25 @@ private DefaultTableModel model;
         tgl_cuti.setDate(null);
         tgl_masuk.setDate(null);
     }
-    public void selectData() throws ParseException{
+    public void selectData(){
         int i = tbl.getSelectedRow();
-        String a = model.getValueAt(i, 0).toString();
-        String b = model.getValueAt(i, 1).toString();
-        String c = model.getValueAt(i, 2).toString();
-        String d = model.getValueAt(i, 3).toString();
-        String e = model.getValueAt(i, 4).toString();
-        txtcuti.setText(a);
-        nm.setText(b);
-        txtalasan.setText(c);
-        Date date = new SimpleDateFormat("yyyy-MM-dd").parse((String)model.getValueAt(i, 3));
-            tgl_cuti.setDate(date);
-       Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse((String)model.getValueAt(i, 4));
-            tgl_masuk.setDate(date1);
-        /*if(i == -1){
+        if(i == -1){
             JOptionPane.showMessageDialog(null, "Tidak ada data terpilih!");
             return;
         }
         nm.setText(""+model.getValueAt(i, 1));
-         /*try {
+         txtcuti.setText(""+model.getValueAt(i, 0));
+        txtalasan.setText(""+model.getValueAt(i, 2));
+         try {
           
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse((String)model.getValueAt(i, 3));
             tgl_cuti.setDate(date);
-           // Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse((String)model.getValueAt(i, 4));
-            //tgl_masuk.setDate(date1);
+            Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse((String)model.getValueAt(i, 4));
+            tgl_masuk.setDate(date1);
         } catch (ParseException ex) {
-            Logger.getLogger(Form_Cuti.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-        txtcuti.setText(""+model.getValueAt(i, 0));
-        txtalasan.setText(""+model.getValueAt(i, 2));
+            Logger.getLogger(Form_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
        //tgl_cuti.setDate(""+model.getValueAt(i, 3));
         //tgl_masuk.setDate(""+model.getValueAt(i, 4));*/
     }
@@ -149,8 +137,7 @@ private DefaultTableModel model;
         loadData();
         try{
            st = (Statement)koneksi.getKoneksi().createStatement();
-           String sql = "update penggajian set karyawanID='"+vkaryawanID+"',"
-                   
+           String sql = "update cuti set karyawanID='"+vkaryawanID+"',"
                    + "alasan='"+vAlasan+"',"
                    + "tgl_cuti='"+vTglCuti+"',"
                    + "tgl_masuk='"+vTglMasuk+"' where cutiID='"+vcutiID+"'";
@@ -172,7 +159,7 @@ private DefaultTableModel model;
         if(psn == JOptionPane.OK_OPTION){
             try{
                 st = (Statement) koneksi.getKoneksi().createStatement();
-                String sql = "Delete From penggajian Where cutiID='"+vcutiID+"'";
+                String sql = "Delete From cuti Where cutiID='"+vcutiID+"'";
                 PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareCall(sql);
                 p.executeUpdate();
                 getData();
@@ -182,7 +169,7 @@ private DefaultTableModel model;
             }catch(SQLException err){
                 JOptionPane.showMessageDialog(null, "Data Gagal DiHapus!");
                 reset();
-            }
+            } 
         }
     }
     
@@ -530,11 +517,7 @@ private DefaultTableModel model;
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
-    try {
         selectData();
-    } catch (ParseException ex) {
-        Logger.getLogger(Form_Cuti.class.getName()).log(Level.SEVERE, null, ex);
-    }
         upd.setEnabled(true);
         del.setEnabled(true);
         jButton1.setEnabled(false);
