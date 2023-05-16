@@ -64,7 +64,6 @@ public class Form_Utama extends javax.swing.JFrame {
         mLaporan = new javax.swing.JMenu();
         lKaryawan = new javax.swing.JMenuItem();
         lPenggajian = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Menu Utama");
@@ -268,7 +267,7 @@ public class Form_Utama extends javax.swing.JFrame {
 
         user.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         user.setForeground(new java.awt.Color(204, 255, 255));
-        user.setText("user");
+        user.setText("User");
         user.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jButton8.setBackground(new java.awt.Color(255, 153, 153));
@@ -276,6 +275,7 @@ public class Form_Utama extends javax.swing.JFrame {
         jButton8.setForeground(new java.awt.Color(51, 51, 0));
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/icons8-logout-35.png"))); // NOI18N
         jButton8.setText("LOGOUT");
+        jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton8.setFocusPainted(false);
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -439,14 +439,6 @@ public class Form_Utama extends javax.swing.JFrame {
 
         mUtama.add(mLaporan);
 
-        jMenu1.setText("USER");
-        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu1MouseClicked(evt);
-            }
-        });
-        mUtama.add(jMenu1);
-
         setJMenuBar(mUtama);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -562,10 +554,6 @@ public class Form_Utama extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
-        new Form_User().setVisible(true);
-    }//GEN-LAST:event_jMenu1MouseClicked
-
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         new Form_User().setVisible(true);
     }//GEN-LAST:event_jButton9ActionPerformed
@@ -623,7 +611,6 @@ public class Form_Utama extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
