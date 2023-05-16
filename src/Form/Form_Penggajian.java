@@ -452,12 +452,18 @@ public class Form_Penggajian extends javax.swing.JFrame {
                                     .addComponent(jButton8))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 157, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton4)))
                 .addContainerGap())
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        cr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crActionPerformed(evt);
+            }
+        });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/View.gif"))); // NOI18N
         jButton5.setText("Search");
@@ -470,6 +476,11 @@ public class Form_Penggajian extends javax.swing.JFrame {
         });
 
         ktg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nama", "jabatan", "gaji_bersih" }));
+        ktg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ktgActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Kategori");
 
@@ -625,6 +636,14 @@ public class Form_Penggajian extends javax.swing.JFrame {
         DSL.setResizable(false);
         tj.requestFocus();
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void ktgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ktgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ktgActionPerformed
+
+    private void crActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_crActionPerformed
 
     /**
      * @param args the command line arguments
