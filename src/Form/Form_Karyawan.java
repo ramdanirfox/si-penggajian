@@ -460,6 +460,11 @@ public class Form_Karyawan extends javax.swing.JFrame {
         });
 
         ktg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nama", "jabatan", "alamat" }));
+        ktg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ktgActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Kategori");
 
@@ -633,6 +638,10 @@ public class Form_Karyawan extends javax.swing.JFrame {
         cr.setText(null);
         getData();
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void ktgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ktgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ktgActionPerformed
 
     /**
      * @param args the command line arguments
