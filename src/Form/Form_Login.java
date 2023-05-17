@@ -4,20 +4,27 @@
  * and open the template in the editor.
  */
 package Form;
+
 import java.sql.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.net.URL;
 import koneksiDB.koneksi;
 import javax.imageio.ImageIO;
 import penggajian_karyawan.*;
+
 /**
  *
  * @author ramdanirfox
  */
+
 public class Form_Login extends javax.swing.JFrame {
+
     private static Statement st;
+
     /**
      * Creates new form Form_Login
      */
@@ -26,9 +33,21 @@ public class Form_Login extends javax.swing.JFrame {
         initComponents();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
-        setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
+        setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
     }
+    MouseListener ml = new MouseAdapter() {
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            Component c = evt.getComponent();
+            c.setBackground(new Color(8, 141, 165));
+        }
 
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+            Component c = evt.getComponent();
+            c.setBackground(new Color(241, 241, 241));
+        }
+
+    };
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,6 +92,14 @@ public class Form_Login extends javax.swing.JFrame {
         jButton1.setAutoscrolls(true);
         jButton1.setMaximumSize(new java.awt.Dimension(72, 23));
         jButton1.setName(""); // NOI18N
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton1MouseExited(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -109,13 +136,13 @@ public class Form_Login extends javax.swing.JFrame {
                                     .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(user))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel7)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,9 +157,9 @@ public class Form_Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pass))
                 .addGap(35, 35, 35)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -177,15 +204,15 @@ public class Form_Login extends javax.swing.JFrame {
             String sql = "SELECT * FROM user WHERE username = '" + user.getText() + "' AND password = '" + pass.getText() + "'";
             st = koneksi.getKoneksi().createStatement();
             ResultSet rsLogin = st.executeQuery(sql);
- 
+
             rsLogin.next();
-            rsLogin.last(); 
-            if (rsLogin.getRow()==1){
+            rsLogin.last();
+            if (rsLogin.getRow() == 1) {
                 String id = rsLogin.getString(1);
                 String nama = rsLogin.getString(2);
                 Penggajian_Karyawan.setUserInfo(id, nama);
                 JOptionPane.showMessageDialog(null, "Login Berhasil!");
-                new Form_Utama().setVisible(true); 
+                new Form_Utama().setVisible(true);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Maaf, Username / Password salah!");
@@ -193,7 +220,16 @@ public class Form_Login extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
         }
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
+        jButton1.addMouseListener(ml);
+    }//GEN-LAST:event_jButton1MouseEntered
+
+    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
+        jButton1.addMouseListener(ml);
+    }//GEN-LAST:event_jButton1MouseExited
 
     /**
      * @param args the command line arguments
@@ -229,21 +265,19 @@ public class Form_Login extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void fnGetResource() {
         try {
-          // URL url16 = new URL("http://i.stack.imgur.com/m0KKu.png");
+            // URL url16 = new URL("http://i.stack.imgur.com/m0KKu.png");
 //          File fileGambar = new File("src/assets/ss.png");
-          URL res = getClass().getResource("/Icon/gif/16x16/dktbig.gif");
+            URL res = getClass().getResource("/Icon/gif/16x16/dktbig.gif");
 //          gambar = ImageIO.read(url16);
-          gambar = ImageIO.read(res);
-        }
-        catch (Exception e) {
-            
+            gambar = ImageIO.read(res);
+        } catch (Exception e) {
+
         }
     }
 
-    
     private java.awt.Image gambar;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
