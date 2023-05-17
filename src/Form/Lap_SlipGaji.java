@@ -3,6 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Form;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.io.File;
 import koneksiDB.koneksi;
 import java.sql.*;
@@ -31,7 +37,22 @@ public class Lap_SlipGaji extends javax.swing.JFrame {
      */
     public Lap_SlipGaji() {
         initComponents();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = getSize();
+        setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
     }
+     MouseListener ml = new MouseAdapter() {
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            Component c = evt.getComponent();
+            c.setBackground(new Color(8, 141, 165));
+        }
+
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+            Component c = evt.getComponent();
+            c.setBackground(new Color(241, 241, 241));
+        }
+
+    };
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +73,14 @@ public class Lap_SlipGaji extends javax.swing.JFrame {
         jButton1.setText("Cetak");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton1MouseExited(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -112,6 +141,14 @@ public class Lap_SlipGaji extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
+       jButton1.addMouseListener(ml);
+    }//GEN-LAST:event_jButton1MouseEntered
+
+    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
+        jButton1.addMouseListener(ml);
+    }//GEN-LAST:event_jButton1MouseExited
 
     /**
      * @param args the command line arguments

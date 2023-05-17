@@ -338,6 +338,14 @@ public class Form_Utama extends javax.swing.JFrame {
         lapSlipGaji.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lapSlipGaji.setMaximumSize(new java.awt.Dimension(72, 23));
         lapSlipGaji.setName(""); // NOI18N
+        lapSlipGaji.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lapSlipGajiMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lapSlipGajiMouseExited(evt);
+            }
+        });
         lapSlipGaji.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lapSlipGajiActionPerformed(evt);
@@ -458,6 +466,12 @@ public class Form_Utama extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mDataMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                mDataMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                mDataMouseExited(evt);
+            }
         });
 
         dKaryawan.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
@@ -535,6 +549,14 @@ public class Form_Utama extends javax.swing.JFrame {
         mUtama.add(mData);
 
         mLaporan.setText("LAPORAN");
+        mLaporan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                mLaporanMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                mLaporanMouseExited(evt);
+            }
+        });
 
         lKaryawan.setText("Laporan Karyawan");
         lKaryawan.addActionListener(new java.awt.event.ActionListener() {
@@ -749,6 +771,30 @@ public class Form_Utama extends javax.swing.JFrame {
     private void jButton7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseExited
        jButton7.addMouseListener(ml3);
     }//GEN-LAST:event_jButton7MouseExited
+
+    private void lapSlipGajiMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lapSlipGajiMouseEntered
+        lapSlipGaji.addMouseListener(ml3);
+    }//GEN-LAST:event_lapSlipGajiMouseEntered
+
+    private void lapSlipGajiMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lapSlipGajiMouseExited
+      lapSlipGaji.addMouseListener(ml3);
+    }//GEN-LAST:event_lapSlipGajiMouseExited
+
+    private void mDataMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mDataMouseEntered
+       mData.addMouseListener(ml3);
+    }//GEN-LAST:event_mDataMouseEntered
+
+    private void mDataMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mDataMouseExited
+        mData.addMouseListener(ml3);
+    }//GEN-LAST:event_mDataMouseExited
+
+    private void mLaporanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mLaporanMouseEntered
+     mLaporan.addMouseListener(ml3);
+    }//GEN-LAST:event_mLaporanMouseEntered
+
+    private void mLaporanMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mLaporanMouseExited
+   mLaporan.addMouseListener(ml3);
+    }//GEN-LAST:event_mLaporanMouseExited
 
     /**
      * @param args the command line arguments

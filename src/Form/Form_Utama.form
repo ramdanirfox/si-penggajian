@@ -10,6 +10,8 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mDataMouseClicked"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mDataMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mDataMouseExited"/>
           </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="dKaryawan">
@@ -80,6 +82,10 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="LAPORAN"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mLaporanMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mLaporanMouseExited"/>
+          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="lKaryawan">
               <Properties>
@@ -519,6 +525,8 @@
                 <Property name="name" type="java.lang.String" value="" noResource="true"/>
               </Properties>
               <Events>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lapSlipGajiMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lapSlipGajiMouseExited"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lapSlipGajiActionPerformed"/>
               </Events>
             </Component>
