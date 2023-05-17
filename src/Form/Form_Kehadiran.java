@@ -542,7 +542,9 @@ bsave.setEnabled(true);
             return;
         }
         fidkaryawan.setText(""+model.getValueAt(i, 0));
-       
+        this.jamMasuk2.setDateTimeStrict(LocalDateTime.now());
+        this.jamPulang.setDateTimeStrict(LocalDateTime.now());
+
           
     }
       public void update(){
