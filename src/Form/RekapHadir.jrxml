@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 5.2.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Slip Gaji" pageWidth="595" pageHeight="845" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL Adapter"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EEEFF0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#CACED0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#D8D8D8"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="tableDataset" uuid="f13e6d36-5148-4ecc-bbe3-3035def80980">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<subDataset name="Empty Dataset1" uuid="657ddbf8-b0f7-4140-9f3f-d4d726b0864a"/>
+	<subDataset name="lembur_dataset" uuid="edfe64b9-4211-4ee2-95cf-7343bae2c12c">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL Adapter"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT
+     karyawan.`karyawanID` AS karyawan_karyawanID,
+     karyawan.`nama` AS karyawan_nama,
+     karyawan.`jabatan` AS karyawan_jabatan,
+     lembur.lemburID AS lembur_lemburID,
+     lembur.jml_jam AS lembur_jml_jam,
+     lembur.total AS lembur_total
+FROM
+       `karyawan` karyawan
+ INNER JOIN 
+ 		`lembur` lembur
+ ON
+ 		karyawan.karyawanID = lembur.karyawanID]]>
+		</queryString>
+		<field name="karyawan_karyawanID" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="karyawanID"/>
+			<property name="com.jaspersoft.studio.field.label" value="karyawan_karyawanID"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="karyawan"/>
+		</field>
+		<field name="karyawan_nama" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="nama"/>
+			<property name="com.jaspersoft.studio.field.label" value="karyawan_nama"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="karyawan"/>
+		</field>
+		<field name="karyawan_jabatan" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="jabatan"/>
+			<property name="com.jaspersoft.studio.field.label" value="karyawan_jabatan"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="karyawan"/>
+		</field>
+		<field name="lembur_jml_jam" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="jml_jam"/>
+			<property name="com.jaspersoft.studio.field.label" value="lembur_jml_jam"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="lembur"/>
+		</field>
+		<field name="lembur_total" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="total"/>
+			<property name="com.jaspersoft.studio.field.label" value="lembur_total"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="lembur"/>
+		</field>
+	</subDataset>
+	<parameter name="PTANGGAL" class="java.lang.String"/>
+	<parameter name="PNAMA" class="java.lang.String"/>
+	<parameter name="PJABATAN" class="java.lang.String"/>
+	<parameter name="PKARYAWANID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["5"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     karyawan.`karyawanID` AS karyawan_karyawanID,
+     karyawan.`nama` AS karyawan_nama,
+     karyawan.`jabatan` AS karyawan_jabatan,
+     DATE_FORMAT(kehadiran.`jam_masuk`, '%Y-%m-%d') AS kehadiran_tanggal,
+     kehadiran.`jam_masuk` AS kehadiran_jam_masuk,
+     kehadiran.`jam_pulang` AS kehadiran_jam_pulang
+FROM
+       `karyawan` karyawan
+ INNER JOIN 
+        `kehadiran` kehadiran
+ ON
+        karyawan.karyawanID = kehadiran.karyawanID
+ WHERE
+        karyawan.karyawanID = $P{PKARYAWANID}]]>
+	</queryString>
+	<field name="karyawan_karyawanID" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="karyawanID"/>
+		<property name="com.jaspersoft.studio.field.label" value="karyawan_karyawanID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="karyawan"/>
+	</field>
+	<field name="karyawan_nama" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama"/>
+		<property name="com.jaspersoft.studio.field.label" value="karyawan_nama"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="karyawan"/>
+	</field>
+	<field name="karyawan_jabatan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="jabatan"/>
+		<property name="com.jaspersoft.studio.field.label" value="karyawan_jabatan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="karyawan"/>
+	</field>
+	<field name="kehadiran_jam_masuk" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="jam_masuk"/>
+		<property name="com.jaspersoft.studio.field.label" value="kehadiran_jam_masuk"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kehadiran"/>
+	</field>
+	<field name="kehadiran_jam_pulang" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="jam_pulang"/>
+		<property name="com.jaspersoft.studio.field.label" value="kehadiran_jam_pulang"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kehadiran"/>
+	</field>
+	<field name="kehadiran_tanggal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="kehadiran_tanggal"/>
+		<property name="com.jaspersoft.studio.field.name" value="tanggal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kehadiran"/>
+	</field>
+	<title>
+		<band height="145" splitType="Stretch">
+			<staticText>
+				<reportElement x="400" y="85" width="50" height="20" uuid="0f86baff-6386-4f3f-b3fe-2388707babe8"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Tanggal:]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="450" y="85" width="110" height="20" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
+				<textFieldExpression><![CDATA[$P{PTANGGAL}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center">
+				<reportElement x="0" y="82" width="65" height="60" uuid="94883631-a913-43e2-b182-ab8d77d0181e"/>
+				<imageExpression><![CDATA["dktbig.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="169" y="100" width="196" height="25" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REKAP KEHADIRAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="105" width="50" height="20" uuid="440f5e34-c23c-4182-8a4b-523c3770ae0b"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Nama:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="125" width="50" height="20" uuid="601442b5-5cc6-4dc2-9d1b-c32508ef222f"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Jabatan:]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="450" y="105" width="110" height="20" uuid="4b3d35af-c5da-4a94-b971-b5d4c5a39363"/>
+				<textFieldExpression><![CDATA[$P{PNAMA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="449" y="125" width="110" height="20" uuid="a54eb5c5-8e0f-4300-95b1-452f58ac8fd4"/>
+				<textFieldExpression><![CDATA[$P{PJABATAN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="34">
+			<line>
+				<reportElement x="1" y="7" width="556" height="1" uuid="f3bfe5cc-562f-4f5a-898d-3a5c309b9ef9">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="1" y="25" width="556" height="1" uuid="e2134d76-61c8-4f9b-be3f-b0e6a98c3d99">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="10" y="10" width="124" height="15" uuid="1f8931e6-4098-4ab5-8dd6-466ce79bf744"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TANGGAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="8" width="90" height="15" uuid="4c341fec-3876-488b-9324-88d1c921753b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[JAM KELUAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="10" width="80" height="15" uuid="a7fbd83d-a575-4673-91d7-c944fc5051f1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[JAM MASUK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="467" y="8" width="90" height="15" uuid="1816d507-1e83-4691-bcfd-9a24d4bc8413"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUTI]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="61">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="10" y="-3" width="125" height="20" uuid="83b5ec9c-cf1a-4fd5-8047-954d62ba296f"/>
+				<textFieldExpression><![CDATA[$F{kehadiran_tanggal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="200" y="-3" width="125" height="20" uuid="9b83c44d-b2fe-4709-9441-9f5cd7c855ad"/>
+				<textFieldExpression><![CDATA[$F{kehadiran_jam_masuk}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="330" y="0" width="125" height="20" uuid="b58678f5-78c9-4cc1-8042-d147ef4a1370"/>
+				<textFieldExpression><![CDATA[$F{kehadiran_jam_pulang}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="256">
+			<line>
+				<reportElement x="1" y="126" width="556" height="1" uuid="4800c4c6-b3d5-4341-9073-76bb2a70ead9">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</lastPageFooter>
+</jasperReport>
