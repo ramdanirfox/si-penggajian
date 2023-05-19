@@ -98,7 +98,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
             
             File reprt = new File("src/Form/RekapHadir.jrxml");
             jasperDesign = JRXmlLoader.load(reprt);
-            param.clear();
+//            param.clear();
             jasperReport = JasperCompileManager.compileReport(jasperDesign);
             jasperPrint = JasperFillManager.fillReport(jasperReport,param,koneksi.getKoneksi());
             JasperViewer.viewReport(jasperPrint,false);
