@@ -49,8 +49,8 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
     public void getData(){
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
-        String k = (String)ktg.getSelectedItem();
-        String c = cr.getText();
+        String k = (String) ktgz.getSelectedItem();
+        String c = cr3.getText();
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
             String sql = "SELECT * FROM karyawan WHERE "+k+" like '%"+c+"%'";
@@ -65,8 +65,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
                 obj[5] = res.getString("noHP");
                 obj[6] = res.getString("jabatan");
                 obj[7] = res.getString("golongan");
-//                r
-//                model.addRow(obj);
+                model.addRow(obj);
             }
         }catch(SQLException err){
                 JOptionPane.showMessageDialog(null, err.getMessage());
@@ -89,7 +88,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         cr3 = new javax.swing.JTextField();
         jButton11 = new javax.swing.JButton();
-        ktg3 = new javax.swing.JComboBox<>();
+        ktgz = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         jButton12 = new javax.swing.JButton();
 
@@ -151,7 +150,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
             }
         });
 
-        ktg3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nama", "jabatan", "alamat" }));
+        ktgz.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nama", "jabatan", "alamat" }));
 
         jLabel14.setText("Kategori");
 
@@ -173,14 +172,14 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ktg3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ktgz, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cr3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton12)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +187,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cr3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ktg3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ktgz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
@@ -203,20 +202,24 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(179, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 170, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(24, 24, 24))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(173, 173, 173))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(24, 24, 24))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(173, 173, 173))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+                        .addContainerGap())))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
@@ -224,16 +227,16 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 249, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(35, 35, 35)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(100, Short.MAX_VALUE)))
+                    .addContainerGap(271, Short.MAX_VALUE)))
         );
 
         pack();
@@ -262,13 +265,18 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
-//        int tabelKry = tbl.getSelectedRow();
+        int tabelKry = tbl.getSelectedRow();
 //        fL.nmKry = tbl.getValueAt(tabelKry, 1).toString();
 //        fL.jbtKry = tbl.getValueAt(tabelKry, 6).toString();
 //        fL.golKry = tbl.getValueAt(tabelKry, 7).toString();
 //        fL.itemTerpilih();
 
-        this.dispose();
+//        this.dispose();
+        param.put("PKARYAWANID", tbl.getValueAt(tabelKry, 0).toString());
+        param.put("PNAMA", tbl.getValueAt(tabelKry, 1).toString());
+        param.put("PJABATAN", tbl.getValueAt(tabelKry, 6).toString());
+        param.put("PTANGGAL", (new java.util.Date()).toString());
+        System.out.println(Arrays.asList(param)); // method 1
     }//GEN-LAST:event_tblMouseClicked
 
     private void cr3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cr3ActionPerformed
@@ -280,7 +288,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        cr.setText(null);
+        cr3.setText(null);
         getData();
     }//GEN-LAST:event_jButton12ActionPerformed
 
@@ -323,11 +331,11 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
     }
     
     private void loadParam() {
-        param.put("PKARYAWANID", "5");
-        param.put("PNAMA", "Ramdani");
-        param.put("PJABATAN", "Staff");
-        param.put("PTANGGAL", (new java.util.Date()).toString());
-        System.out.println(Arrays.asList(param)); // method 1
+//        param.put("PKARYAWANID", "5");
+//        param.put("PNAMA", "Ramdani");
+//        param.put("PJABATAN", "Staff");
+//        param.put("PTANGGAL", (new java.util.Date()).toString());
+//        System.out.println(Arrays.asList(param)); // method 1
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -357,7 +365,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ktg;
     private javax.swing.JComboBox<String> ktg1;
     private javax.swing.JComboBox<String> ktg2;
-    private javax.swing.JComboBox<String> ktg3;
+    private javax.swing.JComboBox<String> ktgz;
     private javax.swing.JTable tbl;
     // End of variables declaration//GEN-END:variables
 }
