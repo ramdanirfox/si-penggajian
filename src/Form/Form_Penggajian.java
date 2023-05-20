@@ -219,6 +219,8 @@ public class Form_Penggajian extends javax.swing.JFrame {
         jbt.setText(jbtKry);
         gol.setText(golKry);
         gl.setText(String.valueOf(lmb));
+        queryPotongan();
+        queryTunjangan();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -386,12 +388,12 @@ public class Form_Penggajian extends javax.swing.JFrame {
                         .addComponent(upd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(del)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 5, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton4)
                     .addComponent(jButton8))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -679,6 +681,38 @@ public class Form_Penggajian extends javax.swing.JFrame {
                 new Form_Penggajian().setVisible(true);
             }
         });
+    }
+    
+    private void queryPotongan() {
+        try{
+            st = (Statement) koneksi.getKoneksi().createStatement();
+            String sql = "SELECT SUM(jumlah) as jum FROM potongan t INNER JOIN karyawan k ON k.karyawanID = t.potonganID  WHERE nama = '" + nmKry + "'";
+            ResultSet res = st.executeQuery(sql);
+            while(res.next()){
+                Object[] obj = new Object[1];
+                obj[0] = res.getString("jum");
+//                model.addRow(obj);
+                pt.setText(res.getString("jum"));
+            }
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, err.getMessage());
+        }
+    }
+    
+    private void queryTunjangan() {
+        try{
+            st = (Statement) koneksi.getKoneksi().createStatement();
+            String sql = "SELECT SUM(jumlah) as jum FROM tunjangan t INNER JOIN karyawan k ON k.karyawanID = t.tunjanganID WHERE nama = '" + nmKry + "'";
+            ResultSet res = st.executeQuery(sql);
+            while(res.next()){
+                Object[] obj = new Object[1];
+                obj[0] = res.getString("jum");
+//                model.addRow(obj);
+                tj.setText(res.getString("jum"));
+            }
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, err.getMessage());
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
