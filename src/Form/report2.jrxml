@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 5.2.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f5baeebc-9674-449f-8277-efabbb578d20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -77,18 +78,18 @@ FROM
 				<text><![CDATA[Laporan Penggajian]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="301" y="62" width="196" height="22" uuid="59ba64ae-7743-4336-a2ce-a0317316ac96"/>
+				<reportElement style="SubTitle" x="295" y="62" width="250" height="22" uuid="a2243beb-bb26-4825-9f66-30f4054244e0"/>
 				<textElement>
 					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[PT. Nama Perusahaan ]]></text>
+				<text><![CDATA[PT Dinamika Kreasi Teknologi]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="147" y="84" width="500" height="22" uuid="5c3f9fcd-1802-433e-a2b8-751d574ef6a7"/>
-				<textElement>
+				<reportElement style="SubTitle" x="100" y="84" width="603" height="22" uuid="987867c3-dc31-48c5-a8e6-86f7f8f74887"/>
+				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[Jl.Nama Jalan No. jl Tlp : 9999-8888-7777 Email : abc@gmail.com]]></text>
+				<text><![CDATA[Jl. Danau Sunter  Kec. Tj. Priok, Jkt Utara, Daerah Khusus Ibukota Jakarta 14350]]></text>
 			</staticText>
 		</band>
 	</title>

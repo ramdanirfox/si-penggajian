@@ -32,14 +32,41 @@ public class Lap_SlipGaji extends javax.swing.JFrame {
     Map param = new HashMap();
     private DefaultTableModel model;
     private static Statement st;
+    Object P_KARYAWAN_ID;
+    Object P_TUNJANGAN;
+    Object P_GAJI_BERSIH;
+    Object P_POTONGAN;
+    Object P_HASIL_TEMP;
+    Object P_LEMBUR;
+    Object P_GAPOK;
+    Object P_TELEPON;
+    Object P_GOLONGAN;
+    Object P_JABATAN;
+    Object P_REF;
+    Object P_KARYAWAN_NAMA;
     /**
      * Creates new form Lap_SlipGaji
      */
     public Lap_SlipGaji() {
         initComponents();
+        model = new DefaultTableModel();
+        tbl.setModel(model);
+        model.addColumn("ID");
+        model.addColumn("karyawanID");
+        model.addColumn("TglGaji");
+        model.addColumn("Nama");
+        model.addColumn("Jabatan");
+        model.addColumn("NoTelp");
+        model.addColumn("Golongan");
+        model.addColumn("GajiPokok");
+        model.addColumn("GajiLembur");
+        model.addColumn("Tunjangan");
+        model.addColumn("Potongan");
+        model.addColumn("GajiBersih");
+        getData();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
-        setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
+        setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);        
     }
      MouseListener ml = new MouseAdapter() {
         public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -63,27 +90,31 @@ public class Lap_SlipGaji extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        bcetak = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Print.gif"))); // NOI18N
-        jButton1.setText("Cetak");
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        bcetak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Print.gif"))); // NOI18N
+        bcetak.setText("Cetak");
+        bcetak.setEnabled(false);
+        bcetak.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bcetak.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bcetak.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton1MouseEntered(evt);
+                bcetakMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton1MouseExited(evt);
+                bcetakMouseExited(evt);
             }
         });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bcetak.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bcetakActionPerformed(evt);
             }
         });
 
@@ -95,45 +126,81 @@ public class Lap_SlipGaji extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setText("Cetak Slip Gaji");
+
+        tbl.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbl);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(24, 24, 24))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(245, 245, 245)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(24, 24, 24))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(231, 231, 231)
+                .addComponent(bcetak, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton2)
-                .addGap(88, 88, 88)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addGap(42, 42, 42)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(bcetak, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bcetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcetakActionPerformed
         try{
             File reprt = new File("src/Form/SlipGaji.jrxml");
             jasperDesign = JRXmlLoader.load(reprt);
-            param.clear();
             jasperReport = JasperCompileManager.compileReport(jasperDesign);
             jasperPrint = JasperFillManager.fillReport(jasperReport,param,koneksi.getKoneksi());
             JasperViewer.viewReport(jasperPrint,false);
             JasperPrintManager.printReport(jasperPrint, true);
+//            param.clear();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_bcetakActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        int konf = JOptionPane.showConfirmDialog(null, "Yakin Ingin menutup Form?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
@@ -142,13 +209,18 @@ public class Lap_SlipGaji extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
-       jButton1.addMouseListener(ml);
-    }//GEN-LAST:event_jButton1MouseEntered
+    private void bcetakMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bcetakMouseEntered
+       bcetak.addMouseListener(ml);
+    }//GEN-LAST:event_bcetakMouseEntered
 
-    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
-        jButton1.addMouseListener(ml);
-    }//GEN-LAST:event_jButton1MouseExited
+    private void bcetakMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bcetakMouseExited
+        bcetak.addMouseListener(ml);
+    }//GEN-LAST:event_bcetakMouseExited
+
+    private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
+        selectData();
+        bcetak.setEnabled(true);
+    }//GEN-LAST:event_tblMouseClicked
 
     /**
      * @param args the command line arguments
@@ -184,9 +256,85 @@ public class Lap_SlipGaji extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void getData(){
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        try{
+            st = (Statement) koneksi.getKoneksi().createStatement();
+            String sql = "SELECT gajiID, karyawanID, tgl, p.nama, p.jabatan, k.noHP, p.golongan, p.gapok, p.gaji_lembur, p.tunjangan, p.potongan , p.gaji_bersih  FROM penggajian p INNER JOIN karyawan k ON p.nama = k.nama";
+            ResultSet res = st.executeQuery(sql);
+            while(res.next()){
+                Object[] obj = new Object[12];
+                obj[0] = res.getString("gajiID");
+                obj[1] = res.getString("karyawanID");
+                obj[2] = res.getString("tgl");
+                obj[3] = res.getString("nama");
+                obj[4] = res.getString("jabatan");
+                obj[5] = res.getString("noHP");
+                obj[6] = res.getString("golongan");
+                obj[7] = res.getString("gapok");
+                obj[8] = res.getString("gaji_lembur");
+                obj[9] = res.getString("tunjangan");
+                obj[10] = res.getString("potongan");
+                obj[11] = res.getString("gaji_bersih");
+                model.addRow(obj);
+            }
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, err.getMessage());
+        }
+    }
+    
+    public void selectData(){
+        int i = tbl.getSelectedRow();
+        if(i == -1){
+            JOptionPane.showMessageDialog(null, "Tidak ada data terpilih!");
+            return;
+        }
+        P_REF = model.getValueAt(i, 0);
+        P_KARYAWAN_ID = model.getValueAt(i, 1);
+        P_KARYAWAN_NAMA = model.getValueAt(i, 3);
+        P_JABATAN = model.getValueAt(i, 4);
+        P_TELEPON = model.getValueAt(i, 5);
+        P_GOLONGAN = model.getValueAt(i, 6);
+        P_GAPOK = model.getValueAt(i, 7);
+        P_LEMBUR = model.getValueAt(i, 8);
+        P_TUNJANGAN = model.getValueAt(i, 9);
+        P_POTONGAN = model.getValueAt(i, 10);
+        P_GAJI_BERSIH = model.getValueAt(i, 11);
+        
+        P_HASIL_TEMP = (Integer.valueOf(((String) P_GAPOK)) + Integer.valueOf(((String) P_LEMBUR)) + Integer.valueOf(((String) P_TUNJANGAN))) + "";
+        System.out.println(P_HASIL_TEMP);
+        
+//        nm.setText(""+model.getValueAt(i, 1));
+//        jbt.setText(""+model.getValueAt(i, 2));
+//        gol.setText(""+model.getValueAt(i, 3));
+//        jj.setText(""+model.getValueAt(i, 4));
+//        gj.setText(""+model.getValueAt(i, 5));
+//        vId = Integer.valueOf(""+model.getValueAt(i, 0));
+        loadParam();
+    }
+    
+    private void loadParam() {
+        param.put("P_GOLONGAN", P_GOLONGAN);
+        param.put("P_GAJI_BERSIH", P_GAJI_BERSIH);
+        param.put("P_GAPOK", P_GAPOK);
+        param.put("P_HASIL_TEMP", P_HASIL_TEMP);
+        param.put("P_JABATAN", P_JABATAN);
+        param.put("P_KARYAWAN_ID", P_KARYAWAN_ID);
+        param.put("P_KARYAWAN_NAMA", P_KARYAWAN_NAMA);
+        param.put("P_LEMBUR", P_LEMBUR);
+        param.put("P_POTONGAN", P_POTONGAN);
+        param.put("P_REF", P_REF);
+        param.put("P_TELEPON", P_TELEPON);
+        param.put("P_TUNJANGAN", P_TUNJANGAN);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton bcetak;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbl;
     // End of variables declaration//GEN-END:variables
 }

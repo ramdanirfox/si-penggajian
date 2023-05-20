@@ -176,7 +176,7 @@ public class Lap_Penggajian extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try{
-            File reprt = new File("src/Form/report_test.jrxml");
+            File reprt = new File("src/Form/report2.jrxml");
             jasperDesign = JRXmlLoader.load(reprt);
             param.clear();
             jasperReport = JasperCompileManager.compileReport(jasperDesign);

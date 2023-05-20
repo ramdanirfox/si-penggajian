@@ -197,7 +197,7 @@ FROM
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="450" y="105" width="110" height="20" uuid="4b3d35af-c5da-4a94-b971-b5d4c5a39363"/>
-				<textFieldExpression><![CDATA[$P{PNAMA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}.get("PNAMA")]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="449" y="125" width="110" height="20" uuid="a54eb5c5-8e0f-4300-95b1-452f58ac8fd4"/>
