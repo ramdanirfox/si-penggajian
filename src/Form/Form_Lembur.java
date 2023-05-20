@@ -17,6 +17,8 @@ public class Form_Lembur extends javax.swing.JFrame {
     private DefaultTableModel model;
     String vNm,vJbt,vGol;
     int vJj,vGj,vTot,vId;
+    String karId;
+    
     private static Statement st;
     /**
      * Creates new form Lembur
@@ -71,7 +73,7 @@ public class Form_Lembur extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, err.getMessage());
         }
     }
-    public String nmKry, jbtKry, golKry;
+    public String nmKry, jbtKry, golKry, idKry;
  
     public String getnmKry() {
         return nmKry;
@@ -90,14 +92,16 @@ public class Form_Lembur extends javax.swing.JFrame {
         vGol = gol.getText();
         vJj = Integer.parseInt(jj.getText());
         vGj = Integer.parseInt(gj.getText());
+        karId = karId;
         vTot = vGj * vJj;
     }
     public void save(){
         loadData();
         try{
         st = (Statement)koneksi.getKoneksi().createStatement();
-        String sql = "Insert into lembur(nama,jabatan,golongan,jml_jam,gaji_perjam,total)"
-                +"values('"+vNm+"','"+vJbt+"','"+vGol+"','"+vJj+"','"+vGj+"','"+vTot+"')";
+        String sql = "Insert into lembur(nama,jabatan,golongan,jml_jam,gaji_perjam,total, karyawanID)"
+                +"values('"+vNm+"','"+vJbt+"','"+vGol+"','"+vJj+"','"+vGj+"','"+vTot+"','"+karId+"')";
+        System.out.println(sql);
         PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
         p.executeUpdate(sql);
         getData();
@@ -165,7 +169,7 @@ public class Form_Lembur extends javax.swing.JFrame {
             try{
                 st = (Statement) koneksi.getKoneksi().createStatement();
                 String sql = "Delete From lembur Where lemburID='"+vId+"'";
-                PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareCall(sql);
+                PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareStatement(sql);
                 p.executeUpdate();
                 getData();
                 reset();

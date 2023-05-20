@@ -573,7 +573,7 @@ bsave.setEnabled(true);
             try{
                 st = (Statement) koneksi.getKoneksi().createStatement();
                 String sql = "Delete From kehadiran Where karyawanID='"+vNm+"'";
-                PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareCall(sql);
+                PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareStatement(sql);
                 p.executeUpdate();
                 getData();
                 fnKosong();

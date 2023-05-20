@@ -157,7 +157,7 @@ public class Form_Tunjangan extends javax.swing.JFrame {
             try{
                 st = (Statement) koneksi.getKoneksi().createStatement();
                 String sql = "Delete From tunjangan Where tunjanganID='"+vtunjanganID+"'";
-                PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareCall(sql);
+                PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareStatement(sql);
                 p.executeUpdate();
                 getData();
                 reset();

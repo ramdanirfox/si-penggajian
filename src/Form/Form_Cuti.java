@@ -157,7 +157,8 @@ private DefaultTableModel model;
             try{
                 st = (Statement) koneksi.getKoneksi().createStatement();
                 String sql = "Delete From cuti Where cutiID='"+vcutiID+"'";
-                PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareCall(sql);
+                System.out.println(sql);
+                PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareStatement(sql);
                 p.executeUpdate();
                 getData();
                 reset();

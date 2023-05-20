@@ -179,7 +179,7 @@ public class Form_Karyawan extends javax.swing.JFrame {
             try{
                 st = (Statement) koneksi.getKoneksi().createStatement();
                 String sql = "Delete From karyawan Where karyawanID='"+vId+"'";
-                PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareCall(sql);
+                PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareStatement(sql);
                 p.executeUpdate();
                 getData();
                 reset();
