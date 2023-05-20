@@ -115,15 +115,15 @@ FROM
      karyawan.`karyawanID` AS karyawan_karyawanID,
      karyawan.`nama` AS karyawan_nama,
      karyawan.`jabatan` AS karyawan_jabatan,
-     DATE_FORMAT(kehadiran.`jam_masuk`, '%Y-%m-%d') AS kehadiran_tanggal,
-     kehadiran.`jam_masuk` AS kehadiran_jam_masuk,
-     kehadiran.`jam_pulang` AS kehadiran_jam_pulang
+     `cuti`.cutiID  AS cuti_id,
+     `cuti`.tgl_masuk AS cuti_tgl_masuk,
+     `cuti`.tgl_cuti AS cuti_tgl_cuti
 FROM
-       `karyawan` karyawan
+       `karyawan` karyawan/
  INNER JOIN 
-        `kehadiran` kehadiran
+       `cuti` cuti
  ON
-        karyawan.karyawanID = kehadiran.karyawanID
+        karyawan.karyawanID = cuti.karyawanID
  WHERE
         karyawan.karyawanID = $P{PKARYAWANID}]]>
 	</queryString>
@@ -142,20 +142,15 @@ FROM
 		<property name="com.jaspersoft.studio.field.label" value="karyawan_jabatan"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="karyawan"/>
 	</field>
-	<field name="kehadiran_jam_masuk" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="jam_masuk"/>
-		<property name="com.jaspersoft.studio.field.label" value="kehadiran_jam_masuk"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="kehadiran"/>
+	<field name="cuti_tgl_masuk" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tgl_masuk"/>
+		<property name="com.jaspersoft.studio.field.label" value="cuti_tgl_masuk"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cuti"/>
 	</field>
-	<field name="kehadiran_jam_pulang" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="jam_pulang"/>
-		<property name="com.jaspersoft.studio.field.label" value="kehadiran_jam_pulang"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="kehadiran"/>
-	</field>
-	<field name="kehadiran_tanggal" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="kehadiran_tanggal"/>
-		<property name="com.jaspersoft.studio.field.name" value="tanggal"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="kehadiran"/>
+	<field name="cuti_tgl_cuti" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tgl_cuti"/>
+		<property name="com.jaspersoft.studio.field.label" value="cuti_tgl_cuti"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cuti"/>
 	</field>
 	<title>
 		<band height="145" splitType="Stretch">
@@ -182,7 +177,7 @@ FROM
 				<textElement textAlignment="Center">
 					<font size="19" isBold="true"/>
 				</textElement>
-				<text><![CDATA[REKAP KEHADIRAN]]></text>
+				<text><![CDATA[REKAP CUTI]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="400" y="105" width="50" height="20" uuid="440f5e34-c23c-4182-8a4b-523c3770ae0b"/>
@@ -221,41 +216,41 @@ FROM
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement x="10" y="10" width="124" height="15" uuid="1f8931e6-4098-4ab5-8dd6-466ce79bf744"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[TANGGAL]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="330" y="8" width="90" height="15" uuid="4c341fec-3876-488b-9324-88d1c921753b"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[JAM KELUAR]]></text>
+				<text><![CDATA[TANGGAL MASUK]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="10" width="80" height="15" uuid="a7fbd83d-a575-4673-91d7-c944fc5051f1"/>
+				<reportElement x="160" y="10" width="80" height="15" uuid="a7fbd83d-a575-4673-91d7-c944fc5051f1"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[JAM MASUK]]></text>
+				<text><![CDATA[TANGGAL CUTI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="10" width="124" height="15" uuid="5a76a28c-d41c-448c-bc2f-679c9e0fffbc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="25">
+		<band height="61">
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="10" y="-3" width="125" height="20" uuid="83b5ec9c-cf1a-4fd5-8047-954d62ba296f"/>
-				<textFieldExpression><![CDATA[$F{kehadiran_tanggal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{karyawan_karyawanID}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="200" y="-3" width="125" height="20" uuid="9b83c44d-b2fe-4709-9441-9f5cd7c855ad"/>
-				<textFieldExpression><![CDATA[$F{kehadiran_jam_masuk}]]></textFieldExpression>
+				<reportElement x="160" y="-3" width="125" height="20" uuid="9b83c44d-b2fe-4709-9441-9f5cd7c855ad"/>
+				<textFieldExpression><![CDATA[$F{cuti_tgl_masuk}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="330" y="0" width="125" height="20" uuid="b58678f5-78c9-4cc1-8042-d147ef4a1370"/>
-				<textFieldExpression><![CDATA[$F{kehadiran_jam_pulang}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cuti_tgl_cuti}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Form;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import koneksiDB.koneksi;
 import java.sql.*;
@@ -31,6 +33,9 @@ public class Lap_Lembur extends javax.swing.JFrame {
      */
     public Lap_Lembur() {
         initComponents();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = getSize();
+        setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);        
     }
 
     /**

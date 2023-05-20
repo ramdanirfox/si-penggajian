@@ -20,7 +20,7 @@ import net.sf.jasperreports.view.*;
  *
  * @author RFox
  */
-public class Lap_Kehadiran extends javax.swing.JFrame {
+public class Lap_Cuti extends javax.swing.JFrame {
 
     JasperReport jasperReport;
     JasperDesign jasperDesign;
@@ -32,7 +32,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
     /**
      * Creates new form Lap_SlipGaji
      */
-    public Lap_Kehadiran() {
+    public Lap_Cuti() {
         initComponents();
         model = new DefaultTableModel();
         tbl.setModel(model);
@@ -47,8 +47,10 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
         getData();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
-        setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);        
+        setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
+        Seticon();
         loadParam();
+        
     }
     
     public void getData(){
@@ -101,7 +103,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
         setResizable(false);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Print.gif"))); // NOI18N
-        jButton1.setText("Cetak Laporan Kehadiran");
+        jButton1.setText("Cetak Laporan Cuti");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -250,7 +252,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try{
             
-            File reprt = new File("src/Form/RekapHadir.jrxml");
+            File reprt = new File("src/Form/RekapCuti.jrxml");
             jasperDesign = JRXmlLoader.load(reprt);
 //            param.clear();
             jasperReport = JasperCompileManager.compileReport(jasperDesign);
@@ -314,14 +316,18 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Lap_Kehadiran.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Lap_Cuti.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Lap_Kehadiran.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Lap_Cuti.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Lap_Kehadiran.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Lap_Cuti.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Lap_Kehadiran.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Lap_Cuti.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -330,7 +336,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Lap_Kehadiran().setVisible(true);
+                new Lap_Cuti().setVisible(true);
             }
         });
     }
@@ -342,34 +348,20 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
 //        param.put("PTANGGAL", (new java.util.Date()).toString());
 //        System.out.println(Arrays.asList(param)); // method 1
     }
+    
+    private void Seticon() {
+       setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Icon/gif/16x16/dktbig.gif")));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField cr;
-    private javax.swing.JTextField cr1;
-    private javax.swing.JTextField cr2;
     private javax.swing.JTextField cr3;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox<String> ktg;
-    private javax.swing.JComboBox<String> ktg1;
-    private javax.swing.JComboBox<String> ktg2;
     private javax.swing.JComboBox<String> ktgz;
     private javax.swing.JTable tbl;
     // End of variables declaration//GEN-END:variables
