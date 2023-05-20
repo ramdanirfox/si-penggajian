@@ -4,6 +4,8 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL Adapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -14,6 +16,9 @@
 			<style backcolor="#E6DAC3"/>
 		</conditionalStyle>
 	</style>
+	<parameter name="TGL_FILTER" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      penggajian.`gajiID` AS penggajian_gajiID,
@@ -27,7 +32,8 @@
      penggajian.`potongan` AS penggajian_potongan,
      penggajian.`gaji_bersih` AS penggajian_gaji_bersih
 FROM
-     `penggajian` penggajian]]>
+     `penggajian` penggajian
+WHERE penggajian.tgl like '%$P!{TGL_FILTER}%']]>
 	</queryString>
 	<field name="penggajian_gajiID" class="java.lang.Integer"/>
 	<field name="penggajian_tgl" class="java.sql.Date"/>
@@ -143,7 +149,7 @@ FROM
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="15" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="195ef2bd-9bfd-4ff5-91d7-fa1cf551dce8"/>
 				<textField isStretchWithOverflow="true" pattern="dd MMMMM yyyy">

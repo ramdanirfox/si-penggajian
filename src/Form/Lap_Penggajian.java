@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.io.File;
 import koneksiDB.koneksi;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.*;
 import javax.swing.JOptionPane;
@@ -55,8 +56,16 @@ public class Lap_Penggajian extends javax.swing.JFrame {
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
         try{
+            String paramTgl = "";
+            if (tgl.getDate() != null) {
+               String tampilan ="yyyy-MM" ; 
+               SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
+               String vTglCuti = String.valueOf(fm.format(tgl.getDate()));
+               paramTgl = vTglCuti;
+               System.out.println(vTglCuti);
+            }
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM penggajian";
+            String sql = "SELECT * FROM penggajian WHERE tgl like '%"+paramTgl+"%'";
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
                 Object[] obj = new Object[10];
@@ -91,6 +100,8 @@ public class Lap_Penggajian extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tgl = new com.toedter.calendar.JDateChooser();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -128,6 +139,20 @@ public class Lap_Penggajian extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Laporan Data Penggajian");
 
+        jButton2.setText("Reset");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Cari");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,10 +171,16 @@ public class Lap_Penggajian extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(308, 308, 308)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                            .addComponent(tgl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tgl, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addGap(189, 189, 189))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,8 +191,14 @@ public class Lap_Penggajian extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton2)
+                        .addComponent(jButton3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -175,10 +212,20 @@ public class Lap_Penggajian extends javax.swing.JFrame {
     }//GEN-LAST:event_tblMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String paramTgl = "";
+        if (tgl.getDate() != null) {
+           String tampilan ="yyyy-MM" ; 
+           SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
+           String vTglCuti = String.valueOf(fm.format(tgl.getDate()));
+           paramTgl = vTglCuti;
+           System.out.println(vTglCuti);
+        }
+        param.put("TGL_FILTER", paramTgl);
+        
         try{
             File reprt = new File("src/Form/report2.jrxml");
             jasperDesign = JRXmlLoader.load(reprt);
-            param.clear();
+//            param.clear();
             jasperReport = JasperCompileManager.compileReport(jasperDesign);
             jasperPrint = JasperFillManager.fillReport(jasperReport,param,koneksi.getKoneksi());
             JasperViewer.viewReport(jasperPrint,false);
@@ -187,6 +234,31 @@ public class Lap_Penggajian extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        tgl.setDate(null);
+//        String tampilan ="yyyy-MM" ; 
+//        SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
+//        String vTglCuti = String.valueOf(fm.format(tgl.getDate()));
+        if (tgl.getDate() != null) {
+           System.out.println("ada");    
+        }
+        else {
+            System.out.println(" ga ada");    
+        }
+        System.out.println(tgl.getDate());
+        getData();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String tampilan ="yyyy-MM" ; 
+        SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
+        String vTglCuti = String.valueOf(fm.format(tgl.getDate()));
+        System.out.println(vTglCuti);
+        getData();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -225,6 +297,8 @@ public class Lap_Penggajian extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

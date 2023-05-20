@@ -1,4 +1,4 @@
-/*
+/*  
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -17,7 +17,7 @@ public class Form_Lembur extends javax.swing.JFrame {
     private DefaultTableModel model;
     String vNm,vJbt,vGol;
     int vJj,vGj,vTot,vId;
-    String karId;
+    public String idKry;
     
     private static Statement st;
     /**
@@ -73,7 +73,7 @@ public class Form_Lembur extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, err.getMessage());
         }
     }
-    public String nmKry, jbtKry, golKry, idKry;
+    public String nmKry, jbtKry, golKry;
  
     public String getnmKry() {
         return nmKry;
@@ -92,7 +92,6 @@ public class Form_Lembur extends javax.swing.JFrame {
         vGol = gol.getText();
         vJj = Integer.parseInt(jj.getText());
         vGj = Integer.parseInt(gj.getText());
-        karId = karId;
         vTot = vGj * vJj;
     }
     public void save(){
@@ -100,7 +99,7 @@ public class Form_Lembur extends javax.swing.JFrame {
         try{
         st = (Statement)koneksi.getKoneksi().createStatement();
         String sql = "Insert into lembur(nama,jabatan,golongan,jml_jam,gaji_perjam,total, karyawanID)"
-                +"values('"+vNm+"','"+vJbt+"','"+vGol+"','"+vJj+"','"+vGj+"','"+vTot+"','"+karId+"')";
+                +"values('"+vNm+"','"+vJbt+"','"+vGol+"','"+vJj+"','"+vGj+"','"+vTot+"','"+idKry+"')";
         System.out.println(sql);
         PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
         p.executeUpdate(sql);
