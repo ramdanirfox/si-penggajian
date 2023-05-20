@@ -96,6 +96,7 @@ public class Form_Utama extends javax.swing.JFrame {
         lapSlipGaji2 = new javax.swing.JButton();
         lapSlipGaji3 = new javax.swing.JButton();
         lapSlipGaji4 = new javax.swing.JButton();
+        lapSlipGaji5 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         user = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
@@ -111,6 +112,7 @@ public class Form_Utama extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         mLaporan = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
         lKaryawan = new javax.swing.JMenuItem();
         lPenggajian = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -424,6 +426,22 @@ public class Form_Utama extends javax.swing.JFrame {
             }
         });
 
+        lapSlipGaji5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lapSlipGaji5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/icons8-print-30.png"))); // NOI18N
+        lapSlipGaji5.setText("Cetak Lap. Cuti");
+        lapSlipGaji5.setToolTipText("Masuk");
+        lapSlipGaji5.setAutoscrolls(true);
+        lapSlipGaji5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lapSlipGaji5.setHideActionText(true);
+        lapSlipGaji5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lapSlipGaji5.setMaximumSize(new java.awt.Dimension(72, 23));
+        lapSlipGaji5.setName(""); // NOI18N
+        lapSlipGaji5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lapSlipGaji5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -435,7 +453,8 @@ public class Form_Utama extends javax.swing.JFrame {
                     .addComponent(lapSlipGaji2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lapSlipGaji, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lapSlipGaji3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lapSlipGaji4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lapSlipGaji4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lapSlipGaji5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(43, 43, 43))
         );
         jPanel2Layout.setVerticalGroup(
@@ -451,6 +470,8 @@ public class Form_Utama extends javax.swing.JFrame {
                 .addComponent(lapSlipGaji3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lapSlipGaji4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lapSlipGaji5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -642,6 +663,14 @@ public class Form_Utama extends javax.swing.JFrame {
                 mLaporanMouseExited(evt);
             }
         });
+
+        jMenuItem8.setText("Cetak Slip Gaji");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        mLaporan.add(jMenuItem8);
 
         lKaryawan.setText("Laporan Karyawan");
         lKaryawan.addActionListener(new java.awt.event.ActionListener() {
@@ -940,6 +969,16 @@ public class Form_Utama extends javax.swing.JFrame {
         new Lap_Kehadiran().setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+                new Lap_SlipGaji().setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void lapSlipGaji5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lapSlipGaji5ActionPerformed
+        // TODO add your handling code here:
+        new Lap_Cuti().setVisible(true);
+    }//GEN-LAST:event_lapSlipGaji5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1002,6 +1041,7 @@ public class Form_Utama extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1012,6 +1052,7 @@ public class Form_Utama extends javax.swing.JFrame {
     private javax.swing.JButton lapSlipGaji2;
     private javax.swing.JButton lapSlipGaji3;
     private javax.swing.JButton lapSlipGaji4;
+    private javax.swing.JButton lapSlipGaji5;
     private javax.swing.JMenu mData;
     private javax.swing.JMenu mLaporan;
     private javax.swing.JMenuBar mUtama;
