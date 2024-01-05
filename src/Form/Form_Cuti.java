@@ -54,9 +54,9 @@ private DefaultTableModel model;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
-        getData();
         isiKaryawan();
         perbaruiID();
+        getData();
     }
     public String idKry;
  
@@ -71,7 +71,8 @@ private DefaultTableModel model;
         String cariitem = cr.getText();
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT cutiID, k.karyawanID, alasan, tgl_cuti, tgl_masuk, k.nama FROM cuti c LEFT JOIN karyawan k ON c.karyawanID = k.karyawanID where cutiID like '%" + cariitem + "%' or k.karyawanID like '%" + cariitem + "%' order by cutiID asc";
+            String sql = "SELECT cutiID, k.karyawanID, alasan, tgl_cuti, tgl_masuk, k.nama FROM cuti c LEFT JOIN karyawan k ON c.karyawanID = k.karyawanID where k.karyawanID = " + idKry + " AND "+
+                    " ( cutiID like '%" + cariitem + "%' or alasan like '%" + cariitem + "%' or tgl_cuti like '%"+cariitem+"%' or tgl_masuk like '%"+cariitem+"%' ) order by cutiID asc";
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
                 Object[] obj = new Object[6];
@@ -131,6 +132,7 @@ private DefaultTableModel model;
         SimpleDateFormat fm = new SimpleDateFormat(tampilan);
         vTglCuti = String.valueOf(fm.format(tgl_cuti.getDate()));
         vTglMasuk = String.valueOf(fm.format(tgl_masuk.getDate()));
+        perbaruiID();
     }
     public void save(){
         loadData();
