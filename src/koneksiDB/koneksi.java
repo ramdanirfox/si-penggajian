@@ -19,7 +19,7 @@ public class koneksi extends javax.swing.JFrame {
                pass = "";
         try{
             try {
-            Class.forName("com.mysql.jdbc.Driver");    
+            Class.forName("com.mysql.jdbc.Driver");
             }
             catch (Exception e) {
                JOptionPane.showMessageDialog(null, "Gagal Driver!" + e.getMessage());    

@@ -51,7 +51,7 @@ public class Lap_Penggajian extends javax.swing.JFrame {
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
         Seticon();
-        tgl.getDateEditor().setDateFormatString("YYYY-MM");
+        tgl.getDateEditor().setDateFormatString("yyyy-MM");
     }
     public void getData(){
         model.getDataVector().removeAllElements();

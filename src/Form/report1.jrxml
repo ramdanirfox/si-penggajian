@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 5.2.0  -->
+<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 5.5.2  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0c9f12a5-1f83-4ae8-b844-d88391f32b81">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -62,7 +62,7 @@ FROM
 		</groupFooter>
 	</group>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="34" splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="136" splitType="Stretch">
@@ -176,31 +176,26 @@ FROM
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="25" splitType="Stretch">
-			<frame>
-				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="bc7ac04c-7bf6-4036-b1b5-a76e2209b128"/>
-				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="0e4c5546-023f-4f97-b5e0-27c3a862ef38"/>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="a077aa45-596c-4197-9b76-0e1ad177855c"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-				</textField>
-				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="834ebb46-520a-4838-a78e-b507ef79ee56"/>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-				</textField>
-			</frame>
+		<band height="129" splitType="Stretch">
+			<staticText>
+				<reportElement x="616" y="10" width="45" height="20" uuid="8845bd86-caf1-4a86-92ab-5b5512239314"/>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="656" y="10" width="142" height="20" uuid="719ac918-5f95-4dbd-b376-1e73af2039c4"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id", "ID")).format(new java.util.Date());]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="655" y="79" width="70" height="20" uuid="a40797dc-140c-458a-a590-b43d2f9af7ab"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[(Shanti Dewi)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="645" y="99" width="90" height="20" uuid="d3ce6c52-233b-414a-9f8d-7bead276a104"/>
+				<text><![CDATA[Manajer Personalia]]></text>
+			</staticText>
 		</band>
 	</pageFooter>
 	<summary>

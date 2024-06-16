@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 5.2.0  -->
+<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 5.5.2  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Slip Gaji" pageWidth="595" pageHeight="845" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL Adapter"/>
 	<property name="com.jaspersoft.studio.report.description" value=""/>
@@ -260,13 +260,32 @@ FROM
 		</band>
 	</detail>
 	<lastPageFooter>
-		<band height="256">
+		<band height="250">
 			<line>
 				<reportElement x="1" y="126" width="556" height="1" uuid="4800c4c6-b3d5-4341-9073-76bb2a70ead9">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
+			<staticText>
+				<reportElement x="375" y="140" width="45" height="20" uuid="5cdca96d-4e8d-4da3-b952-69b0ac5a0264"/>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="415" y="140" width="142" height="20" uuid="fc0128a6-1cdc-4f46-a6fa-5a5b1e68ff9a"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id", "ID")).format(new java.util.Date());]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="414" y="209" width="70" height="20" uuid="c1b3b899-79a6-4fd2-902d-bc2aa1cad187"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[(Shanti Dewi)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="229" width="90" height="20" uuid="5cf1eb65-4f46-4a66-843e-934a5def409e"/>
+				<text><![CDATA[Manajer Personalia]]></text>
+			</staticText>
 		</band>
 	</lastPageFooter>
 </jasperReport>

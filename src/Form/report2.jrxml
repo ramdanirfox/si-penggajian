@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 5.2.0  -->
+<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 5.5.2  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f5baeebc-9674-449f-8277-efabbb578d20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -202,31 +202,26 @@ WHERE penggajian.tgl like '%$P!{TGL_FILTER}%']]>
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="25" splitType="Stretch">
-			<frame>
-				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="0771c5ff-b81f-47bc-9d36-d44b2f18d23b"/>
-				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="4f42025d-5425-4bf2-aa48-1981910b51cf"/>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="f8f86bc7-325f-4e36-9f0c-28a83ef3d0a9"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-				</textField>
-				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="f00b0f7f-fcf2-4bed-9a9c-4c7fba26c290"/>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-				</textField>
-			</frame>
+		<band height="119" splitType="Stretch">
+			<staticText>
+				<reportElement x="655" y="79" width="70" height="20" uuid="8bf50b53-23ff-41f5-9e7f-69f49afa0b60"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[(Shanti Dewi)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="645" y="99" width="90" height="20" uuid="313f0ff7-0777-4ccb-b801-4ec2a7275a4d"/>
+				<text><![CDATA[Manajer Personalia]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="656" y="10" width="142" height="20" uuid="fda4069d-0d86-47b1-92ad-6578f48f25f4"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id", "ID")).format(new java.util.Date());]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="616" y="10" width="45" height="20" uuid="e5141679-8357-407e-b7fc-8fbf2eb8909a"/>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
 		</band>
 	</pageFooter>
 	<summary>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 5.2.0  -->
+<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 5.5.2  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Slip Gaji" pageWidth="595" pageHeight="845" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL Adapter"/>
 	<property name="com.jaspersoft.studio.report.description" value=""/>
@@ -372,4 +372,27 @@ FROM
 	<detail>
 		<band height="20"/>
 	</detail>
+	<pageFooter>
+		<band height="124">
+			<staticText>
+				<reportElement x="375" y="10" width="45" height="20" uuid="a31ac4f9-fd9d-482a-b91a-b7d7a4fdbbe1"/>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="415" y="10" width="142" height="20" uuid="bc3206d0-a549-4964-92e4-2fabfb506955"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id", "ID")).format(new java.util.Date());]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="414" y="79" width="70" height="20" uuid="8f7c423c-52db-4060-bc67-4d3de8f7b227"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[(Shanti Dewi)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="99" width="90" height="20" uuid="87cdc881-6c02-4eab-96d2-a991777936fe"/>
+				<text><![CDATA[Manajer Personalia]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
 </jasperReport>
