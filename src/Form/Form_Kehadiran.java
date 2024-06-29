@@ -4,6 +4,8 @@
  */
 package Form;
 
+import com.github.lgooddatepicker.components.TimePickerSettings;
+import com.github.lgooddatepicker.components.TimePickerSettings.TimeIncrement;
 import com.github.lgooddatepicker.optionalusertools.DateTimeChangeListener;
 import com.github.lgooddatepicker.zinternaltools.DateTimeChangeEvent;
 import java.awt.Dimension;
@@ -33,10 +35,12 @@ public class Form_Kehadiran extends javax.swing.JFrame {
 private DefaultTableModel model;
 String vNm,vwktM,vtglM,vwktP,vtglP;
 private static Statement st;
+private TimePickerSettings lgoodTimePickerSetting;
     /**
      * Creates new form Form_Kehadiran
      */
     public Form_Kehadiran() {
+        initSetting();
         initComponents();
         model = new DefaultTableModel();
        tbl.setModel(model);
@@ -87,8 +91,8 @@ private static Statement st;
         bdelete = new javax.swing.JButton();
         bexit = new javax.swing.JButton();
         breset = new javax.swing.JButton();
-        jamMasuk2 = new com.github.lgooddatepicker.components.DateTimePicker();
-        jamPulang = new com.github.lgooddatepicker.components.DateTimePicker();
+        jamMasuk2 = new com.github.lgooddatepicker.components.DateTimePicker(null, lgoodTimePickerSetting);
+        jamPulang = new com.github.lgooddatepicker.components.DateTimePicker(null, lgoodTimePickerSetting);
         jLabel2 = new javax.swing.JLabel();
         bSekarangMasuk = new javax.swing.JButton();
         bSekarangPulang = new javax.swing.JButton();
@@ -236,7 +240,7 @@ private static Statement st;
                                 .addComponent(jamPulang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bSekarangPulang)))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jamMasukLayout.setVerticalGroup(
             jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -460,6 +464,12 @@ bsave.setEnabled(true);
         });
     }
     
+    private void initSetting() {
+        lgoodTimePickerSetting = new TimePickerSettings();
+        lgoodTimePickerSetting.use24HourClockFormat();
+        lgoodTimePickerSetting.generatePotentialMenuTimes(TimeIncrement.FifteenMinutes, null, null);
+    }
+    
     private void initListener() {
     jamPulang.addDateTimeChangeListener(new DateTimeChangeListener() {
             public void dateOrTimeChanged(DateTimeChangeEvent event) {
@@ -542,8 +552,11 @@ bsave.setEnabled(true);
             return;
         }
         fidkaryawan.setText(""+model.getValueAt(i, 0));
-        this.jamMasuk2.setDateTimeStrict(LocalDateTime.now());
-        this.jamPulang.setDateTimeStrict(LocalDateTime.now());
+        DateTimeFormatter p = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+        LocalDateTime a = LocalDateTime.parse((CharSequence)model.getValueAt(i, 1), p);
+        LocalDateTime b = LocalDateTime.parse((CharSequence)model.getValueAt(i, 2), p);
+        this.jamMasuk2.setDateTimeStrict(a);
+        this.jamPulang.setDateTimeStrict(b);
 
           
     }
