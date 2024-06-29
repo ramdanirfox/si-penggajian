@@ -9,6 +9,7 @@ import koneksiDB.koneksi;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.Arrays;
 /**
  *
  * @author ramdanirfox
@@ -56,7 +57,7 @@ public class Form_User extends javax.swing.JFrame {
     }
     public void loadData(){
         vUser = user.getText();
-        vPass = pass.getSelectedText();
+        vPass = String.copyValueOf(pass.getPassword());
     }
     public void save(){
         loadData();
@@ -116,15 +117,17 @@ public class Form_User extends javax.swing.JFrame {
         if(psn == JOptionPane.OK_OPTION){
             try{
                 st = (Statement) koneksi.getKoneksi().createStatement();
-                String sql = "Delete From user Where noID='"+vId+"'";
-                PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareCall(sql);
+                String sql = "Delete From user Where noID=?";
+                System.out.println(sql);
+                PreparedStatement p =(PreparedStatement) koneksi.getKoneksi().prepareStatement(sql);
+                p.setInt(1, vId);
                 p.executeUpdate();
                 getData();
                 reset();
                 user.requestFocus();
                 JOptionPane.showMessageDialog(null, "Data Berhasil DiHapus");
             }catch(SQLException err){
-                JOptionPane.showMessageDialog(null, "Data Gagal DiHapus!");
+                JOptionPane.showMessageDialog(null, "Data Gagal DiHapus! : " + err);
                 reset();
             }
         }
