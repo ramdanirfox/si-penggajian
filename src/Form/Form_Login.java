@@ -210,11 +210,11 @@ public class Form_Login extends javax.swing.JFrame {
             if (rsLogin.getRow() == 1) {
                 String id = rsLogin.getString(1);
                 String nama = rsLogin.getString(2);
-                String golongan = rsLogin.getString(4);
-                Penggajian_Karyawan.setUserInfo(id, nama);
+                String jabatan = rsLogin.getString(4);
+                Penggajian_Karyawan.setUserInfo(id, nama, jabatan);
                 JOptionPane.showMessageDialog(null, "Login Berhasil!");
-                System.out.println(golongan+ nama+ id);
-                if (golongan.equals("Karyawan") || golongan.equals("Staff IT")) {
+                System.out.println(jabatan+ nama+ id);
+                if (jabatan.equals("Karyawan") || jabatan.equals("Staff IT")) {
                     new Form_Utama_Karyawan().setVisible(true);
                     this.dispose();
                 }

@@ -3,11 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Form;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 import koneksiDB.koneksi;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.*;
 import javax.swing.JOptionPane;
@@ -16,6 +18,7 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.*;
+
 /**
  *
  * @author RFox
@@ -28,7 +31,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
     Map param = new HashMap();
     private DefaultTableModel model;
     private static Statement st;
-    
+
     /**
      * Creates new form Lap_SlipGaji
      */
@@ -47,20 +50,20 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
         getData();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
-        setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);        
+        setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
         loadParam();
     }
-    
-    public void getData(){
+
+    public void getData() {
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
         String k = (String) ktgz.getSelectedItem();
         String c = cr3.getText();
-        try{
+        try {
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM karyawan WHERE "+k+" like '%"+c+"%'";
+            String sql = "SELECT * FROM karyawan WHERE " + k + " like '%" + c + "%'";
             ResultSet res = st.executeQuery(sql);
-            while(res.next()){
+            while (res.next()) {
                 Object[] obj = new Object[8];
                 obj[0] = res.getString("karyawanID");
                 obj[1] = res.getString("nama");
@@ -72,8 +75,8 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
                 obj[7] = res.getString("golongan");
                 model.addRow(obj);
             }
-        }catch(SQLException err){
-                JOptionPane.showMessageDialog(null, err.getMessage());
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, err.getMessage());
         }
     }
 
@@ -248,22 +251,22 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try{
-            
+        try {
+
             File reprt = new File("src/Form/RekapHadir.jrxml");
             jasperDesign = JRXmlLoader.load(reprt);
 //            param.clear();
             jasperReport = JasperCompileManager.compileReport(jasperDesign);
-            jasperPrint = JasperFillManager.fillReport(jasperReport,param,koneksi.getKoneksi());
-            JasperViewer.viewReport(jasperPrint,false);
+            jasperPrint = JasperFillManager.fillReport(jasperReport, param, koneksi.getKoneksi());
+            JasperViewer.viewReport(jasperPrint, false);
             JasperPrintManager.printReport(jasperPrint, true);
-        }catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       int konf = JOptionPane.showConfirmDialog(null, "Yakin Ingin menutup Form?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        int konf = JOptionPane.showConfirmDialog(null, "Yakin Ingin menutup Form?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
         if (konf == JOptionPane.YES_OPTION) {
             this.dispose();
         }
@@ -280,7 +283,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
         param.put("PKARYAWANID", tbl.getValueAt(tabelKry, 0).toString());
         param.put("PNAMA", tbl.getValueAt(tabelKry, 1).toString());
         param.put("PJABATAN", tbl.getValueAt(tabelKry, 6).toString());
-        param.put("PTANGGAL", (new java.util.Date()).toString());
+        param.put("PTANGGAL", new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id", "ID")).format(new java.util.Date()));
         System.out.println(Arrays.asList(param)); // method 1
     }//GEN-LAST:event_tblMouseClicked
 
@@ -334,7 +337,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void loadParam() {
 //        param.put("PKARYAWANID", "5");
 //        param.put("PNAMA", "Ramdani");

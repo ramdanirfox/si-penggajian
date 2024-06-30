@@ -20,7 +20,7 @@ import java.awt.*;
  */
 public class Form_Penggajian extends javax.swing.JFrame {
     private DefaultTableModel model;
-    String vNm,vTgl,vJbt,vGol;
+    String vNm,vTgl,vTglBln,vJbt,vGol;
     int vId,vGp,vGl,vT,vP,vGb;
     private static Statement st;
     /**
@@ -51,6 +51,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
         Seticon();
+//        addListener();
     }
     public String nmKry, jbtKry, golKry;
     public int lmb;
@@ -219,6 +220,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
         jbt.setText(jbtKry);
         gol.setText(golKry);
         gl.setText(String.valueOf(lmb));
+        queryLembur();
         queryPotongan();
         queryTunjangan();
     }
@@ -683,10 +685,30 @@ public class Form_Penggajian extends javax.swing.JFrame {
         });
     }
     
+    private void queryLembur() {
+      try{
+            st = (Statement) koneksi.getKoneksi().createStatement();
+            String sql = "SELECT date_format(tanggal_lembur, '%Y-%m') AS tglbulan, SUM(total) as total_lembur FROM lembur l WHERE karyawanID = " + vId + " GROUP BY tglbulan";
+            System.out.println(sql);
+//            String sql = "SELECT SUM(jumlah) as jum FROM potongan t INNER JOIN karyawan k ON k.karyawanID = t.potonganID  WHERE nama = '" + nmKry + "'";
+            ResultSet res = st.executeQuery(sql);
+            while(res.next()){
+                Object[] obj = new Object[1];
+                obj[0] = res.getString("total_lembur");
+//                model.addRow(obj);
+                gl.setText(res.getString("total_lembur"));
+            }
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, err.getMessage());
+        }
+    }
+    
+//    SELECT date_format(tanggal_lembur, '%Y-%m') AS tglbulan, SUM(total) as total_lembur FROM lembur l WHERE karyawanID = 4 GROUP BY tglbulan
+    
     private void queryPotongan() {
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT SUM(jumlah) as jum FROM potongan t INNER JOIN karyawan k ON k.karyawanID = t.potonganID  WHERE nama = '" + nmKry + "'";
+            String sql = "SELECT SUM(jumlah) as jum FROM potongan t INNER JOIN karyawan k ON k.karyawanID = t.karyawanID WHERE nama = '" + nmKry + "'";
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
                 Object[] obj = new Object[1];
@@ -702,7 +724,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
     private void queryTunjangan() {
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT SUM(jumlah) as jum FROM tunjangan t INNER JOIN karyawan k ON k.karyawanID = t.tunjanganID WHERE nama = '" + nmKry + "'";
+            String sql = "SELECT SUM(jumlah) as jum FROM tunjangan t INNER JOIN karyawan k ON k.karyawanID = t.karyawanID WHERE nama = '" + nmKry + "'";
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
                 Object[] obj = new Object[1];
@@ -714,6 +736,12 @@ public class Form_Penggajian extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, err.getMessage());
         }
     }
+    
+//   private updateTglBln() {
+//        vNm = tg.getDate();
+//        String tampilan ="yyyy-MM-" ; 
+//        SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
+//   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cr;

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Form;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
@@ -23,12 +24,14 @@ import net.sf.jasperreports.view.*;
  * @author ramdanirfox
  */
 public class Lap_Karyawan extends javax.swing.JFrame {
+
     JasperReport jasperReport;
     JasperDesign jasperDesign;
     JasperPrint jasperPrint;
     Map param = new HashMap();
     private DefaultTableModel model;
     private static Statement st;
+
     /**
      * Creates new form Lap
      */
@@ -47,17 +50,18 @@ public class Lap_Karyawan extends javax.swing.JFrame {
         getData();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
-        setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
+        setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
         Seticon();
     }
-    public void getData(){
+
+    public void getData() {
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
-        try{
+        try {
             st = (Statement) koneksi.getKoneksi().createStatement();
             String sql = "SELECT * FROM karyawan";
             ResultSet res = st.executeQuery(sql);
-            while(res.next()){
+            while (res.next()) {
                 Object[] obj = new Object[8];
                 obj[0] = res.getString("karyawanID");
                 obj[1] = res.getString("nama");
@@ -67,13 +71,14 @@ public class Lap_Karyawan extends javax.swing.JFrame {
                 obj[5] = res.getString("noHP");
                 obj[6] = res.getString("jabatan");
                 obj[7] = res.getString("golongan");
-                
+
                 model.addRow(obj);
             }
-        }catch(SQLException err){
-                JOptionPane.showMessageDialog(null, err.getMessage());
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, err.getMessage());
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -164,15 +169,15 @@ public class Lap_Karyawan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try{
+        try {
             File reprt = new File("src/Form/report1.jrxml");
             jasperDesign = JRXmlLoader.load(reprt);
             param.clear();
             jasperReport = JasperCompileManager.compileReport(jasperDesign);
-            jasperPrint = JasperFillManager.fillReport(jasperReport,param,koneksi.getKoneksi());
-            JasperViewer.viewReport(jasperPrint,false);
+            jasperPrint = JasperFillManager.fillReport(jasperReport, param, koneksi.getKoneksi());
+            JasperViewer.viewReport(jasperPrint, false);
             JasperPrintManager.printReport(jasperPrint, true);
-        }catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -184,7 +189,7 @@ public class Lap_Karyawan extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]){
+    public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -224,7 +229,7 @@ public class Lap_Karyawan extends javax.swing.JFrame {
     private javax.swing.JTable tbl;
     // End of variables declaration//GEN-END:variables
 
-  private void Seticon() {
-       setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Icon/gif/16x16/dktbig.gif")));
+    private void Seticon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Icon/gif/16x16/dktbig.gif")));
     }
 }

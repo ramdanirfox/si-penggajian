@@ -92,7 +92,7 @@ public class Form_Karyawan extends javax.swing.JFrame {
     }
     public void save(){
         loadData();
-        int generatedId = saveUserInfo();
+        int generatedId = saveUserInfo(-1);
         
         if (generatedId != -1) {
             try{
@@ -116,32 +116,67 @@ public class Form_Karyawan extends javax.swing.JFrame {
         
     }
     
-    private int saveUserInfo() {
+    private int saveUserInfo(int id) {
         try{
             st = (Statement)koneksi.getKoneksi().createStatement();
             String sql = "Insert into user(username,password)"
                     +"values('"+vUser+"','"+vPass+"')";
+            if (id > -1) {
+                sql = "Insert into user(noID,username,password)"
+                    +"values("+id+",'"+vUser+"','"+vPass+"')";
+            }
             PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
             p.executeUpdate(sql);
-                try{
-                    st = (Statement) koneksi.getKoneksi().createStatement();
-                    String sql2 = "SELECT * FROM user WHERE username = '" + vUser + "'";
-                    ResultSet res = st.executeQuery(sql2);
-                    Object[] obj = new Object[3];
-                    while(res.next()){
-                        obj[0] = res.getInt("noID");
-                        obj[1] = res.getString("username");
-                        obj[2] = res.getString("password");
-                    } 
-                    return (int)obj[0];
-                }catch(SQLException err){
-                    JOptionPane.showMessageDialog(null, "Gagal mengecek info akun : " + err.getMessage());
-                }
+            return getUserId(vUser, "username");
         }catch(SQLException err){
             JOptionPane.showMessageDialog(null, "User Gagal DiSimpan! : " + err.getMessage());
             reset();
         }
         return -1;
+    }
+    
+    private int updateUserInfo(int id) {
+        try{
+            st = (Statement)koneksi.getKoneksi().createStatement();
+            String sql = "Insert into user(username,password)"
+                    +"values('"+vUser+"','"+vPass+"')";
+            if (id > -1) {
+                sql = "Insert into user(noID,username,password)"
+                    +"values("+id+",'"+vUser+"','"+vPass+"')";
+            }
+            PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
+            p.executeUpdate(sql);
+            return getUserId(vUser, "username");
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, "User Gagal DiSimpan! : " + err.getMessage());
+            reset();
+        }
+        return 0;
+    }
+    
+    private int getUserId(String pName, String fName) {
+        try{
+            st = (Statement) koneksi.getKoneksi().createStatement();
+            String sql2 = "SELECT * FROM user WHERE " + fName + " = '" + pName + "'";
+            if (fName.equals("noID")) {
+                sql2 = "SELECT * FROM user WHERE " + fName + " = " + pName + "";
+            }
+            ResultSet res = st.executeQuery(sql2);
+            Object[] obj = new Object[3];
+            int cnt = 0;
+            while(res.next()){
+                obj[0] = res.getInt("noID");
+                obj[1] = res.getString("username");
+                obj[2] = res.getString("password");
+                cnt++;
+            } 
+            if (cnt > 0) { return (int)obj[0]; }
+            else { return -1; }
+            
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, "Gagal mengecek info akun : " + err.getMessage());
+            return -1;
+        }
     }
     
     public void reset(){
@@ -188,6 +223,7 @@ public class Form_Karyawan extends javax.swing.JFrame {
         jbt.setSelectedItem(""+model.getValueAt(i, 6));
         gol.setSelectedItem(""+model.getValueAt(i, 7));
         vId = Integer.valueOf(""+model.getValueAt(i, 0));
+        System.out.println(vId);
         selectUserInfo(vId);
     }
     
@@ -222,6 +258,13 @@ public class Form_Karyawan extends javax.swing.JFrame {
                    + "golongan='"+vGol+"' where karyawanID='"+vId+"'";
         PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
         p.executeUpdate();
+        int uID = getUserId(vId + "", "noID");
+        if (uID == -1) {
+            saveUserInfo(vId);
+        }
+        else {
+            
+        }
         getData();
         reset();
         nm.requestFocus();

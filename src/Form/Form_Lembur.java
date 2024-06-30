@@ -9,14 +9,15 @@ import koneksiDB.koneksi;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.text.SimpleDateFormat;
 /**
  *
  * @author ramdanirfox
  */
 public class Form_Lembur extends javax.swing.JFrame {
     private DefaultTableModel model;
-    String vNm,vJbt,vGol;
-    int vJj,vGj,vTot,vId;
+    String vNm,vJbt,vGol, vTgl;
+    int vJj,vGj,vTot,vId, kryId;
     public String idKry;
     
     private static Statement st;
@@ -34,6 +35,8 @@ public class Form_Lembur extends javax.swing.JFrame {
         model.addColumn("Jml Jam");
         model.addColumn("GajiPerJam");
         model.addColumn("Total");
+        model.addColumn("Tanggal Lembur");
+        model.addColumn("Karyawan ID");
         getData();
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
@@ -58,7 +61,7 @@ public class Form_Lembur extends javax.swing.JFrame {
             String sql = "SELECT * FROM lembur WHERE "+k+" like '%"+c+"%'";
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
-                Object[] obj = new Object[7];
+                Object[] obj = new Object[9];
                 obj[0] = res.getString("lemburID");
                 obj[1] = res.getString("nama");
                 obj[2] = res.getString("jabatan");
@@ -66,7 +69,8 @@ public class Form_Lembur extends javax.swing.JFrame {
                 obj[4] = res.getString("jml_jam");
                 obj[5] = res.getString("gaji_perjam");
                 obj[6] = res.getString("total");
-                
+                obj[7] = res.getString("tanggal_lembur");
+                obj[8] = res.getString("karyawanID");
                 model.addRow(obj);
             }
         }catch(SQLException err){
@@ -93,13 +97,17 @@ public class Form_Lembur extends javax.swing.JFrame {
         vJj = Integer.parseInt(jj.getText());
         vGj = Integer.parseInt(gj.getText());
         vTot = vGj * vJj;
+        String tampilan ="yyyy-MM-dd" ; 
+        SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
+        vTgl = String.valueOf(fm.format(tgl.getDate()));
+        System.out.println("Tgl" + vTgl);
     }
     public void save(){
         loadData();
         try{
         st = (Statement)koneksi.getKoneksi().createStatement();
-        String sql = "Insert into lembur(nama,jabatan,golongan,jml_jam,gaji_perjam,total, karyawanID)"
-                +"values('"+vNm+"','"+vJbt+"','"+vGol+"','"+vJj+"','"+vGj+"','"+vTot+"','"+idKry+"')";
+        String sql = "Insert into lembur(nama,jabatan,golongan,jml_jam,gaji_perjam,total, karyawanID, tanggal_lembur)"
+                +"values('"+vNm+"','"+vJbt+"','"+vGol+"','"+vJj+"','"+vGj+"','"+vTot+"',"+idKry+", '"+vTgl+"')";
         System.out.println(sql);
         PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
         p.executeUpdate(sql);
@@ -138,6 +146,14 @@ public class Form_Lembur extends javax.swing.JFrame {
         jj.setText(""+model.getValueAt(i, 4));
         gj.setText(""+model.getValueAt(i, 5));
         vId = Integer.valueOf(""+model.getValueAt(i, 0));
+        vTgl = (String)model.getValueAt(i, 7);
+        try {
+            tgl.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(vTgl));    
+        }
+        catch(Exception err) {
+            System.out.println("Error Proses Tanggal : " + err.getMessage());
+        }
+        
     }
     public void update(){
         loadData();
@@ -148,15 +164,18 @@ public class Form_Lembur extends javax.swing.JFrame {
                    + "golongan='"+vGol+"',"
                    + "jml_jam='"+vJj+"',"
                    + "gaji_perjam='"+vGj+"',"
+                   + "karyawanID="+idKry+","
+                   + "tanggal_lembur='"+vTgl+"',"
                    + "total='"+vTot+"' where lemburID='"+vId+"'";
         PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
         p.executeUpdate();
         getData();
         reset();
         nm.requestFocus();
+            System.out.println("SQL" + sql);
         JOptionPane.showMessageDialog(null, "Data Berhasil DiUpdate");
         }catch(SQLException err){
-            JOptionPane.showMessageDialog(null, "Data Gagal DiUpdate!");
+            JOptionPane.showMessageDialog(null, "Data Gagal DiUpdate!" + err.getMessage());
             reset();
         }
     }
@@ -223,6 +242,8 @@ public class Form_Lembur extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        tgl = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -268,7 +289,7 @@ public class Form_Lembur extends javax.swing.JFrame {
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,6 +401,8 @@ public class Form_Lembur extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("/ Jam");
 
+        jLabel9.setText("Tanggal Lembur");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -387,39 +410,46 @@ public class Form_Lembur extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(41, 41, 41)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(gol, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(41, 41, 41)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(gj, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel8))
+                                .addComponent(gol, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(nm, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton6))
-                            .addComponent(jbt, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jj, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(gj, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel8))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButton1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton4))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(nm, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton6))
+                                    .addComponent(jbt, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jj, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel7)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(tgl, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -430,7 +460,7 @@ public class Form_Lembur extends javax.swing.JFrame {
                     .addComponent(nm)
                     .addComponent(jLabel2)
                     .addComponent(jButton6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jbt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -438,7 +468,11 @@ public class Form_Lembur extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(gol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
@@ -454,7 +488,7 @@ public class Form_Lembur extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
-                .addContainerGap())
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -466,26 +500,26 @@ public class Form_Lembur extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(247, 247, 247)
                         .addComponent(jLabel1)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -534,6 +568,7 @@ public class Form_Lembur extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         Data_Search DS = new Data_Search();
         DS.fL = this;
+        System.out.println("ID Karyawan" + idKry);
         DS.setVisible(true);
         DS.setResizable(false);    
         jj.requestFocus();
@@ -600,6 +635,7 @@ public class Form_Lembur extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
@@ -608,6 +644,7 @@ public class Form_Lembur extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ktg;
     private javax.swing.JTextField nm;
     private javax.swing.JTable tbl;
+    private com.toedter.calendar.JDateChooser tgl;
     // End of variables declaration//GEN-END:variables
 
    private void Seticon() {

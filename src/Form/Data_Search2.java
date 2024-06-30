@@ -209,6 +209,7 @@ public class Data_Search2 extends javax.swing.JFrame {
         fP.nmKry = tbl.getValueAt(tabelKry, 1).toString();
         fP.jbtKry = tbl.getValueAt(tabelKry, 6).toString();
         fP.golKry = tbl.getValueAt(tabelKry, 7).toString();
+        fP.vId = Integer.valueOf(tbl.getValueAt(tabelKry, 0).toString());
         fP.itemTerpilih();
         this.dispose();
     }//GEN-LAST:event_tblMouseClicked

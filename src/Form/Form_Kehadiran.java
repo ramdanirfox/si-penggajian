@@ -49,6 +49,7 @@ private TimePickerSettings lgoodTimePickerSetting;
         model.addColumn("karyawanID");
         model.addColumn("jam_masuk");
         model.addColumn("jam_pulang");
+        model.addColumn("nama");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
@@ -59,6 +60,7 @@ private TimePickerSettings lgoodTimePickerSetting;
    
  
     public String idKry;
+    public String nmKry;
  
     public String getidKry() {
         return idKry;
@@ -67,8 +69,8 @@ private TimePickerSettings lgoodTimePickerSetting;
     
   public void itemTerpilih(){                              
         Data_Search1 DS = new Data_Search1();
-        DS.fK = this;
         fidkaryawan.setText(idKry);
+        fnamakaryawan.setText(nmKry);
         
     }
     /**
@@ -96,6 +98,8 @@ private TimePickerSettings lgoodTimePickerSetting;
         jLabel2 = new javax.swing.JLabel();
         bSekarangMasuk = new javax.swing.JButton();
         bSekarangPulang = new javax.swing.JButton();
+        fnamakaryawan = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -109,6 +113,8 @@ private TimePickerSettings lgoodTimePickerSetting;
         setResizable(false);
 
         jamMasuk.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        fidkaryawan.setEnabled(false);
 
         jLabel3.setText("ID Karyawan");
 
@@ -140,6 +146,7 @@ private TimePickerSettings lgoodTimePickerSetting;
         bupdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Modify.gif"))); // NOI18N
         bupdate.setText("Update");
         bupdate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bupdate.setPreferredSize(new java.awt.Dimension(0, 0));
         bupdate.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         bupdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -150,6 +157,7 @@ private TimePickerSettings lgoodTimePickerSetting;
         bdelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Delete.gif"))); // NOI18N
         bdelete.setText("Delete");
         bdelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bdelete.setPreferredSize(new java.awt.Dimension(0, 0));
         bdelete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         bdelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,34 +212,43 @@ private TimePickerSettings lgoodTimePickerSetting;
             }
         });
 
+        fnamakaryawan.setEnabled(false);
+
+        jLabel4.setText("Nama Karyawan");
+
         javax.swing.GroupLayout jamMasukLayout = new javax.swing.GroupLayout(jamMasuk);
         jamMasuk.setLayout(jamMasukLayout);
         jamMasukLayout.setHorizontalGroup(
             jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jamMasukLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jamMasukLayout.createSequentialGroup()
-                        .addComponent(bsave)
+                .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jamMasukLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(17, 17, 17)
+                        .addComponent(fnamakaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jamMasukLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(38, 38, 38)
+                        .addComponent(fidkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bupdate)
+                        .addComponent(jButton6))
+                    .addGroup(jamMasukLayout.createSequentialGroup()
+                        .addComponent(bsave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(breset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bdelete)
+                        .addComponent(bexit)
+                        .addGap(93, 93, 93)
+                        .addComponent(bupdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bexit))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jamMasukLayout.createSequentialGroup()
+                        .addComponent(bdelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jamMasukLayout.createSequentialGroup()
                         .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
                             .addComponent(jLabel5)
                             .addComponent(jLabel2))
-                        .addGap(38, 38, 38)
+                        .addGap(42, 42, 42)
                         .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jamMasukLayout.createSequentialGroup()
-                                .addComponent(fidkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton6))
                             .addGroup(jamMasukLayout.createSequentialGroup()
                                 .addComponent(jamMasuk2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -245,12 +262,16 @@ private TimePickerSettings lgoodTimePickerSetting;
         jamMasukLayout.setVerticalGroup(
             jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jamMasukLayout.createSequentialGroup()
-                .addGap(83, 83, 83)
+                .addGap(60, 60, 60)
                 .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fidkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jButton6))
-                .addGap(43, 43, 43)
+                .addGap(18, 18, 18)
+                .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fnamakaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(26, 26, 26)
                 .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jamMasuk2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -262,12 +283,13 @@ private TimePickerSettings lgoodTimePickerSetting;
                     .addComponent(bSekarangPulang))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(bsave, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(bupdate, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(bdelete)
-                        .addComponent(bexit))
-                    .addComponent(breset))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bsave, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(bdelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(breset, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(bupdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bexit, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(14, 14, 14))
         );
 
@@ -373,20 +395,6 @@ private TimePickerSettings lgoodTimePickerSetting;
                 save();
     }//GEN-LAST:event_bsaveActionPerformed
 
-    private void bupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bupdateActionPerformed
-        update();
-        bsave.setEnabled(true);
-        bupdate.setEnabled(false);
-bdelete.setEnabled(false);
-    }//GEN-LAST:event_bupdateActionPerformed
-
-    private void bdeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bdeleteActionPerformed
-         delete();
-bsave.setEnabled(true);
-     bupdate.setEnabled(false);
-        bdelete.setEnabled(false);
-    }//GEN-LAST:event_bdeleteActionPerformed
-
     private void bexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bexitActionPerformed
         int konf = JOptionPane.showConfirmDialog(null, "Yakin Ingin menutup Form?","Konfirmasi",JOptionPane.YES_NO_OPTION);
         if(konf == JOptionPane.YES_OPTION){
@@ -428,6 +436,20 @@ bsave.setEnabled(true);
         bupdate.setEnabled(true);
         bdelete.setEnabled(true);
     }//GEN-LAST:event_tblMouseClicked
+
+    private void bdeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bdeleteActionPerformed
+        delete();
+        bsave.setEnabled(true);
+        bupdate.setEnabled(false);
+        bdelete.setEnabled(false);
+    }//GEN-LAST:event_bdeleteActionPerformed
+
+    private void bupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bupdateActionPerformed
+        update();
+        bsave.setEnabled(true);
+        bupdate.setEnabled(false);
+        bdelete.setEnabled(false);
+    }//GEN-LAST:event_bupdateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -500,13 +522,15 @@ bsave.setEnabled(true);
         String cariitem = fcari.getText();
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM kehadiran where karyawanID like '%" + cariitem + "%' order by karyawanID asc";
+            String sql = "SELECT b.karyawanID, jam_masuk, jam_pulang, b.nama  FROM kehadiran a LEFT JOIN karyawan b ON a.karyawanID = b.karyawanID where a.karyawanID like '%" + cariitem + "%' order by karyawanID asc";
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
-                Object[] obj = new Object[3];
+                Object[] obj = new Object[4];
                 obj[0] = res.getString("karyawanID");
                 obj[1] = res.getString("jam_masuk");
                 obj[2] = res.getString("jam_pulang");
+                obj[3] = res.getString("nama");
+                System.out.println(obj[3]);
                 model.addRow(obj);
             }
         }catch(SQLException err){
@@ -609,11 +633,13 @@ bsave.setEnabled(true);
     private javax.swing.JButton bupdate;
     private javax.swing.JTextField fcari;
     private javax.swing.JTextField fidkaryawan;
+    private javax.swing.JTextField fnamakaryawan;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

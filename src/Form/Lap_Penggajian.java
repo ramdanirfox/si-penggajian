@@ -59,7 +59,7 @@ public class Lap_Penggajian extends javax.swing.JFrame {
         try{
             String paramTgl = "";
             if (tgl.getDate() != null) {
-               String tampilan ="yyyy-MM" ; 
+               String tampilan ="yyyy-MM"; 
                SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
                String vTglCuti = String.valueOf(fm.format(tgl.getDate()));
                paramTgl = vTglCuti;
