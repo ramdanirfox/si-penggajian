@@ -201,7 +201,7 @@ public class Form_Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            String sql = "SELECT * FROM user WHERE username = '" + user.getText() + "' AND password = '" + pass.getText() + "'";
+            String sql = "SELECT noID, username , password, jabatan FROM user b INNER JOIN karyawan a ON b.noID = a.karyawanID WHERE username = '" + user.getText() + "' AND password = '" + String.valueOf(pass.getPassword())+ "'";
             st = koneksi.getKoneksi().createStatement();
             ResultSet rsLogin = st.executeQuery(sql);
 
@@ -210,10 +210,19 @@ public class Form_Login extends javax.swing.JFrame {
             if (rsLogin.getRow() == 1) {
                 String id = rsLogin.getString(1);
                 String nama = rsLogin.getString(2);
+                String golongan = rsLogin.getString(4);
                 Penggajian_Karyawan.setUserInfo(id, nama);
                 JOptionPane.showMessageDialog(null, "Login Berhasil!");
-                new Form_Utama().setVisible(true);
-                this.dispose();
+                System.out.println(golongan+ nama+ id);
+                if (golongan.equals("Karyawan") || golongan.equals("Staff IT")) {
+                    new Form_Utama_Karyawan().setVisible(true);
+                    this.dispose();
+                }
+                else {
+                    new Form_Utama_Personalia().setVisible(true);
+                    this.dispose();
+                }
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Maaf, Username / Password salah!");
                 user.requestFocus();
