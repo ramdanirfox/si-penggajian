@@ -100,7 +100,7 @@ public class Form_Lembur extends javax.swing.JFrame {
         golKry = Penggajian_Karyawan.getGolongan();
         nm.setText(nmKry);
         jbt.setText(jbtKry);
-        gol.setText(golKry);       
+        gol.setText(golKry);
     }
     
     public void loadData(){

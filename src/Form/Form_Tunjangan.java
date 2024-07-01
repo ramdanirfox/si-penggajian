@@ -46,27 +46,55 @@ public class Form_Tunjangan extends javax.swing.JFrame {
         model.addColumn("jenis_tunjangan");
         model.addColumn("tanggal");
         model.addColumn("jumlah");
+        model.addColumn("nama");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
         Seticon();
         getData();
+        perbaruiID();
     }
+    
+      private void perbaruiID() {
+        try{
+          st = (Statement) koneksi.getKoneksi().createStatement();
+          String sql = "SELECT CONCAT('T-', LPAD(MAX(CAST(replace(tunjanganID, 'T-', '') AS INT) + 1), 4, '0')) AS AUTO_INCREMENT FROM tunjangan";
+          ResultSet res = st.executeQuery(sql);
+          while(res.next()){
+              Object[] obj = new Object[1];
+              obj[0] = res.getString("AUTO_INCREMENT");
+              String idBaru = (String)obj[0];
+              if (idBaru == null) {
+                tunjanganID.setText("T-0001");
+                vtunjanganID = "T-0001";
+              }
+              else {
+                tunjanganID.setText(idBaru);
+                vtunjanganID = idBaru;
+              }
+              
+          }
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, err.getMessage());
+        }
+  }
+    
     public void getData(){
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
        String cariitem = cr.getText();
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM tunjangan where tunjanganID like '%" + cariitem + "%' or karyawanID like '%" + cariitem + "%' order by tunjanganID asc";
+            String sql = "SELECT tunjanganID, k.karyawanID, jenis_tunjangan, tanggal, jumlah, k.nama FROM tunjangan t LEFT JOIN karyawan k ON t.karyawanID = k.karyawanID where tunjanganID like '%" + cariitem + "%' or k.nama like '%" + cariitem + "%' order by tunjanganID asc";
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
-                Object[] obj = new Object[5];
+                Object[] obj = new Object[6];
                 obj[0] = res.getString("tunjanganID");
                 obj[1] = res.getString("karyawanID");
                 obj[2] = res.getString("jenis_tunjangan");
                 obj[3] = res.getString("tanggal");
                 obj[4] = res.getString("jumlah");
+                obj[5] = res.getString("nama");
                 model.addRow(obj);
             }
         }catch(SQLException err){

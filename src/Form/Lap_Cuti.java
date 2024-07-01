@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.io.File;
 import koneksiDB.koneksi;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.*;
 import javax.swing.JOptionPane;
@@ -282,7 +283,7 @@ public class Lap_Cuti extends javax.swing.JFrame {
         param.put("PKARYAWANID", tbl.getValueAt(tabelKry, 0).toString());
         param.put("PNAMA", tbl.getValueAt(tabelKry, 1).toString());
         param.put("PJABATAN", tbl.getValueAt(tabelKry, 6).toString());
-        param.put("PTANGGAL", (new java.util.Date()).toString());
+        param.put("PTANGGAL", (new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id", "ID")).format(new java.util.Date())).toString());
         System.out.println(Arrays.asList(param)); // method 1
     }//GEN-LAST:event_tblMouseClicked
 

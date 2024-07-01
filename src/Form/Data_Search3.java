@@ -209,7 +209,8 @@ public class Data_Search3 extends javax.swing.JFrame {
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
         int tabelKry = tbl.getSelectedRow();
         fC.idKry = tbl.getValueAt(tabelKry,0).toString();
-       
+        fC.vkaryawanID = tbl.getValueAt(tabelKry,0).toString();
+        fC.vNama = tbl.getValueAt(tabelKry,1).toString();
         fC.itemTerpilih();
        
         this.dispose();
