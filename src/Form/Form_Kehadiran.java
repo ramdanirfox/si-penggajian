@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DateFormatter;
 import koneksiDB.koneksi;
+import penggajian_karyawan.Penggajian_Karyawan;
 
 /**
  *
@@ -56,6 +57,9 @@ private TimePickerSettings lgoodTimePickerSetting;
         Seticon();
         initListener();
         getData();
+        fidkaryawan.setEditable(false);
+        fnamakaryawan.setEditable(false);
+        isiKaryawan();
     }
    
  
@@ -66,12 +70,18 @@ private TimePickerSettings lgoodTimePickerSetting;
         return idKry;
     }
     
+    private void isiKaryawan() {
+    idKry = Penggajian_Karyawan.getUserId();
+    nmKry = Penggajian_Karyawan.getDisplayName();
+    fidkaryawan.setText(idKry);
+    fnamakaryawan.setText(nmKry);
+    }
+    
     
   public void itemTerpilih(){                              
         Data_Search1 DS = new Data_Search1();
         fidkaryawan.setText(idKry);
         fnamakaryawan.setText(nmKry);
-        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,8 +123,6 @@ private TimePickerSettings lgoodTimePickerSetting;
         setResizable(false);
 
         jamMasuk.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        fidkaryawan.setEnabled(false);
 
         jLabel3.setText("ID Karyawan");
 
@@ -211,8 +219,6 @@ private TimePickerSettings lgoodTimePickerSetting;
                 bSekarangPulangActionPerformed(evt);
             }
         });
-
-        fnamakaryawan.setEnabled(false);
 
         jLabel4.setText("Nama Karyawan");
 
@@ -507,9 +513,6 @@ private TimePickerSettings lgoodTimePickerSetting;
                 String wkt = jamMasuk2.getTimePicker().getText();
                 String tgl = jamMasuk2.getDatePicker().getText();
                 System.out.println("Tanggal terpilih datang " + tgl + " " + wkt );
-//                jamPulang.getDateTimeStrict().toString();
-//                jamPulang.setDateTimeStrict(null);
-//                jamPulang.setDateTimeStrict(LocalDateTime.parse("2020-02-03T05:03:05"));
             }
         });
     }
@@ -520,9 +523,9 @@ private TimePickerSettings lgoodTimePickerSetting;
         model.fireTableDataChanged();
         //String k = (String)ktg.getSelectedItem();
         String cariitem = fcari.getText();
-        try{
+        try {
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT b.karyawanID, jam_masuk, jam_pulang, b.nama  FROM kehadiran a LEFT JOIN karyawan b ON a.karyawanID = b.karyawanID where a.karyawanID like '%" + cariitem + "%' order by karyawanID asc";
+            String sql = "SELECT b.karyawanID, jam_masuk, jam_pulang, b.nama  FROM kehadiran a LEFT JOIN karyawan b ON a.karyawanID = b.karyawanID where b.nama like '%" + cariitem + "%' order by b.nama asc";
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
                 Object[] obj = new Object[4];
@@ -552,7 +555,6 @@ private TimePickerSettings lgoodTimePickerSetting;
         prepSql.setString(1, fidkaryawan.getText());
         prepSql.setString(2, jamMasuk2.getDateTimeStrict().format(DateTimeFormatter.ISO_DATE_TIME).replace("T", " "));
         prepSql.setString(3, jamPulang.getDateTimeStrict().format(DateTimeFormatter.ISO_DATE_TIME).replace("T", " "));
-//        System.out.println(prepSql.toString());
         prepSql.executeUpdate();
         getData();
         fnKosong();
@@ -564,7 +566,6 @@ private TimePickerSettings lgoodTimePickerSetting;
         }
     }
       private void fnKosong() {
-        fidkaryawan.setText("");
         fcari.setText("");
         jamPulang.setDateTimeStrict(null);
         jamMasuk2.setDateTimeStrict(null);

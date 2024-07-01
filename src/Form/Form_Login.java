@@ -201,7 +201,7 @@ public class Form_Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            String sql = "SELECT noID, username , password, jabatan FROM user b INNER JOIN karyawan a ON b.noID = a.karyawanID WHERE username = '" + user.getText() + "' AND password = '" + String.valueOf(pass.getPassword())+ "'";
+            String sql = "SELECT karyawanID, username , password, jabatan, nama, golongan FROM karyawan WHERE username = '" + user.getText() + "' AND password = '" + String.valueOf(pass.getPassword())+ "'";
             st = koneksi.getKoneksi().createStatement();
             ResultSet rsLogin = st.executeQuery(sql);
 
@@ -211,7 +211,9 @@ public class Form_Login extends javax.swing.JFrame {
                 String id = rsLogin.getString(1);
                 String nama = rsLogin.getString(2);
                 String jabatan = rsLogin.getString(4);
-                Penggajian_Karyawan.setUserInfo(id, nama, jabatan);
+                String namaDisplay = rsLogin.getString(5);
+                String golongan = rsLogin.getString(6);
+                Penggajian_Karyawan.setUserInfo(id, nama, namaDisplay, jabatan, golongan);
                 JOptionPane.showMessageDialog(null, "Login Berhasil!");
                 System.out.println(jabatan+ nama+ id);
                 if (jabatan.equals("Karyawan") || jabatan.equals("Staff IT")) {
@@ -228,6 +230,7 @@ public class Form_Login extends javax.swing.JFrame {
                 user.requestFocus();
             }
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Kesalahan Database : " + e.getMessage());
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed

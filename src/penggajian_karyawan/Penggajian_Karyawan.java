@@ -11,6 +11,9 @@ package penggajian_karyawan;
 public class Penggajian_Karyawan {
     private static String userId;
     private static String userName;
+    private static String nameDisplay;
+    private static String userJabatan;
+    private static String userGolongan;
     /**
      * @param args the command line arguments
      */
@@ -18,9 +21,12 @@ public class Penggajian_Karyawan {
         // TODO code application logic here
     }
     
-    public static void setUserInfo(String id, String name) {
+    public static void setUserInfo(String id, String username, String name, String jabatan, String golongan) {
         userId = id;
         userName = name;
+        nameDisplay = name;
+        userJabatan = jabatan;
+        userGolongan = golongan;
     }
     
     public static String getUserId() {
@@ -29,6 +35,18 @@ public class Penggajian_Karyawan {
     
     public static String getUsername() {
         return userName;
+    }
+    
+    public static String getDisplayName() {
+        return nameDisplay;
+    }
+    
+    public static String getJabatan() {
+        return userJabatan;
+    }
+    
+    public static String getGolongan() {
+        return userGolongan;
     }
     
 }

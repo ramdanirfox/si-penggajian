@@ -54,7 +54,7 @@ public class Form_Karyawan extends javax.swing.JFrame {
         String c = cr.getText();
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * from karyawan a LEFT JOIN user b ON b.noID = a.karyawanID WHERE "+k+" like '%"+c+"%'";
+            String sql = "SELECT * from karyawan WHERE "+k+" like '%"+c+"%'";
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
                 Object[] obj = new Object[9];
@@ -92,26 +92,19 @@ public class Form_Karyawan extends javax.swing.JFrame {
     }
     public void save(){
         loadData();
-        int generatedId = saveUserInfo(-1);
-        
-        if (generatedId != -1) {
-            try{
-            st = (Statement)koneksi.getKoneksi().createStatement();
-            String sql = "Insert into karyawan(karyawanID, nama,tgl_lahir,jk,alamat,noHP,jabatan,golongan)"
-                    +"values("+generatedId+",'"+vNm+"','"+vTgl+"','"+vJk+"','"+vAl+"','"+vHp+"','"+vJbt+"','"+vGol+"')";
-            PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
-            p.executeUpdate(sql);
-            getData();
+        try{
+        st = (Statement)koneksi.getKoneksi().createStatement();
+        String sql = "Insert into karyawan(nama,tgl_lahir,jk,alamat,noHP,jabatan,golongan,username,password)"
+                +"values('"+vNm+"','"+vTgl+"','"+vJk+"','"+vAl+"','"+vHp+"','"+vJbt+"','"+vGol+"','"+vUser+"','"+vPass+"')";
+        PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
+        p.executeUpdate(sql);
+        getData();
+        reset();
+        nm.requestFocus();
+        JOptionPane.showMessageDialog(null, "Data Berhasil DiSimpan!");
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, "Data Gagal DiSimpan!" + err.getMessage());
             reset();
-            nm.requestFocus();
-            JOptionPane.showMessageDialog(null, "Data Berhasil DiSimpan!");
-            }catch(SQLException err){
-                JOptionPane.showMessageDialog(null, "Data Gagal DiSimpan!" + err.getMessage());
-                reset();
-            }
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "Operasi Simpan Karyawan Dibatalkan!");
         }
         
     }
@@ -230,11 +223,11 @@ public class Form_Karyawan extends javax.swing.JFrame {
     private void selectUserInfo(int uID) {
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM user WHERE noID=" + uID;
+            String sql = "SELECT * FROM karyawan WHERE karyawanID=" + uID;
             ResultSet res = st.executeQuery(sql);
             Object[] obj = new Object[3];
             while(res.next()){
-                obj[0] = res.getString("noID");
+                obj[0] = res.getString("karyawanID");
                 obj[1] = res.getString("username");
                 obj[2] = res.getString("password");
             }
@@ -255,16 +248,11 @@ public class Form_Karyawan extends javax.swing.JFrame {
                    + "alamat='"+vAl+"',"
                    + "noHP='"+vHp+"',"
                    + "jabatan='"+vJbt+"',"
+                   + "username='"+vUser+"',"
+                   + "password='"+vPass+"',"
                    + "golongan='"+vGol+"' where karyawanID='"+vId+"'";
         PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
         p.executeUpdate();
-        int uID = getUserId(vId + "", "noID");
-        if (uID == -1) {
-            saveUserInfo(vId);
-        }
-        else {
-            
-        }
         getData();
         reset();
         nm.requestFocus();

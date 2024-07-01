@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.text.SimpleDateFormat;
+import penggajian_karyawan.Penggajian_Karyawan;
 /**
  *
  * @author ramdanirfox
@@ -47,6 +48,7 @@ public class Form_Lembur extends javax.swing.JFrame {
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
         Seticon();
+        isiKaryawan();
     }
     class One{
         Form_Kehadiran fK;
@@ -90,6 +92,17 @@ public class Form_Lembur extends javax.swing.JFrame {
     public String getgolKry() {
         return golKry;
     }
+    
+    private void isiKaryawan() {
+        idKry = Penggajian_Karyawan.getUserId();
+        nmKry = Penggajian_Karyawan.getDisplayName();
+        jbtKry = Penggajian_Karyawan.getJabatan();
+        golKry = Penggajian_Karyawan.getGolongan();
+        nm.setText(nmKry);
+        jbt.setText(jbtKry);
+        gol.setText(golKry);       
+    }
+    
     public void loadData(){
         vNm = nm.getText();
         vJbt = jbt.getText();
