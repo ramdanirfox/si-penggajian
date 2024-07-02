@@ -92,9 +92,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jbt" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
                       <Component id="gol" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
-                      <Component id="tg" alignment="0" min="-2" pref="113" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="nm" min="-2" pref="163" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="tg" alignment="0" max="32767" attributes="0"/>
+                              <Component id="nm" alignment="0" pref="163" max="32767" attributes="0"/>
+                          </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jButton6" min="-2" max="-2" attributes="0"/>
                       </Group>

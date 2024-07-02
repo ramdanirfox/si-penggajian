@@ -3,7 +3,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Slip Gaji" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL Adapter"/>
 	<property name="com.jaspersoft.studio.report.description" value=""/>
-	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="cGVuZ2dhamlhbiAsMTUsMTUsZWI1ZTkzZDgtZjY3Yy00ZTljLThkMTEtMmM1MjU2MmE3MmRmOw=="/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
@@ -104,21 +104,21 @@ FROM
 			<property name="com.jaspersoft.studio.field.tree.path" value="lembur"/>
 		</field>
 	</subDataset>
+	<parameter name="TGL_FILTER" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT
-     penggajian.`gajiID` AS penggajian_gajiID,
-     penggajian.`tgl` AS penggajian_tgl,
-     penggajian.`nama` AS penggajian_nama,
-     penggajian.`jabatan` AS penggajian_jabatan,
-     penggajian.`golongan` AS penggajian_golongan,
-     penggajian.`gapok` AS penggajian_gapok,
-     penggajian.`gaji_lembur` AS penggajian_gaji_lembur,
-     penggajian.`tunjangan` AS penggajian_tunjangan,
-     penggajian.`potongan` AS penggajian_potongan,
-     penggajian.`gaji_bersih` AS penggajian_gaji_bersih
-FROM
-     `penggajian` penggajian
-WHERE penggajian.tgl like '%$P!{TGL_FILTER}%']]>
+		<![CDATA[SELECT penggajian.gajiID AS penggajian_gajiID,
+	penggajian.tgl AS penggajian_tgl,
+	penggajian.nama AS penggajian_nama,
+	penggajian.jabatan AS penggajian_jabatan,
+	penggajian.golongan AS penggajian_golongan,
+	penggajian.gapok AS penggajian_gapok,
+	penggajian.gaji_lembur AS penggajian_gaji_lembur,
+	penggajian.tunjangan AS penggajian_tunjangan,
+	penggajian.potongan AS penggajian_potongan,
+	penggajian.gaji_bersih AS penggajian_gaji_bersih
+FROM penggajian penggajian
+WHERE 
+	 penggajian.tgl LIKE '%$P!{TGL_FILTER}%']]>
 	</queryString>
 	<field name="penggajian_gajiID" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="karyawanID"/>
@@ -145,11 +145,15 @@ WHERE penggajian.tgl like '%$P!{TGL_FILTER}%']]>
 		<property name="com.jaspersoft.studio.field.label" value="lembur_total"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="lembur"/>
 	</field>
-	<field name="penggajian_gapok" class="java.lang.Integer"/>
+	<field name="penggajian_gapok" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="penggajian_gapok"/>
+		<property name="com.jaspersoft.studio.field.name" value="gapok"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="penggajian"/>
+	</field>
 	<field name="penggajian_gaji_lembur" class="java.lang.Integer"/>
 	<field name="penggajian_tunjangan" class="java.lang.Integer"/>
 	<field name="penggajian_potongan" class="java.lang.Integer"/>
-	<field name="penggajian_gaji_bersih" class="java.lang.String"/>
+	<field name="penggajian_gaji_bersih" class="java.lang.Integer"/>
 	<title>
 		<band height="142" splitType="Stretch">
 			<staticText>
@@ -260,19 +264,12 @@ WHERE penggajian.tgl like '%$P!{TGL_FILTER}%']]>
 	<detail>
 		<band height="53">
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="345" y="0" width="178" height="15" uuid="f10d21e1-16a3-4ada-b2e6-d4f96ac8b2d9"/>
-				<textElement textAlignment="Right">
-					<font fontName="Monospaced"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{lembur_total}]]></textFieldExpression>
-			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="10" y="-3" width="125" height="20" uuid="83b5ec9c-cf1a-4fd5-8047-954d62ba296f"/>
 				<textFieldExpression><![CDATA[$F{penggajian_nama}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="70" y="-3" width="125" height="20" uuid="71d91605-98ea-4c62-bff5-99e1475b5c14"/>
-				<textFieldExpression><![CDATA[$F{penggajian_tgl}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("MMMM yyyy", new Locale("id", "ID")).format($F{penggajian_tgl});]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="155" y="-3" width="125" height="20" uuid="9b83c44d-b2fe-4709-9441-9f5cd7c855ad"/>
@@ -282,24 +279,24 @@ WHERE penggajian.tgl like '%$P!{TGL_FILTER}%']]>
 				<reportElement x="225" y="-3" width="125" height="20" uuid="b58678f5-78c9-4cc1-8042-d147ef4a1370"/>
 				<textFieldExpression><![CDATA[$F{penggajian_golongan}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
+			<textField pattern="#,##0.###;#,##0.###-">
 				<reportElement x="295" y="-3" width="125" height="20" uuid="2a84957a-bc26-48fb-905c-8974a6629711"/>
-				<textFieldExpression><![CDATA[=$F{penggajian_gapok}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{penggajian_gapok}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="430" y="-1" width="125" height="20" uuid="50c8d6d8-63d8-4637-9203-7006604572fc"/>
+			<textField pattern="#,##0.###;#,##0.###-">
+				<reportElement x="430" y="-3" width="125" height="20" uuid="50c8d6d8-63d8-4637-9203-7006604572fc"/>
 				<textFieldExpression><![CDATA[$F{penggajian_gaji_lembur}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
+			<textField pattern="#,##0.###;#,##0.###-">
 				<reportElement x="529" y="-1" width="125" height="20" uuid="00b0d3c8-15ae-4421-95a7-d24cd655a2b7"/>
 				<textFieldExpression><![CDATA[$F{penggajian_tunjangan}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="630" y="0" width="125" height="20" uuid="a25b5ce1-786a-40e4-940c-9a2c28ea34c4"/>
+			<textField pattern="#,##0.###;#,##0.###-">
+				<reportElement x="630" y="-1" width="125" height="20" uuid="a25b5ce1-786a-40e4-940c-9a2c28ea34c4"/>
 				<textFieldExpression><![CDATA[$F{penggajian_potongan}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="700" y="0" width="100" height="20" uuid="8c39915b-6753-4326-8fd9-00b6af3a55d5"/>
+			<textField pattern="#,##0.###;#,##0.###-">
+				<reportElement x="700" y="-1" width="100" height="20" uuid="8c39915b-6753-4326-8fd9-00b6af3a55d5"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{penggajian_gaji_bersih}]]></textFieldExpression>
 			</textField>
