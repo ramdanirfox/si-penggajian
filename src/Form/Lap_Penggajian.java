@@ -224,7 +224,7 @@ public class Lap_Penggajian extends javax.swing.JFrame {
         param.put("TGL_FILTER", paramTgl);
         
         try{
-            File reprt = new File("src/Form/report2.jrxml");
+            File reprt = new File("src/Form/RekapPenggajian.jrxml");
             jasperDesign = JRXmlLoader.load(reprt);
 //            param.clear();
             jasperReport = JasperCompileManager.compileReport(jasperDesign);

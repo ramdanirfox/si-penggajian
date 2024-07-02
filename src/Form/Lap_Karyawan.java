@@ -170,7 +170,7 @@ public class Lap_Karyawan extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            File reprt = new File("src/Form/report1.jrxml");
+            File reprt = new File("src/Form/RekapKaryawan.jrxml");
             jasperDesign = JRXmlLoader.load(reprt);
             param.clear();
             jasperReport = JasperCompileManager.compileReport(jasperDesign);

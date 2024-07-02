@@ -189,6 +189,8 @@ public class Form_Karyawan extends javax.swing.JFrame {
         hp.setText(null);
         jbt.setSelectedIndex(0);
         gol.setSelectedIndex(0);
+        pass.setText(null);
+        user.setText(null);
     }
     public void selectData(){
         int i = tbl.getSelectedRow();
@@ -463,7 +465,7 @@ public class Form_Karyawan extends javax.swing.JFrame {
 
         jLabel7.setText("Jabatan");
 
-        jbt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Sekertaris", "Kepala HRD", "Staff IT", "Keuangan", "Karyawan" }));
+        jbt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Direktur", "Manager", "Sales", "Staff IT", "Admin", "Karyawan" }));
         jbt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -626,7 +628,6 @@ public class Form_Karyawan extends javax.swing.JFrame {
                 .addGap(0, 10, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ktg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

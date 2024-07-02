@@ -216,7 +216,7 @@ public class Form_Login extends javax.swing.JFrame {
                 Penggajian_Karyawan.setUserInfo(id, nama, namaDisplay, jabatan, golongan);
                 JOptionPane.showMessageDialog(null, "Login Berhasil!");
                 System.out.println(jabatan+ nama+ id);
-                if (jabatan.equals("Karyawan") || jabatan.equals("Staff IT")) {
+                if (jabatan.equals("Karyawan") || jabatan.equals("Staff IT") || jabatan.equals("Sales")) {
                     new Form_Utama_Karyawan().setVisible(true);
                     this.dispose();
                 }
