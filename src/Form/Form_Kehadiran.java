@@ -14,17 +14,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.DateFormatter;
 import koneksiDB.koneksi;
 import penggajian_karyawan.Penggajian_Karyawan;
 
@@ -33,8 +26,10 @@ import penggajian_karyawan.Penggajian_Karyawan;
  * @author RFox
  */
 public class Form_Kehadiran extends javax.swing.JFrame {
+javax.swing.Timer pewaktu;
 private DefaultTableModel model;
-String vNm,vwktM,vtglM,vwktP,vtglP;
+String vNm,vwktM,vtglM,vwktP,vtglP, vCariTgl;
+String vCariKriteria = "";
 private static Statement st;
 private TimePickerSettings lgoodTimePickerSetting;
     /**
@@ -55,11 +50,12 @@ private TimePickerSettings lgoodTimePickerSetting;
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
         Seticon();
+        isiKaryawan();
+        initJam();
         initListener();
         getData();
         fidkaryawan.setEditable(false);
         fnamakaryawan.setEditable(false);
-        isiKaryawan();
     }
    
  
@@ -77,6 +73,18 @@ private TimePickerSettings lgoodTimePickerSetting;
     fnamakaryawan.setText(nmKry);
     }
     
+    private void initJam() {
+        DateTimeFormatter p = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        pewaktu = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                pewaktu.stop();
+                String tgl = LocalDateTime.now().format(p);
+                lSekarang.setText(tgl);
+            }
+        });
+        pewaktu.start();
+    }
     
   public void itemTerpilih(){                              
         Data_Search1 DS = new Data_Search1();
@@ -110,17 +118,26 @@ private TimePickerSettings lgoodTimePickerSetting;
         bSekarangPulang = new javax.swing.JButton();
         fnamakaryawan = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        brekam = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        lSekarang = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl = new javax.swing.JTable();
-        fcari = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
+        cariTgl = new com.github.lgooddatepicker.components.DateTimePicker(null, lgoodTimePickerSetting);
+        cariKriteria = new javax.swing.JComboBox<>();
 
         jTextField2.setText("jTextField2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jamMasuk.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -128,6 +145,7 @@ private TimePickerSettings lgoodTimePickerSetting;
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
         jButton6.setText("Search Karyawan");
+        jButton6.setPreferredSize(new java.awt.Dimension(0, 0));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -139,6 +157,7 @@ private TimePickerSettings lgoodTimePickerSetting;
         bsave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Save.gif"))); // NOI18N
         bsave.setText("Save");
         bsave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bsave.setPreferredSize(new java.awt.Dimension(0, 0));
         bsave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         bsave.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -193,6 +212,9 @@ private TimePickerSettings lgoodTimePickerSetting;
             }
         });
 
+        jamMasuk2.setEnabled(false);
+
+        jamPulang.setEnabled(false);
         jamPulang.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 jamPulangMouseMoved(evt);
@@ -207,6 +229,7 @@ private TimePickerSettings lgoodTimePickerSetting;
         jLabel2.setText("Jam Pulang");
 
         bSekarangMasuk.setText("Sekarang");
+        bSekarangMasuk.setPreferredSize(new java.awt.Dimension(0, 0));
         bSekarangMasuk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bSekarangMasukActionPerformed(evt);
@@ -214,6 +237,8 @@ private TimePickerSettings lgoodTimePickerSetting;
         });
 
         bSekarangPulang.setText("Sekarang");
+        bSekarangPulang.setOpaque(true);
+        bSekarangPulang.setPreferredSize(new java.awt.Dimension(0, 0));
         bSekarangPulang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bSekarangPulangActionPerformed(evt);
@@ -221,6 +246,26 @@ private TimePickerSettings lgoodTimePickerSetting;
         });
 
         jLabel4.setText("Nama Karyawan");
+
+        brekam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Save.gif"))); // NOI18N
+        brekam.setText("Rekam");
+        brekam.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        brekam.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        brekam.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                brekamMouseClicked(evt);
+            }
+        });
+        brekam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brekamActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Sekarang");
+
+        lSekarang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Calendar.gif"))); // NOI18N
+        lSekarang.setText("-");
 
         javax.swing.GroupLayout jamMasukLayout = new javax.swing.GroupLayout(jamMasuk);
         jamMasuk.setLayout(jamMasukLayout);
@@ -234,18 +279,14 @@ private TimePickerSettings lgoodTimePickerSetting;
                         .addGap(17, 17, 17)
                         .addComponent(fnamakaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jamMasukLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(38, 38, 38)
-                        .addComponent(fidkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton6))
-                    .addGroup(jamMasukLayout.createSequentialGroup()
-                        .addComponent(bsave)
+                        .addComponent(bsave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(breset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bexit)
-                        .addGap(93, 93, 93)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(brekam)
+                        .addGap(33, 33, 33)
                         .addComponent(bupdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bdelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -258,21 +299,36 @@ private TimePickerSettings lgoodTimePickerSetting;
                             .addGroup(jamMasukLayout.createSequentialGroup()
                                 .addComponent(jamMasuk2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bSekarangMasuk))
+                                .addComponent(bSekarangMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jamMasukLayout.createSequentialGroup()
                                 .addComponent(jamPulang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bSekarangPulang)))))
+                                .addComponent(bSekarangPulang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jamMasukLayout.createSequentialGroup()
+                        .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6))
+                        .addGap(38, 38, 38)
+                        .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lSekarang)
+                            .addGroup(jamMasukLayout.createSequentialGroup()
+                                .addComponent(fidkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jamMasukLayout.setVerticalGroup(
             jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jamMasukLayout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(26, 26, 26)
+                .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(lSekarang))
+                .addGap(18, 18, 18)
                 .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fidkaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jButton6))
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fnamakaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -281,21 +337,22 @@ private TimePickerSettings lgoodTimePickerSetting;
                 .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jamMasuk2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bSekarangMasuk))
+                    .addComponent(bSekarangMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jamPulang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(bSekarangPulang))
+                    .addComponent(bSekarangPulang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jamMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(bsave, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(bsave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(bdelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(breset, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(bupdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(bexit, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(bexit, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(brekam, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(14, 14, 14))
         );
 
@@ -330,6 +387,25 @@ private TimePickerSettings lgoodTimePickerSetting;
             }
         });
 
+        cariTgl.setEnabled(false);
+        cariTgl.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cariTglMouseMoved(evt);
+            }
+        });
+        cariTgl.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cariTglFocusLost(evt);
+            }
+        });
+
+        cariKriteria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Sebelum", "Setelah" }));
+        cariKriteria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cariKriteriaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -339,8 +415,11 @@ private TimePickerSettings lgoodTimePickerSetting;
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(fcari, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(cariKriteria, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cariTgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
                         .addComponent(jButton7)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -348,13 +427,14 @@ private TimePickerSettings lgoodTimePickerSetting;
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7))
-                .addGap(18, 18, 18)
+                    .addComponent(jButton7)
+                    .addComponent(cariTgl, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cariKriteria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -380,7 +460,7 @@ private TimePickerSettings lgoodTimePickerSetting;
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jamMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -417,6 +497,7 @@ private TimePickerSettings lgoodTimePickerSetting;
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
+        getData();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jamPulangFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jamPulangFocusLost
@@ -458,6 +539,49 @@ private TimePickerSettings lgoodTimePickerSetting;
         bupdate.setEnabled(false);
         bdelete.setEnabled(false);
     }//GEN-LAST:event_bupdateActionPerformed
+
+    private void brekamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_brekamMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_brekamMouseClicked
+
+    private void brekamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brekamActionPerformed
+        // TODO add your handling code here:
+        rekam();
+    }//GEN-LAST:event_brekamActionPerformed
+
+    private void cariTglMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cariTglMouseMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cariTglMouseMoved
+
+    private void cariTglFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cariTglFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cariTglFocusLost
+
+    private void cariKriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cariKriteriaActionPerformed
+        // TODO add your handling code here:
+//        System.out.println((String)cariKriteria.getSelectedItem());
+        String s = (String)cariKriteria.getSelectedItem();
+        switch (s) {
+            case "Setelah":
+                vCariKriteria = ">=";
+                cariTgl.setEnabled(true);
+                break;
+            case "Sebelum":
+                vCariKriteria = "<=";
+                cariTgl.setEnabled(true);
+                break;
+            default:
+                vCariKriteria = "";
+                cariTgl.setEnabled(false);
+                break;
+        }
+    }//GEN-LAST:event_cariKriteriaActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        System.out.println("Cmp Removed");
+        pewaktu.stop();
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -522,12 +646,20 @@ private TimePickerSettings lgoodTimePickerSetting;
   
     public void getData(){
         model.getDataVector().removeAllElements();
-        model.fireTableDataChanged();
+        model.fireTableDataChanged(); 
         //String k = (String)ktg.getSelectedItem();
-        String cariitem = fcari.getText();
+        DateTimeFormatter p = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+        String filterTgl = "";
+        String cariitem = "";
+        if (cariTgl.getDateTimeStrict() != null && !vCariKriteria.equals("")) {
+            String tgl = cariTgl.getDateTimeStrict().format(DateTimeFormatter.ISO_DATE_TIME).replace("T", " ");
+            filterTgl = " AND jam_masuk" + vCariKriteria + " '" + tgl + "' ";
+        }
+        
         try {
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT b.karyawanID, jam_masuk, jam_pulang, b.nama  FROM kehadiran a LEFT JOIN karyawan b ON a.karyawanID = b.karyawanID where b.nama like '%" + cariitem + "%' order by b.nama asc";
+            String sql = "SELECT b.karyawanID, jam_masuk, jam_pulang, b.nama  FROM kehadiran a LEFT JOIN karyawan b ON a.karyawanID = b.karyawanID where b.karyawanID = " + idKry + "" + filterTgl + " order by jam_masuk desc";
+            System.out.println(sql);
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
                 Object[] obj = new Object[4];
@@ -535,7 +667,6 @@ private TimePickerSettings lgoodTimePickerSetting;
                 obj[1] = res.getString("jam_masuk");
                 obj[2] = res.getString("jam_pulang");
                 obj[3] = res.getString("nama");
-                System.out.println(obj[3]);
                 model.addRow(obj);
             }
         }catch(SQLException err){
@@ -549,14 +680,66 @@ private TimePickerSettings lgoodTimePickerSetting;
                   vwktP = jamPulang.getTimePicker().getText();
                  vtglP = jamPulang.getDatePicker().getText();
     }
+     
+    private void rekam() {
+        loadData();
+        DateTimeFormatter p = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String sqlDateFmt = "%Y-%m-%d %H:%i:%s";
+        String sqlWhere ="WHERE karyawanID = "+vNm+" AND date_format(jam_masuk, '%Y-%m-%d') = date_format(now(), '%Y-%m-%d')"; 
+        String sqlCekMasuk = "SELECT date_format(jam_masuk, '"+sqlDateFmt+"') AS hasil FROM kehadiran k " + sqlWhere;
+        String jamMasukHariIni = querySatu(sqlCekMasuk);
+        System.out.println("SQLNyah " + sqlCekMasuk);
+        if (jamMasukHariIni.equals("")) {
+            System.out.println("Hari ini belum absen, mengisi");
+            this.jamMasuk2.setDateTimeStrict(LocalDateTime.now());
+            this.jamPulang.setDateTimeStrict(null);
+            save();
+            this.jamMasuk2.setDateTimeStrict(LocalDateTime.now());
+            this.jamPulang.setDateTimeStrict(null);
+        }
+        else {
+            this.jamMasuk2.setDateTimeStrict(LocalDateTime.parse((CharSequence)jamMasukHariIni, p));
+            this.jamPulang.setDateTimeStrict(LocalDateTime.now());
+            rekamUpdate();
+            System.out.println("Sudah Masuk, memperbarui pulang");
+            this.jamMasuk2.setDateTimeStrict(LocalDateTime.parse((CharSequence)jamMasukHariIni, p));
+            this.jamPulang.setDateTimeStrict(LocalDateTime.now());
+        }
+    }
+    
+    private String querySatu(String query) {
+       try {
+            st = (Statement) koneksi.getKoneksi().createStatement();
+            String sql = query;
+            ResultSet res = st.executeQuery(sql);
+            Object[] obj = new Object[1];
+            while(res.next()){
+                obj[0] = res.getString("hasil");
+            }
+            return obj[0] == null ? "" : (String)obj[0];
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, err.getMessage());
+            return "";
+        }
+    }
+    
     private void save() {
         try{
         String sql = "INSERT INTO kehadiran (karyawanID,jam_masuk,jam_pulang)"
                 +" VALUES (?, ?, ?)";
         PreparedStatement prepSql = koneksi.getKoneksi().prepareStatement(sql);
         prepSql.setString(1, fidkaryawan.getText());
-        prepSql.setString(2, jamMasuk2.getDateTimeStrict().format(DateTimeFormatter.ISO_DATE_TIME).replace("T", " "));
-        prepSql.setString(3, jamPulang.getDateTimeStrict().format(DateTimeFormatter.ISO_DATE_TIME).replace("T", " "));
+        if (jamPulang.getDateTimeStrict() == null) {
+            prepSql.setNull(2, java.sql.Types.NULL);
+        }
+        else {
+            prepSql.setString(2, jamMasuk2.getDateTimeStrict().format(DateTimeFormatter.ISO_DATE_TIME).replace("T", " "));    
+        }
+        if (jamPulang.getDateTimeStrict() == null) {
+            prepSql.setNull(3, java.sql.Types.NULL);
+        } else {
+            prepSql.setString(3,  jamPulang.getDateTimeStrict().format(DateTimeFormatter.ISO_DATE_TIME).replace("T", " "));
+        }
         prepSql.executeUpdate();
         getData();
         fnKosong();
@@ -568,7 +751,8 @@ private TimePickerSettings lgoodTimePickerSetting;
         }
     }
       private void fnKosong() {
-        fcari.setText("");
+//        fcari.setText("");
+        cariTgl.setDateTimeStrict(null);
         jamPulang.setDateTimeStrict(null);
         jamMasuk2.setDateTimeStrict(null);
     };
@@ -605,6 +789,26 @@ private TimePickerSettings lgoodTimePickerSetting;
             fnKosong();
         }
     }
+      
+       public void rekamUpdate(){
+        loadData();
+        try{
+           st = (Statement)koneksi.getKoneksi().createStatement();
+           String sql = "update kehadiran set karyawanID='"+vNm+"',"
+                   + "jam_masuk='"+jamMasuk2+"',"
+                   + "jam_pulang='"+jamPulang+"' where karyawanID='"+vNm+"' AND date_format(jam_masuk, '%Y-%m-%d') = date_format(now(), '%Y-%m-%d')";
+        PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
+        p.executeUpdate();
+        getData();
+        fnKosong();
+        fidkaryawan.requestFocus();
+        JOptionPane.showMessageDialog(null, "Data Berhasil DiUpdate");
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, "Data Gagal DiUpdate!");
+            fnKosong();
+        }
+    }
+          
       public void delete(){
         loadData();
         int psn = JOptionPane.showConfirmDialog(null, "Anda yakin ingin menghapus data ini?","Konfirmasi",
@@ -631,10 +835,12 @@ private TimePickerSettings lgoodTimePickerSetting;
     private javax.swing.JButton bSekarangPulang;
     private javax.swing.JButton bdelete;
     private javax.swing.JButton bexit;
+    private javax.swing.JButton brekam;
     private javax.swing.JButton breset;
     private javax.swing.JButton bsave;
     private javax.swing.JButton bupdate;
-    private javax.swing.JTextField fcari;
+    private javax.swing.JComboBox<String> cariKriteria;
+    private com.github.lgooddatepicker.components.DateTimePicker cariTgl;
     private javax.swing.JTextField fidkaryawan;
     private javax.swing.JTextField fnamakaryawan;
     private javax.swing.JButton jButton6;
@@ -644,12 +850,14 @@ private TimePickerSettings lgoodTimePickerSetting;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JPanel jamMasuk;
     private com.github.lgooddatepicker.components.DateTimePicker jamMasuk2;
     private com.github.lgooddatepicker.components.DateTimePicker jamPulang;
+    private javax.swing.JLabel lSekarang;
     private javax.swing.JTable tbl;
     // End of variables declaration//GEN-END:variables
    private void Seticon() {

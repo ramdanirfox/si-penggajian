@@ -25,21 +25,18 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jPanel1" max="32767" attributes="0"/>
-                          <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="247" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  </Group>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jPanel1" max="32767" attributes="0"/>
+                  <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="38" max="32767" attributes="0"/>
+              <EmptySpace pref="33" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="286" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -83,7 +80,7 @@
                   <Component id="jButton5" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton7" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="116" max="32767" attributes="0"/>
+                  <EmptySpace pref="174" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -337,6 +334,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="gj">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -407,6 +407,9 @@
               <Image iconType="3" name="/Icon/gif/16x16/Text preview.gif"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Search Karyawan"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[0, 0]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>

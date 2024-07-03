@@ -116,8 +116,9 @@ FROM
      karyawan.`nama` AS karyawan_nama,
      karyawan.`jabatan` AS karyawan_jabatan,
      DATE_FORMAT(kehadiran.`jam_masuk`, '%Y-%m-%d') AS kehadiran_tanggal,
-     kehadiran.`jam_masuk` AS kehadiran_jam_masuk,
-     kehadiran.`jam_pulang` AS kehadiran_jam_pulang
+     DATE_FORMAT(kehadiran.`jam_masuk`, '%H:%i') AS kehadiran_jam_masuk,
+     DATE_FORMAT(kehadiran.`jam_pulang`, '%H:%i') AS kehadiran_jam_pulang,
+     CONCAT(REPLACE(EXTRACT(HOUR FROM timediff(jam_masuk, jam_pulang)), '-', ''), ' jam ', REPLACE(EXTRACT(MINUTE FROM timediff(jam_masuk, jam_pulang)), '-', ''), ' menit') AS durasi
 FROM
        `karyawan` karyawan
  INNER JOIN 
@@ -157,25 +158,29 @@ FROM
 		<property name="com.jaspersoft.studio.field.name" value="tanggal"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="kehadiran"/>
 	</field>
+	<field name="durasi" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="durasi"/>
+		<property name="com.jaspersoft.studio.field.name" value="durasi"/>
+	</field>
 	<title>
-		<band height="145" splitType="Stretch">
+		<band height="83" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<staticText>
-				<reportElement x="400" y="85" width="50" height="20" uuid="0f86baff-6386-4f3f-b3fe-2388707babe8"/>
+				<reportElement x="401" y="20" width="50" height="20" uuid="0f86baff-6386-4f3f-b3fe-2388707babe8"/>
 				<box rightPadding="4"/>
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[Tanggal:]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="450" y="85" width="110" height="20" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
+				<reportElement x="451" y="20" width="110" height="20" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
 				<textFieldExpression><![CDATA[$P{PTANGGAL}]]></textFieldExpression>
 			</textField>
 			<image hAlign="Center">
-				<reportElement x="0" y="82" width="65" height="60" uuid="94883631-a913-43e2-b182-ab8d77d0181e"/>
+				<reportElement x="1" y="17" width="65" height="60" uuid="94883631-a913-43e2-b182-ab8d77d0181e"/>
 				<imageExpression><![CDATA["dktbig.gif"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="169" y="100" width="196" height="25" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
+				<reportElement x="170" y="35" width="196" height="25" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -185,23 +190,23 @@ FROM
 				<text><![CDATA[REKAP KEHADIRAN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="400" y="105" width="50" height="20" uuid="440f5e34-c23c-4182-8a4b-523c3770ae0b"/>
+				<reportElement x="401" y="40" width="50" height="20" uuid="440f5e34-c23c-4182-8a4b-523c3770ae0b"/>
 				<box rightPadding="4"/>
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[Nama:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="400" y="125" width="50" height="20" uuid="601442b5-5cc6-4dc2-9d1b-c32508ef222f"/>
+				<reportElement x="401" y="60" width="50" height="20" uuid="601442b5-5cc6-4dc2-9d1b-c32508ef222f"/>
 				<box rightPadding="4"/>
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[Jabatan:]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="450" y="105" width="110" height="20" uuid="4b3d35af-c5da-4a94-b971-b5d4c5a39363"/>
+				<reportElement x="451" y="40" width="110" height="20" uuid="4b3d35af-c5da-4a94-b971-b5d4c5a39363"/>
 				<textFieldExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}.get("PNAMA")]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="449" y="125" width="110" height="20" uuid="a54eb5c5-8e0f-4300-95b1-452f58ac8fd4"/>
+				<reportElement x="450" y="60" width="110" height="20" uuid="a54eb5c5-8e0f-4300-95b1-452f58ac8fd4"/>
 				<textFieldExpression><![CDATA[$P{PJABATAN}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -228,18 +233,25 @@ FROM
 				<text><![CDATA[TANGGAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="330" y="8" width="90" height="15" uuid="4c341fec-3876-488b-9324-88d1c921753b"/>
+				<reportElement x="290" y="10" width="90" height="15" uuid="4c341fec-3876-488b-9324-88d1c921753b"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[JAM KELUAR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="10" width="80" height="15" uuid="a7fbd83d-a575-4673-91d7-c944fc5051f1"/>
+				<reportElement x="160" y="10" width="80" height="15" uuid="a7fbd83d-a575-4673-91d7-c944fc5051f1"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[JAM MASUK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="9" width="90" height="15" uuid="59de0dc0-2446-47c7-b5d2-a4f30a716a99"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAMA KERJA]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -250,40 +262,45 @@ FROM
 				<textFieldExpression><![CDATA[$F{kehadiran_tanggal}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="200" y="-3" width="125" height="20" uuid="9b83c44d-b2fe-4709-9441-9f5cd7c855ad"/>
+				<reportElement x="160" y="-3" width="125" height="20" uuid="9b83c44d-b2fe-4709-9441-9f5cd7c855ad"/>
 				<textFieldExpression><![CDATA[$F{kehadiran_jam_masuk}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="330" y="0" width="125" height="20" uuid="b58678f5-78c9-4cc1-8042-d147ef4a1370"/>
+				<reportElement x="290" y="-2" width="125" height="20" uuid="b58678f5-78c9-4cc1-8042-d147ef4a1370"/>
 				<textFieldExpression><![CDATA[$F{kehadiran_jam_pulang}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="426" y="-2" width="125" height="20" uuid="68383199-b2a7-4fdf-a714-78f58b78af39"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{durasi}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<lastPageFooter>
-		<band height="250">
+		<band height="149">
 			<line>
-				<reportElement x="1" y="126" width="556" height="1" uuid="4800c4c6-b3d5-4341-9073-76bb2a70ead9">
+				<reportElement x="1" y="16" width="556" height="1" uuid="4800c4c6-b3d5-4341-9073-76bb2a70ead9">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement x="375" y="140" width="45" height="20" uuid="5cdca96d-4e8d-4da3-b952-69b0ac5a0264"/>
+				<reportElement x="375" y="30" width="45" height="20" uuid="5cdca96d-4e8d-4da3-b952-69b0ac5a0264"/>
 				<text><![CDATA[Jakarta,]]></text>
 			</staticText>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="415" y="140" width="142" height="20" uuid="fc0128a6-1cdc-4f46-a6fa-5a5b1e68ff9a"/>
+				<reportElement x="415" y="30" width="142" height="20" uuid="fc0128a6-1cdc-4f46-a6fa-5a5b1e68ff9a"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id", "ID")).format(new java.util.Date());]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="414" y="209" width="70" height="20" uuid="c1b3b899-79a6-4fd2-902d-bc2aa1cad187"/>
+				<reportElement x="414" y="99" width="70" height="20" uuid="c1b3b899-79a6-4fd2-902d-bc2aa1cad187"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[(Shanti Dewi)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="404" y="229" width="90" height="20" uuid="5cf1eb65-4f46-4a66-843e-934a5def409e"/>
+				<reportElement x="404" y="119" width="90" height="20" uuid="5cf1eb65-4f46-4a66-843e-934a5def409e"/>
 				<text><![CDATA[Manajer Personalia]]></text>
 			</staticText>
 		</band>

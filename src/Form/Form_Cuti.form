@@ -232,6 +232,9 @@
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="tgl_cuti">
+          <Events>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="tgl_cutiPropertyChange"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
@@ -305,6 +308,9 @@
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="tgl_masuk">
+          <Events>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="tgl_masukPropertyChange"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
           <AuxValues>

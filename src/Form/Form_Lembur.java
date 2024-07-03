@@ -10,6 +10,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import penggajian_karyawan.Penggajian_Karyawan;
 /**
  *
@@ -49,6 +51,8 @@ public class Form_Lembur extends javax.swing.JFrame {
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
         Seticon();
         isiKaryawan();
+        reset();
+        tgl.setMinSelectableDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
     }
     class One{
         Form_Kehadiran fK;
@@ -141,11 +145,14 @@ public class Form_Lembur extends javax.swing.JFrame {
         vJj  = 0;
         vGj = 0;
         vTot = 0;
+        vGj = 40000;
         nm.setText(null);
         jbt.setText(null);
         gol.setText(null);
         jj.setText(null);
-        gj.setText(null);
+        gj.setText("40000");
+        tgl.setDate(null);
+        isiKaryawan();
     }
     public void selectData(){
         int i = tbl.getSelectedRow();
@@ -161,7 +168,21 @@ public class Form_Lembur extends javax.swing.JFrame {
         vId = Integer.valueOf(""+model.getValueAt(i, 0));
         vTgl = (String)model.getValueAt(i, 7);
         try {
-            tgl.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(vTgl));    
+            java.util.Date d = new SimpleDateFormat("yyyy-MM-dd").parse(vTgl);
+            tgl.setDate(d);
+            if (d.getTime() > Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()).getTime()) {
+                System.out.println("Lembur Masa Depan");
+                jButton2.setEnabled(true);
+                jButton3.setEnabled(true);
+                jButton1.setEnabled(false);
+            }
+            else {
+                System.out.println("Lembur Lalu");
+                jButton2.setEnabled(false);
+                jButton3.setEnabled(false);
+                jButton1.setEnabled(true);
+                reset();
+            }
         }
         catch(Exception err) {
             System.out.println("Error Proses Tanggal : " + err.getMessage());
@@ -302,7 +323,7 @@ public class Form_Lembur extends javax.swing.JFrame {
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton7)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,6 +379,8 @@ public class Form_Lembur extends javax.swing.JFrame {
 
         jLabel6.setText("Gaji");
 
+        gj.setEnabled(false);
+
         jLabel5.setText("Jumlah Jam");
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Modify.gif"))); // NOI18N
@@ -402,6 +425,7 @@ public class Form_Lembur extends javax.swing.JFrame {
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
         jButton6.setText("Search Karyawan");
+        jButton6.setPreferredSize(new java.awt.Dimension(0, 0));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -452,7 +476,7 @@ public class Form_Lembur extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(nm, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton6))
+                                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jbt, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jj, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -472,7 +496,7 @@ public class Form_Lembur extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nm)
                     .addComponent(jLabel2)
-                    .addComponent(jButton6))
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
@@ -509,17 +533,16 @@ public class Form_Lembur extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(247, 247, 247)
-                        .addComponent(jLabel1)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap(33, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(286, 286, 286))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -544,9 +567,6 @@ public class Form_Lembur extends javax.swing.JFrame {
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
         selectData();
-        jButton2.setEnabled(true);
-        jButton3.setEnabled(true);
-        jButton1.setEnabled(false);
     }//GEN-LAST:event_tblMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

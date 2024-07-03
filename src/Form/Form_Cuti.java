@@ -15,6 +15,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.time.ZoneId;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import penggajian_karyawan.Penggajian_Karyawan;
 
@@ -55,6 +57,7 @@ private DefaultTableModel model;
     public String getidKry() {
         return idKry;
     }
+    
     public void getData(){
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
@@ -277,6 +280,12 @@ private DefaultTableModel model;
 
         jLabel5.setText("Tanggal Cuti");
 
+        tgl_cuti.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tgl_cutiPropertyChange(evt);
+            }
+        });
+
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Save.gif"))); // NOI18N
         jButton1.setText("Save");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -333,6 +342,12 @@ private DefaultTableModel model;
         });
 
         jLabel7.setText("Tanggal Masuk");
+
+        tgl_masuk.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tgl_masukPropertyChange(evt);
+            }
+        });
 
         txtalasan.setColumns(20);
         txtalasan.setRows(5);
@@ -572,6 +587,49 @@ private DefaultTableModel model;
         jButton1.setEnabled(false);
     }//GEN-LAST:event_tblMouseClicked
 
+    private void tgl_cutiPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tgl_cutiPropertyChange
+        // TODO add your handling code here:
+        cekTanggalTabrakan();
+    }//GEN-LAST:event_tgl_cutiPropertyChange
+
+    private void tgl_masukPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tgl_masukPropertyChange
+        // TODO add your handling code here:
+        cekTanggalTabrakan();
+    }//GEN-LAST:event_tgl_masukPropertyChange
+
+    
+    private void cekTanggalTabrakan() {
+        Date sd = tgl_cuti.getDate();
+        Date ed = tgl_masuk.getDate();
+        System.out.println("Sd " + sd);
+        System.out.println("Ed " + ed);
+        if (sd == null && ed == null) {
+            tgl_cuti.setMaxSelectableDate(null);
+            tgl_masuk.setMinSelectableDate(null);
+        }
+        else if (sd != null && ed == null) {
+            Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(tgl_cuti.getDate().getTime());
+            c.add(Calendar.DATE, 1);
+            tgl_masuk.setMinSelectableDate(Date.from(c.toInstant()));
+        }
+        else if (sd == null && ed != null) {
+            Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(tgl_masuk.getDate().getTime());
+            c.add(Calendar.DATE, -1);
+            tgl_cuti.setMaxSelectableDate(Date.from(c.toInstant()));
+        }
+        else {
+            Calendar cs = Calendar.getInstance();
+            cs.setTimeInMillis(tgl_masuk.getDate().getTime());
+            cs.add(Calendar.DATE, -1);
+            Calendar ce = Calendar.getInstance();
+            ce.setTimeInMillis(tgl_cuti.getDate().getTime());
+            ce.add(Calendar.DATE, 1);
+            tgl_cuti.setMaxSelectableDate(Date.from(cs.toInstant()));
+            tgl_masuk.setMinSelectableDate(Date.from(ce.toInstant()));
+        }
+    }
     /**
      * @param args the command line arguments
      */
