@@ -15,6 +15,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
@@ -25,8 +27,12 @@ import penggajian_karyawan.Penggajian_Karyawan;
  * @author RFox
  */
 public class Form_Cuti extends javax.swing.JFrame {
+javax.swing.Timer pewaktu;
 private DefaultTableModel model;
  String vcutiID,vkaryawanID,vAlasan,vTglCuti,vTglMasuk,vNama;
+ Date snapshotCuti, snapshotMasuk;
+ Boolean isListening = true;
+ int sisaCuti = 12;
    
   private static Statement st;
     /**
@@ -59,6 +65,7 @@ private DefaultTableModel model;
     }
     
     public void getData(){
+        sisaCuti = 12;
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
         String cariitem = cr.getText();
@@ -75,17 +82,53 @@ private DefaultTableModel model;
                 obj[4] = res.getString("tgl_masuk");
                 obj[5] = res.getString("nama");
                 model.addRow(obj);
+                sisaCuti -= hitungHariKerja(res.getString("tgl_cuti"), res.getString("tgl_masuk"));
             }
+            System.out.println("Sisa cuti " + sisaCuti);
+            cekTanggalTabrakan();
+            iSisaCuti.setText(sisaCuti + "");
         }catch(SQLException err){
             JOptionPane.showMessageDialog(null, err.getMessage());
         }
     }
+    
+    private int hitungHariKerja(String mulai, String selesai) {
+        String sql = "WITH RECURSIVE DateRange AS ( " +
+        "SELECT '"+mulai+"' AS date " +
+        "UNION ALL " +
+        "SELECT DATE_ADD(date, INTERVAL 1 DAY) " +
+        "FROM DateRange " +
+        "WHERE date < '"+selesai+"' " +
+        ") "+
+        "SELECT " +
+        "COUNT(dayname(date)) AS hasil " +
+        "FROM DateRange WHERE dayname(date) NOT IN ('Saturday', 'Sunday') AND YEAR(date) = YEAR(now()) AND date != '"+selesai+"'";
+        int jml = Integer.parseInt(querySatu(sql));
+        return jml;
+    }
+    
+      private String querySatu(String query) {
+       try {
+            st = (Statement) koneksi.getKoneksi().createStatement();
+            String sql = query;
+            ResultSet res = st.executeQuery(sql);
+            Object[] obj = new Object[1];
+            while(res.next()){
+                obj[0] = res.getString("hasil");
+            }
+            return obj[0] == null ? "" : (String)obj[0];
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, err.getMessage());
+            return "";
+        }
+    }
+    
     public void loadData(){
         vcutiID = txtcuti.getText();
         vkaryawanID = nm.getText();
         vAlasan = txtalasan.getText();
         String tampilan ="yyyy-MM-dd" ; 
-        SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
+        SimpleDateFormat fm = new SimpleDateFormat(tampilan);
         vTglCuti = String.valueOf(fm.format(tgl_cuti.getDate()));
         vTglMasuk = String.valueOf(fm.format(tgl_masuk.getDate()));
     }
@@ -131,11 +174,14 @@ private DefaultTableModel model;
          txtcuti.setText(""+model.getValueAt(i, 0));
         txtalasan.setText(""+model.getValueAt(i, 2));
          try {
-          
+            isListening = false;
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse((String)model.getValueAt(i, 3));
             tgl_cuti.setDate(date);
+            snapshotCuti = new Date(date.getTime());
             Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse((String)model.getValueAt(i, 4));
             tgl_masuk.setDate(date1);
+            snapshotMasuk = new Date(date1.getTime());
+            isListening = true;
         } catch (ParseException ex) {
             Logger.getLogger(Form_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -160,7 +206,8 @@ private DefaultTableModel model;
         }
     }
     public void delete(){
-        loadData();
+//        loadData();
+        vcutiID = txtcuti.getText();
         int psn = JOptionPane.showConfirmDialog(null, "Anda yakin ingin menghapus data ini?","Konfirmasi",
                 JOptionPane.OK_CANCEL_OPTION);
         if(psn == JOptionPane.OK_OPTION){
@@ -199,15 +246,15 @@ private DefaultTableModel model;
   private void perbaruiID() {
         try{
           st = (Statement) koneksi.getKoneksi().createStatement();
-          String sql = "SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'cuti' AND table_schema = DATABASE( )";
+          String sql = "SELECT CONCAT('C-', LPAD(MAX(CAST(replace(cutiID, 'C-', '') AS INT) + 1), 4, '0')) AS AUTO_INCREMENT FROM cuti";
           ResultSet res = st.executeQuery(sql);
           while(res.next()){
               Object[] obj = new Object[1];
               obj[0] = res.getString("AUTO_INCREMENT");
               String idBaru = (String)obj[0];
               if (idBaru == null) {
-                  txtcuti.setText("1");
-                  vcutiID = "1";
+                  txtcuti.setText("C-0001");
+                  vcutiID = "C-0001";
               }
               else {
                 txtcuti.setText(idBaru);
@@ -250,6 +297,9 @@ private DefaultTableModel model;
         txtalasan = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         nama = new javax.swing.JTextField();
+        lSisaCuti = new javax.swing.JLabel();
+        iSisaCuti = new javax.swing.JTextField();
+        lSisaCuti1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl = new javax.swing.JTable();
@@ -264,12 +314,17 @@ private DefaultTableModel model;
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        txtcuti.setEditable(false);
+
         jLabel2.setText("Kode Cuti");
+
+        nm.setEditable(false);
 
         jLabel3.setText("ID Karyawan");
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
         jButton6.setText("Search Karyawan");
+        jButton6.setPreferredSize(new java.awt.Dimension(0, 0));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -355,19 +410,23 @@ private DefaultTableModel model;
 
         jLabel6.setText("Nama Karyawan");
 
+        nama.setEditable(false);
+
+        lSisaCuti.setText("Sisa Cuti");
+
+        iSisaCuti.setEditable(false);
+        iSisaCuti.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        lSisaCuti1.setText("Hari");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(33, 33, 33)
-                        .addComponent(tgl_cuti, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton1)
@@ -394,7 +453,7 @@ private DefaultTableModel model;
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton6))
+                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
@@ -405,8 +464,21 @@ private DefaultTableModel model;
                                         .addComponent(tgl_masuk, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(21, 21, 21)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(iSisaCuti, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lSisaCuti1)))))))
+                        .addContainerGap(213, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lSisaCuti)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(33, 33, 33)
+                                .addComponent(tgl_cuti, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,7 +491,7 @@ private DefaultTableModel model;
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jButton6))
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -430,14 +502,22 @@ private DefaultTableModel model;
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(13, 13, 13)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lSisaCuti)
+                    .addComponent(iSisaCuti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lSisaCuti1))
+                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(tgl_cuti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tgl_masuk, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(tgl_masuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -589,46 +669,139 @@ private DefaultTableModel model;
 
     private void tgl_cutiPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tgl_cutiPropertyChange
         // TODO add your handling code here:
-        cekTanggalTabrakan();
+//        if (tgl_cuti.getDate() != null && tgl_masuk.getDate() != null) { tgl_masuk.setDate(null); }
+        if (isListening) {
+            rekamTelatPilihanTanggal("awal");
+            cekTanggalTabrakan();
+        }
     }//GEN-LAST:event_tgl_cutiPropertyChange
 
     private void tgl_masukPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tgl_masukPropertyChange
         // TODO add your handling code here:
-        cekTanggalTabrakan();
+        if (isListening) {
+            rekamTelatPilihanTanggal("akhir");
+            cekTanggalTabrakan();
+        }
+        
     }//GEN-LAST:event_tgl_masukPropertyChange
-
+    
+    private void rekamTelatPilihanTanggal(String bagian) {
+        Date stDate = tgl_cuti.getDate();
+        Date edDate = tgl_masuk.getDate();
+        final long stMillis = stDate != null ? stDate.getTime() : 0;
+        final long edMillis = edDate != null ? edDate.getTime() : 0;
+        System.out.println("Date Before " + snapshotCuti + " - " + snapshotMasuk); 
+        isListening = false;
+        if (pewaktu != null && pewaktu.isRunning()) {pewaktu.stop();}
+        pewaktu = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if (snapshotMasuk != null && snapshotCuti != null) {
+                    if (bagian.equals("akhir")) {
+                        tgl_cuti.setDate(null);
+                        snapshotCuti = null;
+                    }
+                    if (bagian.equals("awal")) {
+                        tgl_masuk.setDate(null);
+                        snapshotMasuk = null;
+                    }
+                    cekTanggalTabrakan();
+                    System.out.println("MELUPAKAN...");
+                }
+                else {
+                    snapshotCuti = stDate != null ? new Date(stMillis) : null;
+                    snapshotMasuk = edDate != null ? new Date(edMillis) : null;
+                }
+                isListening = true;
+                pewaktu.stop();
+            }
+        });
+        pewaktu.start();
+    }
     
     private void cekTanggalTabrakan() {
+        String tampilan ="yyyy-MM-dd" ; 
+        SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
+        Calendar dtcNow = Calendar.getInstance();
+        dtcNow.add(Calendar.DATE, 7);
+        Instant dtcNowInstant = dtcNow.toInstant();
+        Date dtNow = Date.from(dtcNowInstant);
+        long dtNowMillis = dtcNowInstant.toEpochMilli();
         Date sd = tgl_cuti.getDate();
         Date ed = tgl_masuk.getDate();
         System.out.println("Sd " + sd);
         System.out.println("Ed " + ed);
         if (sd == null && ed == null) {
+            tgl_cuti.setMinSelectableDate(dtNow);
             tgl_cuti.setMaxSelectableDate(null);
-            tgl_masuk.setMinSelectableDate(null);
+            tgl_masuk.setMinSelectableDate(dtNow);
         }
         else if (sd != null && ed == null) {
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(tgl_cuti.getDate().getTime());
             c.add(Calendar.DATE, 1);
+            
+            int cnt = 0;
+            int i = 0;
+            Calendar cl = Calendar.getInstance();
+            cl.setTimeInMillis(sd.getTime());
+            while (cnt < sisaCuti) {
+                cl.add(Calendar.DATE, (1));
+                int dayId = cl.get(Calendar.DAY_OF_WEEK);
+                if (dayId != Calendar.SUNDAY && dayId != Calendar.SATURDAY) {
+                    cnt++;
+                }
+                i++;
+            }
+//            cl.add(Calendar.DATE, -1);
+            if (cl.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) { cl.add(Calendar.DATE, -2); }
+            
+            Calendar cs;
+            cs = cl;
+            
+            tgl_masuk.setMaxSelectableDate(Date.from(cs.toInstant()));
             tgl_masuk.setMinSelectableDate(Date.from(c.toInstant()));
         }
         else if (sd == null && ed != null) {
             Calendar c = Calendar.getInstance();
-            c.setTimeInMillis(tgl_masuk.getDate().getTime());
+            c.setTimeInMillis(ed.getTime());
             c.add(Calendar.DATE, -1);
+            
+            int cnt = 0;
+            int i = 0;
+            Calendar cl = Calendar.getInstance();
+            cl.setTimeInMillis(ed.getTime());
+            while (cnt < sisaCuti) {
+                cl.add(Calendar.DATE, -(1));
+                int dayId = cl.get(Calendar.DAY_OF_WEEK);
+                if (dayId != Calendar.SUNDAY && dayId != Calendar.SATURDAY) {
+                    cnt++;
+                }
+                i++;
+            }
+//            cl.add(Calendar.DATE, 1);
+            if (cl.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) { cl.add(Calendar.DATE, 2); }
+            
+            Calendar cs;
+            if (cl.getTimeInMillis() > dtNowMillis) { cs = cl; } else { cs = Calendar.getInstance(); cs.setTimeInMillis(dtNowMillis); }
+            
             tgl_cuti.setMaxSelectableDate(Date.from(c.toInstant()));
+            tgl_cuti.setMinSelectableDate(Date.from(cs.toInstant()));
         }
         else {
-            Calendar cs = Calendar.getInstance();
-            cs.setTimeInMillis(tgl_masuk.getDate().getTime());
-            cs.add(Calendar.DATE, -1);
-            Calendar ce = Calendar.getInstance();
-            ce.setTimeInMillis(tgl_cuti.getDate().getTime());
-            ce.add(Calendar.DATE, 1);
-            tgl_cuti.setMaxSelectableDate(Date.from(cs.toInstant()));
-            tgl_masuk.setMinSelectableDate(Date.from(ce.toInstant()));
-        }
+//            
+//            Calendar cs = Calendar.getInstance();
+//            cs.setTimeInMillis(tgl_masuk.getDate().getTime());
+//            cs.add(Calendar.DATE, -1);
+//            Calendar ce = Calendar.getInstance();
+//            ce.setTimeInMillis(tgl_cuti.getDate().getTime());
+//            ce.add(Calendar.DATE, 1);
+//            tgl_cuti.setMaxSelectableDate(Date.from(cs.toInstant()));
+//            tgl_masuk.setMinSelectableDate(Date.from(ce.toInstant()));
+//              tgl_masuk.setDate(null);
+//              tgl_cuti.setDate(null);
+            System.out.println("No-op, harapannya dipanggil setelah dinullkan parsial oleh rekamTelatTanggal");
+       }
     }
     /**
      * @param args the command line arguments
@@ -669,6 +842,7 @@ private DefaultTableModel model;
     private javax.swing.JButton breset;
     private javax.swing.JTextField cr;
     private javax.swing.JButton del;
+    private javax.swing.JTextField iSisaCuti;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
@@ -684,6 +858,8 @@ private DefaultTableModel model;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lSisaCuti;
+    private javax.swing.JLabel lSisaCuti1;
     private javax.swing.JTextField nama;
     private javax.swing.JTextField nm;
     private javax.swing.JTable tbl;

@@ -40,6 +40,7 @@ public class Form_Lembur extends javax.swing.JFrame {
         model.addColumn("Total");
         model.addColumn("Tanggal Lembur");
         model.addColumn("Karyawan ID");
+        isiKaryawan();
         getData();
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
@@ -50,7 +51,6 @@ public class Form_Lembur extends javax.swing.JFrame {
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
         Seticon();
-        isiKaryawan();
         reset();
         tgl.setMinSelectableDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
     }
@@ -64,7 +64,7 @@ public class Form_Lembur extends javax.swing.JFrame {
         String c = cr.getText();
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM lembur WHERE "+k+" like '%"+c+"%'";
+            String sql = "SELECT * FROM lembur WHERE "+k+" like '%"+c+"%' AND karyawanID = "+idKry+" ORDER BY tanggal_lembur DESC";
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
                 Object[] obj = new Object[9];
@@ -128,9 +128,9 @@ public class Form_Lembur extends javax.swing.JFrame {
         System.out.println(sql);
         PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
         p.executeUpdate(sql);
-        getData();
         reset();
         nm.requestFocus();
+        getData();
         JOptionPane.showMessageDialog(null, "Data Berhasil DiSimpan!");
         }catch(SQLException err){
             JOptionPane.showMessageDialog(null, "Data Gagal DiSimpan!");
@@ -294,7 +294,7 @@ public class Form_Lembur extends javax.swing.JFrame {
             }
         });
 
-        ktg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nama", "jabatan", "total" }));
+        ktg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "tanggal_lembur", "nama", "jabatan", "total" }));
 
         jLabel11.setText("Search Category");
 
@@ -316,30 +316,27 @@ public class Form_Lembur extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ktg, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ktg, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cr, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton7)
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(ktg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 9, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton7)
-                    .addComponent(jButton5))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton5)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11)
+                        .addComponent(ktg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         tbl.setModel(new javax.swing.table.DefaultTableModel(
