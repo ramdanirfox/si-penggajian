@@ -13,52 +13,46 @@ import java.awt.*;
  *
  * @author ramdanirfox
  */
-public class Data_Search2 extends javax.swing.JFrame {
+public class Data_Search_Tunjangan extends javax.swing.JFrame {
     private DefaultTableModel model;
-    public Form_Penggajian fP = null;
     private static Statement st;
-
+    String vTgl, vIdKry;
     /**
-     * Creates new form Data_Search2
+     * Creates new form Data_Search_Potongan
+     * @param tgl
+     * @param idKry
      */
-    public Data_Search2() {
+    public Data_Search_Tunjangan(String tgl, String idKry) {
         initComponents();
+        vTgl = tgl;
+        vIdKry = idKry;
         model = new DefaultTableModel();
         tbl.setModel(model);
-        model.addColumn("ID");
-        model.addColumn("Nama");
-        model.addColumn("TglLahir");
-        model.addColumn("JK");
-        model.addColumn("Alamat");
-        model.addColumn("NoHP");
-        model.addColumn("Jabatan");
-        model.addColumn("Golongan");
+        model.addColumn("tunjanganID");
+        model.addColumn("jenis_tunjangan");
+        model.addColumn("tanggal");
+        model.addColumn("jumlah");
         getData();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
         Seticon();
     }
-    public void getData(){
+   public void getData(){
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
         String k = (String)ktg.getSelectedItem();
         String c = cr.getText();
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM karyawan WHERE "+k+" like '%"+c+"%'";
+            String sql = "SELECT tunjanganID, jenis_tunjangan, tanggal, jumlah FROM tunjangan where "+k+" like '%"+c+"%' AND DATE_FORMAT(tanggal, '%Y-%m') = DATE_FORMAT('" + vTgl + "', '%Y-%m') AND karyawanID = " + vIdKry;
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
-                Object[] obj = new Object[8];
-                obj[0] = res.getString("karyawanID");
-                obj[1] = res.getString("nama");
-                obj[2] = res.getString("tgl_lahir");
-                obj[3] = res.getString("jk");
-                obj[4] = res.getString("alamat");
-                obj[5] = res.getString("noHP");
-                obj[6] = res.getString("jabatan");
-                obj[7] = res.getString("golongan");
-                
+                Object[] obj = new Object[7];
+                obj[0] = res.getString("tunjanganID");
+                obj[1] = res.getString("jenis_tunjangan");
+                obj[2] = res.getString("tanggal");
+                obj[3] = res.getString("jumlah");                
                 model.addRow(obj);
             }
         }catch(SQLException err){
@@ -77,7 +71,7 @@ public class Data_Search2 extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        lJudul = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         cr = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
@@ -106,8 +100,8 @@ public class Data_Search2 extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setText("Pilih Karyawan");
+        lJudul.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lJudul.setText("Detail Tunjangan");
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -128,7 +122,7 @@ public class Data_Search2 extends javax.swing.JFrame {
             }
         });
 
-        ktg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nama", "jabatan", "alamat" }));
+        ktg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "tanggal", "jenis_potongan", "jumlah", "potonganID" }));
 
         jLabel11.setText("Kategori");
 
@@ -183,36 +177,32 @@ public class Data_Search2 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lJudul)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lJudul)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
-        int tabelKry = tbl.getSelectedRow();
-        fP.nmKry = tbl.getValueAt(tabelKry, 1).toString();
-        fP.jbtKry = tbl.getValueAt(tabelKry, 6).toString();
-        fP.golKry = tbl.getValueAt(tabelKry, 7).toString();
-        fP.vId = Integer.valueOf(tbl.getValueAt(tabelKry, 0).toString());
-        fP.vKryId = tbl.getValueAt(tabelKry, 0).toString();
-        fP.itemTerpilih();
-        this.dispose();
+//        int tabelLmb = tbl.getSelectedRow();
+//        fP.lmb = Integer.parseInt(tbl.getValueAt(tabelLmb, 6).toString());
+//        fP.itemTerpilih();
+//        this.dispose();
     }//GEN-LAST:event_tblMouseClicked
 
     private void crActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crActionPerformed
@@ -245,20 +235,27 @@ public class Data_Search2 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Data_Search2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Data_Search_Tunjangan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Data_Search2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Data_Search_Tunjangan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Data_Search2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Data_Search_Tunjangan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Data_Search2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Data_Search_Tunjangan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Data_Search2().setVisible(true);
+//                new Data_Search_Potongan().setVisible(true);
             }
         });
     }
@@ -267,11 +264,11 @@ public class Data_Search2 extends javax.swing.JFrame {
     private javax.swing.JTextField cr;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton7;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> ktg;
+    private javax.swing.JLabel lJudul;
     private javax.swing.JTable tbl;
     // End of variables declaration//GEN-END:variables
 
@@ -279,3 +276,4 @@ public class Data_Search2 extends javax.swing.JFrame {
        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Icon/gif/16x16/dktbig.gif")));
     }
 }
+

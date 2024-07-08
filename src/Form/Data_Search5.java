@@ -209,7 +209,7 @@ public class Data_Search5 extends javax.swing.JFrame {
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
         int tabelKry = tbl.getSelectedRow();
         fTunjangan.idKry = tbl.getValueAt(tabelKry,0).toString();
-       
+        fTunjangan.nmKry = tbl.getValueAt(tabelKry,1).toString();
         fTunjangan.itemTerpilih();
        
         this.dispose();

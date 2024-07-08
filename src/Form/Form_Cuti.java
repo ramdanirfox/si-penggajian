@@ -108,7 +108,7 @@ private DefaultTableModel model;
         return jml;
     }
     
-      private String querySatu(String query) {
+    private String querySatu(String query) {
        try {
             st = (Statement) koneksi.getKoneksi().createStatement();
             String sql = query;
@@ -791,17 +791,10 @@ private DefaultTableModel model;
             tgl_cuti.setMinSelectableDate(Date.from(cs.toInstant()));
         }
         else {
-//            
-//            Calendar cs = Calendar.getInstance();
-//            cs.setTimeInMillis(tgl_masuk.getDate().getTime());
-//            cs.add(Calendar.DATE, -1);
-//            Calendar ce = Calendar.getInstance();
-//            ce.setTimeInMillis(tgl_cuti.getDate().getTime());
-//            ce.add(Calendar.DATE, 1);
-//            tgl_cuti.setMaxSelectableDate(Date.from(cs.toInstant()));
-//            tgl_masuk.setMinSelectableDate(Date.from(ce.toInstant()));
-//              tgl_masuk.setDate(null);
-//              tgl_cuti.setDate(null);
+            tgl_cuti.setMinSelectableDate(dtNow);
+            tgl_masuk.setMinSelectableDate(dtNow);
+            tgl_cuti.setMaxSelectableDate(null);
+            tgl_masuk.setMaxSelectableDate(null);
             System.out.println("No-op, harapannya dipanggil setelah dinullkan parsial oleh rekamTelatTanggal");
        }
     }

@@ -17,18 +17,21 @@ public class Data_Search_Lmb extends javax.swing.JFrame {
     private DefaultTableModel model;
     public Form_Penggajian fP = null;
     private static Statement st;
+    String vIdKry, vTgl;
     /**
      * Creates new form Data_Search_Lmb
      */
-    public Data_Search_Lmb() {
+    public Data_Search_Lmb(String tgl, String idKry) {
         initComponents();
+        vIdKry = idKry;
+        vTgl = tgl;
         model = new DefaultTableModel();
         tbl.setModel(model);
         model.addColumn("ID");
-        model.addColumn("Nama");
-        model.addColumn("Jabatan");
-        model.addColumn("Golongan");
-        model.addColumn("JmlJam");
+        model.addColumn("Tanggal");
+//        model.addColumn("Jabatan");
+//        model.addColumn("Golongan");
+        model.addColumn("Jml Jam");
         model.addColumn("GajiPerJam");
         model.addColumn("Total");
         getData();
@@ -44,17 +47,15 @@ public class Data_Search_Lmb extends javax.swing.JFrame {
         String c = cr.getText();
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM lembur WHERE "+k+" like '%"+c+"%'";
+            String sql = "SELECT lemburID, tanggal_lembur, jml_jam, gaji_perjam, total FROM lembur WHERE "+k+" like '%"+c+"%' AND DATE_FORMAT(tanggal_lembur, '%Y-%m') = DATE_FORMAT('" + vTgl + "', '%Y-%m') AND karyawanID = " + vIdKry;
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
-                Object[] obj = new Object[7];
+                Object[] obj = new Object[5];
                 obj[0] = res.getString("lemburID");
-                obj[1] = res.getString("nama");
-                obj[2] = res.getString("jabatan");
-                obj[3] = res.getString("golongan");
-                obj[4] = res.getString("jml_jam");
-                obj[5] = res.getString("gaji_perjam");
-                obj[6] = res.getString("total");
+                obj[1] = res.getString("tanggal_lembur");
+                obj[2] = res.getString("jml_jam");
+                obj[3] = res.getString("gaji_perjam");
+                obj[4] = res.getString("total");
                 
                 model.addRow(obj);
             }
@@ -104,7 +105,7 @@ public class Data_Search_Lmb extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbl);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setText("Pilih Lembur Karyawan");
+        jLabel1.setText("Detail Lembur");
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -125,7 +126,7 @@ public class Data_Search_Lmb extends javax.swing.JFrame {
             }
         });
 
-        ktg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nama", "jabatan", "total" }));
+        ktg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "tanggal_lembur", "jml_jam", "gaji_perjam", "total", "lemburID" }));
 
         jLabel11.setText("Kategori");
 
@@ -202,10 +203,10 @@ public class Data_Search_Lmb extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
-        int tabelLmb = tbl.getSelectedRow();
-        fP.lmb = Integer.parseInt(tbl.getValueAt(tabelLmb, 6).toString());
-        fP.itemTerpilih();
-        this.dispose();
+//        int tabelLmb = tbl.getSelectedRow();
+//        fP.lmb = Integer.parseInt(tbl.getValueAt(tabelLmb, 6).toString());
+//        fP.itemTerpilih();
+//        this.dispose();
     }//GEN-LAST:event_tblMouseClicked
 
     private void crActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crActionPerformed
@@ -251,7 +252,7 @@ public class Data_Search_Lmb extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Data_Search_Lmb().setVisible(true);
+//                new Data_Search_Lmb().setVisible(true);
             }
         });
     }
