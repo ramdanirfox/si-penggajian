@@ -23,6 +23,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
     private DefaultTableModel model;
     String vNm,vTgl,vTglBln,vJbt,vGol, vKryId;
     int vId,vGp,vGl,vT,vP,vGb;
+    int vDenda = 0;
     private static Statement st;
     /**
      * Creates new form Penggajian
@@ -111,7 +112,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
         vNm = nm.getText();
         String tampilan ="yyyy-MM-dd" ; 
         SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
-        vTgl = tg.getDate() == null ? String.valueOf(fm.format(tg.getDate())) : "";
+        vTgl = tg.getDate() != null ? String.valueOf(fm.format(tg.getDate())) : "";
         vGp = Integer.parseInt(gp.getText());
         vGl = Integer.parseInt(gl.getText());
         vT = Integer.parseInt(tj.getText());
@@ -124,8 +125,9 @@ public class Form_Penggajian extends javax.swing.JFrame {
         loadData();
         try{
         st = (Statement)koneksi.getKoneksi().createStatement();
-        String sql = "Insert into penggajian(tgl,nama,jabatan,golongan,gapok,gaji_lembur,tunjangan,potongan,gaji_bersih)"
-                +"values('"+vTgl+"','"+vNm+"','"+vJbt+"','"+vGol+"','"+vGp+"','"+vGl+"','"+vT+"','"+vP+"','"+vGb+"')";
+        String sql = "Insert into penggajian (tgl,nama,jabatan,golongan,gapok,gaji_lembur,tunjangan,potongan,gaji_bersih)"
+                +" values ('"+vTgl+"','"+vNm+"','"+vJbt+"','"+vGol+"','"+vGp+"','"+vGl+"','"+vT+"','"+vP+"','"+vGb+"')";
+            System.out.println(sql);
         PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
         p.executeUpdate(sql);
         getData();
@@ -133,7 +135,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
         nm.requestFocus();
         JOptionPane.showMessageDialog(null, "Data Berhasil DiSimpan!");
         }catch(SQLException err){
-            JOptionPane.showMessageDialog(null, "Data Gagal DiSimpan!");
+            JOptionPane.showMessageDialog(null, "Data Gagal DiSimpan! : " + err.getMessage());
             reset();
         }
     }
@@ -707,7 +709,9 @@ public class Form_Penggajian extends javax.swing.JFrame {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-        (new Data_Search_Kehadiran(tg.getDate(), vKryId)).setVisible(true);
+        Data_Search_Kehadiran f = (new Data_Search_Kehadiran(tg.getDate(), vKryId, Integer.parseInt(gp.getText())));
+        f.fP = this;
+        f.setVisible(true);
     }//GEN-LAST:event_jButton11ActionPerformed
 
     /**

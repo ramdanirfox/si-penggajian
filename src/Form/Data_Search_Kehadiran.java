@@ -9,6 +9,8 @@ import com.github.lgooddatepicker.optionalusertools.DateHighlightPolicy;
 import com.github.lgooddatepicker.optionalusertools.DateVetoPolicy;
 import com.github.lgooddatepicker.zinternaltools.HighlightInformation;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,16 +31,26 @@ import koneksiDB.koneksi;
  * @author iramd
  */
 public class Data_Search_Kehadiran extends javax.swing.JFrame {
+    Form_Penggajian fP;
     DatePickerSettings dateSettings;
     DatePickerSettings dateSettings2;
     Date vTglGaji;
     String vIdKry;
+    int vGaji;
+    int vDendaTotal = 0;
     Calendar dateMin, dateMax;
     ArrayList<Date> cutiStart = new ArrayList<>();
     ArrayList<Date> cutiEnd = new ArrayList<>();
     ArrayList<String> cutiText = new ArrayList<>();
     ArrayList<Date> lemburTgl = new ArrayList<>();
     ArrayList<String> lemburJam = new ArrayList<>();
+    ArrayList<Date> penaltiTgl = new ArrayList<>();
+    ArrayList<Integer> penaltiJenis = new ArrayList<>();
+    int hitungHariKerja = 0;
+    int hitungAbsen = 0; 
+    int hitungMasukSaja = 0;
+    int hitungDurasiKurang = 0;
+    
     private static Statement st;
     SimpleDateFormat fmtTgl = new SimpleDateFormat("yyyy-MM-dd");
     DateTimeFormatter parseTgl = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -47,9 +59,10 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
      * @param tglGaji
      * @param idKry
      */
-    public Data_Search_Kehadiran(Date tglGaji, String idKry) {
+    public Data_Search_Kehadiran(Date tglGaji, String idKry, int gaji) {
         vTglGaji = tglGaji;
         vIdKry = idKry;
+        vGaji = gaji;
         
         SampleDateVetoPolicy vetoPolicy = new SampleDateVetoPolicy(vTglGaji);
         java.time.YearMonth yms = java.time.YearMonth.of(vetoPolicy.dateMin.get(Calendar.YEAR), vetoPolicy.dateMin.get(Calendar.MONTH) + 1);
@@ -57,13 +70,22 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
         dateMin = vetoPolicy.dateMin;
         dateMax = vetoPolicy.dateMax;
         getData(buildQuery());
-        
         initCfg();
+        
         initComponents();
         dateSettings.setVetoPolicy(vetoPolicy);
         dateSettings2.setVetoPolicy(vetoPolicy);
         calendarPanel2.setDisplayedYearMonth(yms);
         calendarPanel1.setDisplayedYearMonth(yme);
+                
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = getSize();
+        setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+        
+        lAbsen.setText(" x " + hitungAbsen + " Hari");
+        lMasukSj.setText(" x " + hitungMasukSaja + " Kali");
+        lDurKrg.setText(" x " + hitungDurasiKurang + " Jam");
+        kalkulasiPenalti();
     }
     
     private void initCfg() {
@@ -83,34 +105,360 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        calendarPanel1 = new com.github.lgooddatepicker.components.CalendarPanel(dateSettings);
+        jPanel1 = new javax.swing.JPanel();
         calendarPanel2 = new com.github.lgooddatepicker.components.CalendarPanel(dateSettings2);
+        calendarPanel1 = new com.github.lgooddatepicker.components.CalendarPanel(dateSettings);
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lAbsen = new javax.swing.JLabel();
+        lMasukSj = new javax.swing.JLabel();
+        lDurKrg = new javax.swing.JLabel();
+        fAbsen = new javax.swing.JTextField();
+        fMasukSj = new javax.swing.JTextField();
+        fDurKrg = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        fTotal = new javax.swing.JTextField();
+        bBatal = new javax.swing.JButton();
+        bTambahPotoong = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED)));
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED), "Keterangan"));
+
+        jPanel3.setBackground(java.awt.Color.cyan);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 36, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 15, Short.MAX_VALUE)
+        );
+
+        jPanel4.setBackground(java.awt.Color.orange);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 36, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 15, Short.MAX_VALUE)
+        );
+
+        jLabel2.setText("Lembur");
+
+        jLabel3.setText("Cuti");
+
+        jLabel8.setText("Masuk Saja");
+
+        jPanel6.setBackground(new java.awt.Color(250, 100, 100));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 36, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 15, Short.MAX_VALUE)
+        );
+
+        jPanel7.setBackground(new java.awt.Color(250, 150, 150));
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 36, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 15, Short.MAX_VALUE)
+        );
+
+        jLabel9.setText("Durasi Kurang");
+
+        jPanel8.setBackground(new java.awt.Color(250, 0, 0));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 36, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 15, Short.MAX_VALUE)
+        );
+
+        jLabel10.setText("Absen");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel10)))
+                .addGap(5, 5, 5))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED), "Penalti"));
+
+        jLabel4.setText("Absen");
+
+        jLabel5.setText("Masuk Saja");
+
+        jLabel6.setText("Durasi Kurang");
+
+        lAbsen.setText(" x ");
+
+        lMasukSj.setText(" x ");
+
+        lDurKrg.setText(" x ");
+
+        fAbsen.setText("jTextField1");
+
+        fMasukSj.setText("jTextField1");
+
+        fDurKrg.setText("jTextField1");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lDurKrg)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fDurKrg, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(lMasukSj)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                                .addComponent(fMasukSj, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(lAbsen)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(fAbsen, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(0, 0, 0))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(lAbsen)
+                    .addComponent(fAbsen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(lMasukSj)
+                    .addComponent(fMasukSj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(lDurKrg)
+                    .addComponent(fDurKrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(calendarPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(calendarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(calendarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(calendarPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jLabel1.setText("Detail Kehadiran");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+
+        jLabel7.setText("Total Penalti : ");
+
+        fTotal.setText("jTextField1");
+
+        bBatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Cancel.gif"))); // NOI18N
+        bBatal.setText("Batal");
+        bBatal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bBatalActionPerformed(evt);
+            }
+        });
+
+        bTambahPotoong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Create.gif"))); // NOI18N
+        bTambahPotoong.setText("Tambah ke Potongan");
+        bTambahPotoong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bTambahPotoongActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(283, 283, 283))
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(calendarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(calendarPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(56, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(156, 156, 156)
+                        .addComponent(bBatal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bTambahPotoong)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(74, Short.MAX_VALUE)
-                .addComponent(calendarPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(calendarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(fTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bBatal)
+                    .addComponent(bTambahPotoong))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBatalActionPerformed
+        // TODO add your handling code here:
+        if (fP != null) {
+            fP.vDenda = 0;
+        }
+        else {
+            System.out.println("Form Penggajian tidak diisi");
+        }
+        dispose();
+    }//GEN-LAST:event_bBatalActionPerformed
+
+    private void bTambahPotoongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTambahPotoongActionPerformed
+        // TODO add your handling code here:
+        if (fP != null) {
+            fP.vDenda = Integer.parseInt(fTotal.getText());
+        }
+        else {
+            System.out.println("Form Penggajian tidak diisi");
+        }
+        dispose();
+    }//GEN-LAST:event_bTambahPotoongActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,7 +490,7 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Data_Search_Kehadiran(new Date(2024, 5, 28), "7").setVisible(true);
+                new Data_Search_Kehadiran(new Date(2024, 5, 28), "7", 5000000).setVisible(true);
             }
         });
     }
@@ -155,10 +503,10 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
             long e = date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
             for (Date cs : cutiStart ) {
                 if (e >= cs.getTime() && e < cutiEnd.get(i).getTime()) {
-                   return new HighlightInformation(Color.RED, null, cutiText.get(i));
+                   return new HighlightInformation(Color.ORANGE, null, cutiText.get(i));
                 }
                 i++;
-            }   
+            }
             
             i = 0;
             for (Date cs : lemburTgl ) {
@@ -168,9 +516,42 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
                 i++;
             }
             
+            i = 0;
+            for (Date cs : penaltiTgl ) {
+                if (fmtTgl.format(cs).equals(date.format(parseTgl))) {
+                   if (penaltiJenis.get(i) == 2) {
+                    return new HighlightInformation(new Color(250, 0, 0), null, "Absen");
+                   }
+                   if (penaltiJenis.get(i) == 3) {
+                     return new HighlightInformation(new Color(250, 100, 100), null, "Masuk Saja");
+                   }
+                   if (penaltiJenis.get(i) > 4) {
+                     return new HighlightInformation(new Color(250, 150, 150), null, "Durasi Kurang");
+                   }
+                }
+                i++;
+            }
+            
             return null;
         }
         
+    }
+    
+    private void kalkulasiPenalti() {
+        float dendaHari = vGaji / hitungHariKerja;
+        float dendaJam = dendaHari / 8;
+        
+        float dendaAbsen = dendaHari * hitungAbsen;
+        float dendaMasukSaja = (dendaHari - dendaJam) * hitungMasukSaja;
+        float dendaDurasi = dendaJam * hitungDurasiKurang;
+        
+        fAbsen.setText(String.format("%.0f", dendaAbsen));
+        fDurKrg.setText(String.format("%.0f", dendaDurasi));
+        fMasukSj.setText(String.format("%.0f", dendaMasukSaja));
+        
+        float dendaTotal = dendaAbsen + dendaMasukSaja + dendaDurasi;
+        vDendaTotal = (int) dendaTotal;
+        fTotal.setText(String.format("%.0f", dendaTotal));
     }
     
     private String buildQuery() {
@@ -195,6 +576,14 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
     " c.alasan," +
     " l.tanggal_lembur," +
     " l.jml_jam" +
+       "," +
+           " CASE WHEN dayname(date) NOT IN ('Sunday', 'Saturday') AND (c.tgl_cuti IS NULL OR (date > DATE_ADD(c.tgl_masuk, INTERVAL -1 DAY))) THEN " +
+         " CASE WHEN k.jam_masuk IS NULL THEN 2" +
+             " WHEN k.jam_pulang IS NULL THEN 3" +
+             " WHEN EXTRACT(HOUR from timediff(k.jam_pulang, k.jam_masuk)) < 8 THEN 4" +
+             " WHEN l.tanggal_lembur IS NOT NULL AND EXTRACT(HOUR from timediff(k.jam_pulang, k.jam_masuk)) + l.jml_jam < (8+l.jml_jam) THEN 5" +
+             " ELSE 1 END" +
+    " ELSE 0 END AS jenis_penalti" +
     " FROM " +
     " DateRange" +
     " LEFT JOIN (SELECT * FROM kehadiran WHERE karyawanID = "+vIdKry+") k " +
@@ -204,6 +593,7 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
     " LEFT JOIN (SELECT * FROM lembur WHERE karyawanID = "+vIdKry+") l " +
     " ON date = date_format(l.tanggal_lembur, '%Y-%m-%d')" +
     " ORDER BY date ASC";
+        
     return sql;
     }
     
@@ -227,7 +617,13 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
                   obj.add(res.getString("alasan"));//7
                   obj.add(res.getString("tanggal_lembur"));
                   obj.add(res.getString("jml_jam"));
+                  obj.add(res.getString("jenis_penalti"));
                   al.add(obj);
+                  
+                  if (!(obj.get(1).equals("Saturday") || obj.get(1).equals("Sunday"))) {
+                      hitungHariKerja += 1;
+                  }
+                          
                   if (obj.get(5) != null) {
                       System.out.println(obj.get(0) + "Ada cuti" + res.getString("tgl_cuti"));
                       cutiStart.add(res.getDate("tgl_cuti"));
@@ -240,6 +636,28 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
                         lemburJam.add(res.getString("jml_jam"));
                   }
                   
+                  if (obj.get(10) != null) {
+                      int jenisPenalti = res.getInt("jenis_penalti");
+                      penaltiTgl.add(res.getDate("date"));
+                      penaltiJenis.add(jenisPenalti);
+                      
+                      switch (jenisPenalti) {
+                          case 2:
+                              hitungAbsen += 1;
+                              break;
+                          case 3:
+                              hitungMasukSaja += 1;
+                              break;
+                          case 4:
+                              hitungDurasiKurang += 8 - res.getInt("durasi_hadir_jam");
+                              break;
+                          case 5:
+                              hitungDurasiKurang += (8 + res.getInt("jml_jam")) - res.getInt("durasi_hadir_jam");
+                              break;
+                          default:
+                              break;
+                      }
+                  }       
             }
 //            System.out.println(obj.get(0));
             return al;
@@ -297,7 +715,34 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bBatal;
+    private javax.swing.JButton bTambahPotoong;
     private com.github.lgooddatepicker.components.CalendarPanel calendarPanel1;
     private com.github.lgooddatepicker.components.CalendarPanel calendarPanel2;
+    private javax.swing.JTextField fAbsen;
+    private javax.swing.JTextField fDurKrg;
+    private javax.swing.JTextField fMasukSj;
+    private javax.swing.JTextField fTotal;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JLabel lAbsen;
+    private javax.swing.JLabel lDurKrg;
+    private javax.swing.JLabel lMasukSj;
     // End of variables declaration//GEN-END:variables
 }

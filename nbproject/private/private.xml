@@ -5,23 +5,14 @@
         <group>
             <file>file:/D:/projects/private/si-penggajian/src/Form/Form_Potongan.java</file>
             <file>file:/D:/projects/private/si-penggajian/src/Form/Form_Tunjangan.java</file>
-            <file>file:/D:/projects/private/si-penggajian/src/Form/Lap_Cuti.java</file>
-            <file>file:/D:/projects/private/si-penggajian/src/Form/Form_Utama_Personalia.java</file>
             <file>file:/D:/projects/private/si-penggajian/src/Form/Form_Penggajian.java</file>
-            <file>file:/D:/projects/private/si-penggajian/src/Form/Data_Search3.java</file>
-            <file>file:/D:/projects/private/si-penggajian/src/Form/Lap_Karyawan.java</file>
-            <file>file:/D:/projects/private/si-penggajian/src/Form/Form_Lembur.java</file>
-            <file>file:/D:/projects/private/si-penggajian/src/koneksiDB/koneksi.java</file>
-            <file>file:/D:/projects/private/si-penggajian/src/Form/Lap_Kehadiran.java</file>
-            <file>file:/D:/projects/private/si-penggajian/src/Form/RekapHadir.jrxml</file>
-            <file>file:/D:/projects/private/si-penggajian/src/Form/Lap_SlipGaji.java</file>
-            <file>file:/D:/projects/private/si-penggajian/src/Form/Lap_Penggajian.java</file>
-            <file>file:/D:/projects/private/si-penggajian/src/Form/Form_User.java</file>
-            <file>file:/D:/projects/private/si-penggajian/src/Form/Lap_Lembur.java</file>
+            <file>file:/D:/projects/private/si-penggajian/src/Form/Data_Search_Tunjangan.java</file>
+            <file>file:/D:/projects/private/si-penggajian/src/Form/Data_Search_Lmb.java</file>
             <file>file:/D:/projects/private/si-penggajian/src/Form/Form_Karyawan.java</file>
-            <file>file:/D:/projects/private/si-penggajian/src/Form/RekapCuti.jrxml</file>
+            <file>file:/D:/projects/private/si-penggajian/src/Form/Data_Search_Potongan.java</file>
             <file>file:/D:/projects/private/si-penggajian/src/Form/Form_Utama.java</file>
-            <file>file:/D:/projects/private/si-penggajian/src/Form/Form_Login.java</file>
+            <file>file:/D:/projects/private/si-penggajian/src/Form/Lap_SlipGaji.java</file>
+            <file>file:/D:/projects/private/si-penggajian/src/Form/Data_Search_Kehadiran.java</file>
             <file>file:/D:/projects/private/si-penggajian/src/Form/Form_Cuti.java</file>
             <file>file:/D:/projects/private/si-penggajian/src/Form/Form_Kehadiran.java</file>
         </group>

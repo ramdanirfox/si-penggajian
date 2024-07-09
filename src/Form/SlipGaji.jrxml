@@ -153,7 +153,7 @@ FROM
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="465" y="10" width="84" height="20" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy", new Locale("id", "ID")).format(new java.util.Date());]]></textFieldExpression>
 			</textField>
 			<image hAlign="Center">
 				<reportElement x="0" y="0" width="65" height="60" uuid="94883631-a913-43e2-b182-ab8d77d0181e"/>
@@ -167,7 +167,7 @@ FROM
 				<reportElement x="415" y="30" width="50" height="20" uuid="0b3f9342-da78-4cfa-9fc5-2301c4749678"/>
 				<box rightPadding="4"/>
 				<textElement textAlignment="Right"/>
-				<text><![CDATA[No. Ref]]></text>
+				<text><![CDATA[No. Ref:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="220" y="17" width="110" height="25" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
@@ -218,7 +218,7 @@ FROM
 				<text><![CDATA[Telepon:]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="340" y="74" width="100" height="20" uuid="41df8369-e818-460c-9036-a03ba0efb9cc"/>
+				<reportElement x="340" y="71" width="100" height="20" uuid="41df8369-e818-460c-9036-a03ba0efb9cc"/>
 				<textFieldExpression><![CDATA[$P{P_GOLONGAN}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
@@ -272,21 +272,22 @@ FROM
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_GAPOK}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[String.format("%,d\n", Integer.valueOf($P{P_GAPOK}))]]></textFieldExpression>
 			</textField>
 			<textField pattern="Rp#,##0">
 				<reportElement x="350" y="160" width="178" height="15" uuid="11fe2e7a-2b17-4247-8bf2-28b240d9c439"/>
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_LEMBUR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[String.format("%,d\n", Integer.valueOf($P{P_LEMBUR}))]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="350" y="175" width="178" height="15" uuid="1f4f8cc3-49c2-480e-bb5a-7ee71fc0ad10"/>
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_TUNJANGAN}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[String.format("%,d\n", Integer.valueOf($P{P_TUNJANGAN}))
+]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="330" y="195" width="226" height="1" uuid="490bb37f-b591-4db1-ac62-66b34a651d84">
@@ -306,13 +307,13 @@ FROM
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_HASIL_TEMP}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[String.format("%,d\n", Integer.valueOf($P{P_HASIL_TEMP}))]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="360" y="50" width="105" height="20" uuid="5270587c-7af8-4629-9225-eabaf2c91a10"/>
 				<box rightPadding="4"/>
 				<textElement textAlignment="Right"/>
-				<text><![CDATA[Kode Karyawan]]></text>
+				<text><![CDATA[Kode Karyawan:]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="465" y="50" width="84" height="20" uuid="1c78fe64-9ef3-4d37-ba4e-335f2987009a"/>
@@ -336,7 +337,8 @@ FROM
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_POTONGAN}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[String.format("%,d\n", Integer.valueOf($P{P_POTONGAN}))
+]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="330" y="20" width="226" height="1" uuid="69b38a9e-8442-48e5-aa31-ee72c6e6b63b">
@@ -356,7 +358,7 @@ FROM
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_GAJI_BERSIH}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[String.format("%,d\n", Integer.valueOf($P{P_GAJI_BERSIH}))]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="40" y="20" width="120" height="15" uuid="1a4fbc1f-fb94-44f8-af9f-453b7e43fa91"/>
