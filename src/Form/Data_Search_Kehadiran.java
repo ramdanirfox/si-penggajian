@@ -304,7 +304,7 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(7, 7, 7)
                         .addComponent(lDurKrg)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(fDurKrg, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -442,6 +442,7 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (fP != null) {
             fP.vDenda = 0;
+            fP.kalkulasiKomponenPenggajian();
         }
         else {
             System.out.println("Form Penggajian tidak diisi");
@@ -453,6 +454,7 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (fP != null) {
             fP.vDenda = Integer.parseInt(fTotal.getText());
+            fP.kalkulasiKomponenPenggajian();
         }
         else {
             System.out.println("Form Penggajian tidak diisi");

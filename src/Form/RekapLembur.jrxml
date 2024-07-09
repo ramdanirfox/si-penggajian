@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 5.5.2  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Slip Gaji" pageWidth="595" pageHeight="845" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL Adapter"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rekap Lembur" pageWidth="595" pageHeight="845" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
 	<property name="com.jaspersoft.studio.report.description" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
@@ -104,21 +104,29 @@ FROM
 			<property name="com.jaspersoft.studio.field.tree.path" value="lembur"/>
 		</field>
 	</subDataset>
+	<parameter name="PKARYAWANID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PTANGGAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT
-     karyawan.`karyawanID` AS karyawan_karyawanID,
-     karyawan.`nama` AS karyawan_nama,
-     karyawan.`jabatan` AS karyawan_jabatan,
-     lembur.lemburID AS lembur_lemburID,
-     lembur.tanggal_lembur AS lembur_tanggal_lembur,
-     lembur.jml_jam AS lembur_jml_jam,
-     lembur.total AS lembur_total
-FROM
-       `karyawan` karyawan
- INNER JOIN 
- 		`lembur` lembur
- ON
- 		karyawan.karyawanID = lembur.karyawanID]]>
+		<![CDATA[SELECT karyawan.karyawanID AS karyawan_karyawanID,
+	karyawan.nama AS karyawan_nama,
+	karyawan.jabatan AS karyawan_jabatan,
+	lembur.lemburID AS lembur_lemburID,
+	lembur.tanggal_lembur AS lembur_tanggal_lembur,
+	lembur.jml_jam AS lembur_jml_jam,
+	lembur.total AS lembur_total
+FROM karyawan karyawan
+	INNER JOIN lembur lembur ON 
+	 karyawan.karyawanID = lembur.karyawanID
+	 WHERE (
+	 	karyawan.karyawanID ='$P!{PKARYAWANID}' OR ''='$P!{PKARYAWANID}'
+	 	) AND (
+	 		'$P!{PTANGGAL}' = '' OR 
+	 		date_format(lembur.tanggal_lembur, '%Y-%m') = '$P!{PTANGGAL}'
+	 	)]]>
 	</queryString>
 	<field name="karyawan_karyawanID" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="karyawanID"/>

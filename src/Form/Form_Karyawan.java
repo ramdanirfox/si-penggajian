@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.Locale;
 /**
  *
  * @author ramdanirfox
@@ -46,6 +47,7 @@ public class Form_Karyawan extends javax.swing.JFrame {
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
         Seticon();
+        tg.getDateEditor().setLocale(Locale.forLanguageTag("id-ID"));
     }
     public void getData(){
         model.getDataVector().removeAllElements();
@@ -390,7 +392,7 @@ public class Form_Karyawan extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setText("Password");
+        jLabel10.setText("Kata Sandi");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -577,7 +579,7 @@ public class Form_Karyawan extends javax.swing.JFrame {
         });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/View.gif"))); // NOI18N
-        jButton5.setText("Search");
+        jButton5.setText("Cari");
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -596,7 +598,7 @@ public class Form_Karyawan extends javax.swing.JFrame {
         jLabel11.setText("Kategori");
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Refresh.gif"))); // NOI18N
-        jButton7.setText("Refresh");
+        jButton7.setText("Segarkan");
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton7.addActionListener(new java.awt.event.ActionListener() {

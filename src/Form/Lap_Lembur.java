@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.io.File;
 import koneksiDB.koneksi;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.*;
 import javax.swing.JOptionPane;
@@ -33,9 +34,21 @@ public class Lap_Lembur extends javax.swing.JFrame {
      */
     public Lap_Lembur() {
         initComponents();
+        model = new DefaultTableModel();
+        tbl.setModel(model);
+        model.addColumn("ID");
+        model.addColumn("Nama");
+        model.addColumn("TglLahir");
+        model.addColumn("JK");
+        model.addColumn("Alamat");
+        model.addColumn("NoHP");
+        model.addColumn("Jabatan");
+        model.addColumn("Golongan");
+        getData();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);        
+        tgl.getDateEditor().setDateFormatString("yyyy-MM");
     }
 
     /**
@@ -49,6 +62,10 @@ public class Lap_Lembur extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl = new javax.swing.JTable();
+        tgl = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -64,48 +81,124 @@ public class Lap_Lembur extends javax.swing.JFrame {
         });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Exit.gif"))); // NOI18N
-        jButton2.setText("Exit");
+        jButton2.setText("Tutup");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
+        tbl.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbl);
+
+        jLabel2.setText("Pilih Periode :");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(304, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(24, 24, 24))
             .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton2))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(206, 206, 206)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tgl, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton2)
-                .addGap(88, 88, 88)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void getData() {
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        try {
+            st = (Statement) koneksi.getKoneksi().createStatement();
+            String sql = "SELECT * FROM karyawan";
+            ResultSet res = st.executeQuery(sql);
+            while (res.next()) {
+                Object[] obj = new Object[8];
+                obj[0] = res.getString("karyawanID");
+                obj[1] = res.getString("nama");
+                obj[2] = res.getString("tgl_lahir");
+                obj[3] = res.getString("jk");
+                obj[4] = res.getString("alamat");
+                obj[5] = res.getString("noHP");
+                obj[6] = res.getString("jabatan");
+                obj[7] = res.getString("golongan");
+
+                model.addRow(obj);
+            }
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, err.getMessage());
+        }
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String paramTgl = "";
+        if (tgl.getDate() != null) {
+           String tampilan ="yyyy-MM"; 
+           SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
+           String vTglCuti = String.valueOf(fm.format(tgl.getDate()));
+           paramTgl = vTglCuti;
+           System.out.println(vTglCuti);
+           param.put("PTANGGAL", fm.format(tgl.getDate()));
+        }
+        else {
+            param.put("PTANGGAL", "");
+        }
         try{
             File reprt = new File("src/Form/RekapLembur.jrxml");
             jasperDesign = JRXmlLoader.load(reprt);
-            param.clear();
             jasperReport = JasperCompileManager.compileReport(jasperDesign);
             jasperPrint = JasperFillManager.fillReport(jasperReport,param,koneksi.getKoneksi());
             JasperViewer.viewReport(jasperPrint,false);
             JasperPrintManager.printReport(jasperPrint, true);
+//            param.clear();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -117,6 +210,14 @@ public class Lap_Lembur extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
+        int tabelKry = tbl.getSelectedRow();
+        param.put("PKARYAWANID", tbl.getValueAt(tabelKry, 0).toString());
+        param.put("PNAMA", tbl.getValueAt(tabelKry, 1).toString());
+        param.put("PJABATAN", tbl.getValueAt(tabelKry, 6).toString());
+        System.out.println(Arrays.asList(param)); // method 1
+    }//GEN-LAST:event_tblMouseClicked
 
     /**
      * @param args the command line arguments
@@ -157,5 +258,9 @@ public class Lap_Lembur extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbl;
+    private com.toedter.calendar.JDateChooser tgl;
     // End of variables declaration//GEN-END:variables
 }

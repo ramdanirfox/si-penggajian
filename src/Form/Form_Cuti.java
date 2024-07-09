@@ -19,6 +19,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import penggajian_karyawan.Penggajian_Karyawan;
 
@@ -57,6 +58,8 @@ private DefaultTableModel model;
         isiKaryawan();
         perbaruiID();
         getData();
+        tgl_cuti.getDateEditor().setLocale(Locale.forLanguageTag("id-ID"));
+        tgl_masuk.getDateEditor().setLocale(Locale.forLanguageTag("id-ID"));
     }
     public String idKry;
  
@@ -71,6 +74,33 @@ private DefaultTableModel model;
         String cariitem = cr.getText();
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
+            
+            String sql = "SELECT COUNT(tgl_cuti) AS hasil FROM (\n" +
+                "WITH RECURSIVE DateRange AS (\n" +
+                "    SELECT CONCAT(YEAR(now()), '-01-01') AS date" +
+                "    UNION ALL\n" +
+                "    SELECT DATE_ADD(date, INTERVAL 1 DAY)\n" +
+                "    FROM DateRange\n" +
+                "    WHERE date < DATE_SUB(CONCAT(YEAR(now())+1, '-01-01'), INTERVAL 1 DAY)\n" +
+                ")\n" +
+                "SELECT date, dayname(date) AS namahari, c.tgl_cuti , c.tgl_masuk FROM DateRange\n" +
+                "LEFT JOIN (SELECT * FROM cuti WHERE karyawanID = "+idKry+") c ON date BETWEEN c.tgl_cuti AND DATE_SUB(c.tgl_masuk, INTERVAL 1 DAY)\n" +
+                "WHERE date != '2025-01-01' ORDER BY date ASC\n" +
+                ") sbc\n" +
+                "WHERE namahari NOT IN ('Sunday', 'Saturday')";
+            ResultSet res = st.executeQuery(sql);
+            while(res.next()){
+                sisaCuti -= res.getInt("hasil");
+            }
+            System.out.println("Sisa cuti " + sisaCuti);
+            cekTanggalTabrakan();
+            iSisaCuti.setText(sisaCuti + "");
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, err.getMessage());
+        }
+        
+        try{
+            st = (Statement) koneksi.getKoneksi().createStatement();
             String sql = "SELECT cutiID, k.karyawanID, alasan, tgl_cuti, tgl_masuk, k.nama FROM cuti c LEFT JOIN karyawan k ON c.karyawanID = k.karyawanID where k.karyawanID = " + idKry + " AND "+
                     " ( cutiID like '%" + cariitem + "%' or alasan like '%" + cariitem + "%' or tgl_cuti like '%"+cariitem+"%' or tgl_masuk like '%"+cariitem+"%' ) order by cutiID asc";
             ResultSet res = st.executeQuery(sql);
@@ -83,11 +113,7 @@ private DefaultTableModel model;
                 obj[4] = res.getString("tgl_masuk");
                 obj[5] = res.getString("nama");
                 model.addRow(obj);
-                sisaCuti -= hitungHariKerja(res.getString("tgl_cuti"), res.getString("tgl_masuk"));
             }
-            System.out.println("Sisa cuti " + sisaCuti);
-            cekTanggalTabrakan();
-            iSisaCuti.setText(sisaCuti + "");
         }catch(SQLException err){
             JOptionPane.showMessageDialog(null, err.getMessage());
         }
@@ -344,7 +370,7 @@ private DefaultTableModel model;
         });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Save.gif"))); // NOI18N
-        jButton1.setText("Save");
+        jButton1.setText("Simpan");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -359,7 +385,7 @@ private DefaultTableModel model;
         });
 
         upd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Modify.gif"))); // NOI18N
-        upd.setText("Update");
+        upd.setText("Perbarui");
         upd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         upd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         upd.addActionListener(new java.awt.event.ActionListener() {
@@ -369,7 +395,7 @@ private DefaultTableModel model;
         });
 
         del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Delete.gif"))); // NOI18N
-        del.setText("Delete");
+        del.setText("Hapus");
         del.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         del.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         del.addActionListener(new java.awt.event.ActionListener() {
@@ -379,7 +405,7 @@ private DefaultTableModel model;
         });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Exit.gif"))); // NOI18N
-        jButton4.setText("Exit");
+        jButton4.setText("Tutup");
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -566,7 +592,7 @@ private DefaultTableModel model;
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(cr, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -591,7 +617,7 @@ private DefaultTableModel model;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)

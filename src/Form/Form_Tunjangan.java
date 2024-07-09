@@ -150,6 +150,7 @@ public class Form_Tunjangan extends javax.swing.JFrame {
             return;
         }
         fIdKry.setText(""+model.getValueAt(i, 1));
+        fNmKry.setText(""+model.getValueAt(i, 5));
          tunjanganID.setText(""+model.getValueAt(i, 0));
         cbjenis.setSelectedItem(""+model.getValueAt(i, 2));
          try {
@@ -266,7 +267,7 @@ public class Form_Tunjangan extends javax.swing.JFrame {
         jLabel3.setText("ID Karyawan");
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
-        jButton6.setText("Search Karyawan");
+        jButton6.setText("Cari Karyawan");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -280,7 +281,7 @@ public class Form_Tunjangan extends javax.swing.JFrame {
         jLabel6.setText("Jumlah");
 
         save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Save.gif"))); // NOI18N
-        save.setText("Save");
+        save.setText("Simpan");
         save.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         save.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         save.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -295,7 +296,7 @@ public class Form_Tunjangan extends javax.swing.JFrame {
         });
 
         upd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Modify.gif"))); // NOI18N
-        upd.setText("Update");
+        upd.setText("Perbarui");
         upd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         upd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         upd.addActionListener(new java.awt.event.ActionListener() {
@@ -305,7 +306,7 @@ public class Form_Tunjangan extends javax.swing.JFrame {
         });
 
         del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Delete.gif"))); // NOI18N
-        del.setText("Delete");
+        del.setText("Hapus");
         del.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         del.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         del.addActionListener(new java.awt.event.ActionListener() {
@@ -315,7 +316,7 @@ public class Form_Tunjangan extends javax.swing.JFrame {
         });
 
         bexit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Exit.gif"))); // NOI18N
-        bexit.setText("Exit");
+        bexit.setText("Tutup");
         bexit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bexit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         bexit.addActionListener(new java.awt.event.ActionListener() {
@@ -347,46 +348,46 @@ public class Form_Tunjangan extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(save)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(upd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel4)
                                 .addComponent(jLabel5))
-                            .addGap(56, 56, 56))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel2)
-                                .addComponent(lNmKry)
-                                .addComponent(jLabel6))
-                            .addGap(54, 54, 54))))
+                            .addGap(2, 2, 2))
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel2)
+                        .addComponent(lNmKry)
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(save)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(upd)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(fIdKry, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tunjanganID, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton6))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(fNmKry, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cbjenis, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(2, 2, 2))))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(breset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(del)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bexit))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(fIdKry, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tunjanganID, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(fNmKry, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbjenis, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(2, 2, 2)))))
+                        .addComponent(bexit)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -419,12 +420,13 @@ public class Form_Tunjangan extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(save, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(upd, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(del)
-                        .addComponent(bexit))
-                    .addComponent(breset))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(save, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(upd, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(breset, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(del, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(bexit, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(14, 14, 14))
         );
 
@@ -496,7 +498,7 @@ public class Form_Tunjangan extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(0, 112, Short.MAX_VALUE))
+                .addGap(0, 110, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

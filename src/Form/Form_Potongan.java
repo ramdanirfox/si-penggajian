@@ -146,6 +146,7 @@ public class Form_Potongan extends javax.swing.JFrame {
             return;
         }
         fIdKry.setText(""+model.getValueAt(i, 1));
+        fNmKry.setText(""+model.getValueAt(i, 5));
          potonganID.setText(""+model.getValueAt(i, 0));
         cbjenis.setSelectedItem(""+model.getValueAt(i, 2));
          try {
@@ -261,7 +262,7 @@ public class Form_Potongan extends javax.swing.JFrame {
         jLabel3.setText("ID Karyawan");
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
-        jButton6.setText("Search Karyawan");
+        jButton6.setText("Cari Karyawan");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -275,7 +276,7 @@ public class Form_Potongan extends javax.swing.JFrame {
         jLabel6.setText("Jumlah");
 
         save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Save.gif"))); // NOI18N
-        save.setText("Save");
+        save.setText("Simpan");
         save.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         save.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         save.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -290,7 +291,7 @@ public class Form_Potongan extends javax.swing.JFrame {
         });
 
         upd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Modify.gif"))); // NOI18N
-        upd.setText("Update");
+        upd.setText("Perbarui");
         upd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         upd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         upd.addActionListener(new java.awt.event.ActionListener() {
@@ -300,7 +301,7 @@ public class Form_Potongan extends javax.swing.JFrame {
         });
 
         del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Delete.gif"))); // NOI18N
-        del.setText("Delete");
+        del.setText("Hapus");
         del.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         del.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         del.addActionListener(new java.awt.event.ActionListener() {
@@ -310,7 +311,7 @@ public class Form_Potongan extends javax.swing.JFrame {
         });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Exit.gif"))); // NOI18N
-        jButton4.setText("Exit");
+        jButton4.setText("Tutup");
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -342,17 +343,17 @@ public class Form_Potongan extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(save)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(upd))
                     .addComponent(lNamaKry)
                     .addComponent(jLabel6)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(save)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(upd)))
+                .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -374,7 +375,7 @@ public class Form_Potongan extends javax.swing.JFrame {
                         .addComponent(del)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -406,12 +407,13 @@ public class Form_Potongan extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(save, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(upd, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(del)
-                        .addComponent(jButton4))
-                    .addComponent(breset))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(save, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(upd, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(breset, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(del, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(14, 14, 14))
         );
 

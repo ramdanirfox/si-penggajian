@@ -276,7 +276,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icon/gif/16x16/icons8-attendance-30.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Form Absensi"/>
+                <Property name="text" type="java.lang.String" value="Form Kehadiran"/>
                 <Property name="toolTipText" type="java.lang.String" value="Masuk"/>
                 <Property name="autoscrolls" type="boolean" value="true"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -397,7 +397,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Icon/gif/16x16/icons8-logout-35.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="LOGOUT"/>
+            <Property name="text" type="java.lang.String" value="KELUAR"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>
             </Property>

@@ -162,7 +162,7 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/icons8-attendance-30.png"))); // NOI18N
-        jButton1.setText("Form Absensi");
+        jButton1.setText("Form Kehadiran");
         jButton1.setToolTipText("Masuk");
         jButton1.setAutoscrolls(true);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -266,7 +266,7 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
         jButton8.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButton8.setForeground(new java.awt.Color(51, 51, 0));
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/icons8-logout-35.png"))); // NOI18N
-        jButton8.setText("LOGOUT");
+        jButton8.setText("KELUAR");
         jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton8.setFocusPainted(false);
         jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -444,7 +444,7 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
 
     private void lapSlipGajiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lapSlipGajiActionPerformed
         // TODO add your handling code here:
-        new Lap_SlipGaji().setVisible(true);
+        new Lap_SlipGaji(Integer.parseInt(penggajian_karyawan.Penggajian_Karyawan.getUserId())).setVisible(true);
     }//GEN-LAST:event_lapSlipGajiActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -518,7 +518,7 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
-                new Lap_SlipGaji().setVisible(true);
+                new Lap_SlipGaji(Integer.parseInt(penggajian_karyawan.Penggajian_Karyawan.getUserId())).setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     /**

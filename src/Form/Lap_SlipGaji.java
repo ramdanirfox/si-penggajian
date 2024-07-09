@@ -44,10 +44,14 @@ public class Lap_SlipGaji extends javax.swing.JFrame {
     Object P_JABATAN;
     Object P_REF;
     Object P_KARYAWAN_NAMA;
+    
+    int vIdKry = 0;
     /**
      * Creates new form Lap_SlipGaji
+     * @param idKry
      */
-    public Lap_SlipGaji() {
+    public Lap_SlipGaji(int idKry) {
+        vIdKry = idKry;
         initComponents();
         model = new DefaultTableModel();
         tbl.setModel(model);
@@ -252,7 +256,7 @@ public class Lap_SlipGaji extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Lap_SlipGaji().setVisible(true);
+                new Lap_SlipGaji(0).setVisible(true);
             }
         });
     }
@@ -262,7 +266,8 @@ public class Lap_SlipGaji extends javax.swing.JFrame {
         model.fireTableDataChanged();
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
-            String sql = "SELECT gajiID, karyawanID, tgl, p.nama, p.jabatan, k.noHP, p.golongan, p.gapok, p.gaji_lembur, p.tunjangan, p.potongan , p.gaji_bersih  FROM penggajian p INNER JOIN karyawan k ON p.nama = k.nama";
+            String sql = "SELECT gajiID, karyawanID, tgl, p.nama, p.jabatan, k.noHP, p.golongan, p.gapok, p.gaji_lembur, p.tunjangan, p.potongan , p.gaji_bersih  FROM penggajian p INNER JOIN karyawan k ON p.nama = k.nama" + 
+                         " WHERE 0="+vIdKry+" OR karyawanID = " + vIdKry;
             ResultSet res = st.executeQuery(sql);
             while(res.next()){
                 Object[] obj = new Object[12];

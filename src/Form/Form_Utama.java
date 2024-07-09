@@ -818,7 +818,7 @@ public class Form_Utama extends javax.swing.JFrame {
 
     private void lapSlipGajiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lapSlipGajiActionPerformed
         // TODO add your handling code here:
-        new Lap_SlipGaji().setVisible(true);
+        new Lap_SlipGaji(0).setVisible(true);
     }//GEN-LAST:event_lapSlipGajiActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -971,7 +971,7 @@ public class Form_Utama extends javax.swing.JFrame {
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
-                new Lap_SlipGaji().setVisible(true);
+                new Lap_SlipGaji(0).setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void lapSlipGaji5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lapSlipGaji5ActionPerformed

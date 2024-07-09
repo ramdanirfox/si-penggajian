@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Calendar;
+import java.util.Locale;
 /**
  *
  * @author ramdanirfox
@@ -23,7 +24,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
     private DefaultTableModel model;
     String vNm,vTgl,vTglBln,vJbt,vGol, vKryId;
     int vId,vGp,vGl,vT,vP,vGb;
-    int vDenda = 0;
+    int vDenda, vLembur, vPotongan, vTunjangan = 0;
     private static Statement st;
     /**
      * Creates new form Penggajian
@@ -54,6 +55,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
         setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
         Seticon();
         isiTanggalGaji();
+        tg.getDateEditor().setLocale(Locale.forLanguageTag("id-ID"));
 //        addListener();
     }
     public String nmKry, jbtKry, golKry;
@@ -226,6 +228,44 @@ public class Form_Penggajian extends javax.swing.JFrame {
             }
         }
     }
+    
+    public void kalkulasiKomponenPenggajian() {
+        if (tg.getDate() != null && nmKry != null) {
+            String tampilan ="yyyy-MM-dd" ; 
+            SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
+            vTgl = tg.getDate() != null ? fm.format(tg.getDate()) : fm.format(new Date());
+            vLembur = queryLembur();
+            vPotongan = queryPotongan();
+            vTunjangan = queryTunjangan();
+
+            gl.setText(vLembur + "");
+            tj.setText(vTunjangan + "");
+            pt.setText((vPotongan + vDenda) + "");
+            
+            bLembur.setEnabled(true);
+            bTunjangan.setEnabled(true);
+            bPotongan.setEnabled(true);
+            periksaTombol();
+            
+        }
+    }
+    
+    private void periksaTombol() {
+     String gptxt = gp.getText();
+        if (!gptxt.equals("") && nmKry != null) {
+          try {
+              Integer.parseInt(gptxt);
+              bKehadiran.setEnabled(true);
+          }
+          catch (NumberFormatException err) {
+            bKehadiran.setEnabled(false);
+          }
+        }
+        else {
+          bKehadiran.setEnabled(false);
+        }
+    }
+    
     public void itemTerpilih(){                              
         Data_Search2 DS = new Data_Search2();
         DS.fP = this;
@@ -233,12 +273,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
         jbt.setText(jbtKry);
         gol.setText(golKry);
         gl.setText(String.valueOf(lmb));
-        String tampilan ="yyyy-MM-dd" ; 
-        SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
-        vTgl = tg.getDate() != null ? fm.format(tg.getDate()) : fm.format(new Date());
-        queryLembur();
-        queryPotongan();
-        queryTunjangan();
+        kalkulasiKomponenPenggajian();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -272,10 +307,10 @@ public class Form_Penggajian extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         tg = new com.toedter.calendar.JDateChooser();
         jButton6 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        bLembur = new javax.swing.JButton();
+        bPotongan = new javax.swing.JButton();
+        bTunjangan = new javax.swing.JButton();
+        bKehadiran = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         cr = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
@@ -309,8 +344,27 @@ public class Form_Penggajian extends javax.swing.JFrame {
 
         jLabel9.setText("Potongan");
 
+        gp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gpActionPerformed(evt);
+            }
+        });
+        gp.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                gpPropertyChange(evt);
+            }
+        });
+        gp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                gpKeyTyped(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                gpKeyReleased(evt);
+            }
+        });
+
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Exit.gif"))); // NOI18N
-        jButton4.setText("Exit");
+        jButton4.setText("Tutup");
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -320,7 +374,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
         });
 
         del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Delete.gif"))); // NOI18N
-        del.setText("Delete");
+        del.setText("Hapus");
         del.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         del.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         del.addActionListener(new java.awt.event.ActionListener() {
@@ -330,7 +384,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
         });
 
         upd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Modify.gif"))); // NOI18N
-        upd.setText("Update");
+        upd.setText("Perbarui");
         upd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         upd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         upd.addActionListener(new java.awt.event.ActionListener() {
@@ -340,12 +394,18 @@ public class Form_Penggajian extends javax.swing.JFrame {
         });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Save.gif"))); // NOI18N
-        jButton1.setText("Save");
+        jButton1.setText("Simpan");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        tg.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tgPropertyChange(evt);
             }
         });
 
@@ -357,35 +417,39 @@ public class Form_Penggajian extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
-        jButton8.setText("Detail Lembur");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        bLembur.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
+        bLembur.setText("Detail Lembur");
+        bLembur.setEnabled(false);
+        bLembur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                bLemburActionPerformed(evt);
             }
         });
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
-        jButton9.setText("Detail Potongan");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        bPotongan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
+        bPotongan.setText("Detail Potongan");
+        bPotongan.setEnabled(false);
+        bPotongan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                bPotonganActionPerformed(evt);
             }
         });
 
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
-        jButton10.setText("Detail Tunjangan");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        bTunjangan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
+        bTunjangan.setText("Detail Tunjangan");
+        bTunjangan.setEnabled(false);
+        bTunjangan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                bTunjanganActionPerformed(evt);
             }
         });
 
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
-        jButton11.setText("Periksa Kehadiran");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        bKehadiran.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Text preview.gif"))); // NOI18N
+        bKehadiran.setText("Periksa Kehadiran");
+        bKehadiran.setEnabled(false);
+        bKehadiran.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                bKehadiranActionPerformed(evt);
             }
         });
 
@@ -414,11 +478,11 @@ public class Form_Penggajian extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(upd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(del)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -442,13 +506,13 @@ public class Form_Penggajian extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bKehadiran, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(28, 28, 28))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton8))
+                                    .addComponent(bTunjangan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(bPotongan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(bLembur))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -461,7 +525,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(gp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6)
-                        .addComponent(jButton11)))
+                        .addComponent(bKehadiran)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
@@ -480,21 +544,21 @@ public class Form_Penggajian extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(tj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel8)
-                                    .addComponent(jButton10))
+                                    .addComponent(bTunjangan))
                                 .addGap(14, 14, 14)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(pt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton9))
+                                    .addComponent(bPotongan))
                                 .addGap(25, 25, 25)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jButton1)
-                                        .addComponent(del, javax.swing.GroupLayout.Alignment.TRAILING))
-                                    .addComponent(upd)
-                                    .addComponent(jButton4)))
+                                        .addComponent(del))
+                                    .addComponent(upd, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
@@ -505,7 +569,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(gl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8))
+                            .addComponent(bLembur))
                         .addContainerGap())))
         );
 
@@ -518,7 +582,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
         });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/View.gif"))); // NOI18N
-        jButton5.setText("Search");
+        jButton5.setText("Cari");
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -537,7 +601,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
         jLabel11.setText("Kategori");
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Refresh.gif"))); // NOI18N
-        jButton7.setText("Refresh");
+        jButton7.setText("Segarkan");
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -681,13 +745,13 @@ public class Form_Penggajian extends javax.swing.JFrame {
         gp.requestFocus();
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void bLemburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLemburActionPerformed
         Data_Search_Lmb DSL = new Data_Search_Lmb(vTgl, vKryId);
         DSL.fP = this;
         DSL.setVisible(true);
         DSL.setResizable(false);
         tj.requestFocus();
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_bLemburActionPerformed
 
     private void ktgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ktgActionPerformed
         // TODO add your handling code here:
@@ -697,22 +761,46 @@ public class Form_Penggajian extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_crActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void bPotonganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPotonganActionPerformed
         // TODO add your handling code here:
         (new Data_Search_Potongan(vTgl, vKryId)).setVisible(true);
-    }//GEN-LAST:event_jButton9ActionPerformed
+    }//GEN-LAST:event_bPotonganActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void bTunjanganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTunjanganActionPerformed
         // TODO add your handling code here:
         (new Data_Search_Tunjangan(vTgl, vKryId)).setVisible(true);
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_bTunjanganActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void bKehadiranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bKehadiranActionPerformed
         // TODO add your handling code here:
         Data_Search_Kehadiran f = (new Data_Search_Kehadiran(tg.getDate(), vKryId, Integer.parseInt(gp.getText())));
         f.fP = this;
         f.setVisible(true);
-    }//GEN-LAST:event_jButton11ActionPerformed
+    }//GEN-LAST:event_bKehadiranActionPerformed
+
+    private void tgPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tgPropertyChange
+        // TODO add your handling code here:
+        kalkulasiKomponenPenggajian();
+    }//GEN-LAST:event_tgPropertyChange
+
+    private void gpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gpActionPerformed
+        // TODO add your handling code here:
+     
+    }//GEN-LAST:event_gpActionPerformed
+
+    private void gpPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_gpPropertyChange
+        // TODO add your handling code here:
+     
+    }//GEN-LAST:event_gpPropertyChange
+
+    private void gpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_gpKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_gpKeyTyped
+
+    private void gpKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_gpKeyReleased
+        // TODO add your handling code here:
+      periksaTombol();
+    }//GEN-LAST:event_gpKeyReleased
 
     /**
      * @param args the command line arguments
@@ -750,7 +838,7 @@ public class Form_Penggajian extends javax.swing.JFrame {
         });
     }
     
-    private void queryLembur() {
+    private int queryLembur() {
       try{
             st = (Statement) koneksi.getKoneksi().createStatement();
             String sql = "SELECT date_format(tanggal_lembur, '%Y-%m') AS tglbulan, SUM(total) as total_lembur FROM lembur l WHERE karyawanID = " + vId + 
@@ -763,15 +851,18 @@ public class Form_Penggajian extends javax.swing.JFrame {
                 obj[0] = res.getString("total_lembur");
 //                model.addRow(obj);
                 gl.setText(res.getString("total_lembur"));
+                return res.getInt("total_lembur");
             }
+            return 0;
         }catch(SQLException err){
             JOptionPane.showMessageDialog(null, err.getMessage());
+            return 0;
         }
     }
     
 //    SELECT date_format(tanggal_lembur, '%Y-%m') AS tglbulan, SUM(total) as total_lembur FROM lembur l WHERE karyawanID = 4 GROUP BY tglbulan
     
-    private void queryPotongan() {
+    private int queryPotongan() {
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
             String sql = "SELECT SUM(jumlah) as jum FROM potongan t INNER JOIN karyawan k ON k.karyawanID = t.karyawanID WHERE nama = '" + nmKry + "'" +
@@ -782,13 +873,16 @@ public class Form_Penggajian extends javax.swing.JFrame {
                 obj[0] = res.getString("jum");
 //                model.addRow(obj);
                 pt.setText(res.getString("jum"));
+                return res.getInt("jum");
             }
+            return 0;
         }catch(SQLException err){
             JOptionPane.showMessageDialog(null, err.getMessage());
+            return 0;
         }
     }
     
-    private void queryTunjangan() {
+    private int queryTunjangan() {
         try{
             st = (Statement) koneksi.getKoneksi().createStatement();
             String sql = "SELECT SUM(jumlah) as jum FROM tunjangan t INNER JOIN karyawan k ON k.karyawanID = t.karyawanID WHERE nama = '" + nmKry + "'" +
@@ -799,9 +893,12 @@ public class Form_Penggajian extends javax.swing.JFrame {
                 obj[0] = res.getString("jum");
 //                model.addRow(obj);
                 tj.setText(res.getString("jum"));
+                return res.getInt("jum");
             }
+            return 0;
         }catch(SQLException err){
             JOptionPane.showMessageDialog(null, err.getMessage());
+            return 0;
         }
     }
     
@@ -812,20 +909,20 @@ public class Form_Penggajian extends javax.swing.JFrame {
 //   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bKehadiran;
+    private javax.swing.JButton bLembur;
+    private javax.swing.JButton bPotongan;
+    private javax.swing.JButton bTunjangan;
     private javax.swing.JTextField cr;
     private javax.swing.JButton del;
     private javax.swing.JTextField gl;
     private javax.swing.JTextField gol;
     private javax.swing.JTextField gp;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;

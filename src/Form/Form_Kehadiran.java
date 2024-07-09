@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import koneksiDB.koneksi;
@@ -56,6 +57,9 @@ private TimePickerSettings lgoodTimePickerSetting;
         getData();
         fidkaryawan.setEditable(false);
         fnamakaryawan.setEditable(false);
+        
+        jamMasuk2.datePicker.setLocale(Locale.forLanguageTag("id-ID"));
+        jamPulang.datePicker.setLocale(Locale.forLanguageTag("id-ID"));
     }
    
  
@@ -193,7 +197,7 @@ private TimePickerSettings lgoodTimePickerSetting;
         });
 
         bexit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Exit.gif"))); // NOI18N
-        bexit.setText("Exit");
+        bexit.setText("Tutup");
         bexit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bexit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         bexit.addActionListener(new java.awt.event.ActionListener() {
