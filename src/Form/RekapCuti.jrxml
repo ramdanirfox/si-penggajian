@@ -256,15 +256,15 @@ FROM
 		<band height="42">
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="10" y="-3" width="125" height="20" uuid="83b5ec9c-cf1a-4fd5-8047-954d62ba296f"/>
-				<textFieldExpression><![CDATA[$F{karyawan_karyawanID}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cuti_id}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="89" y="-3" width="125" height="20" uuid="9b83c44d-b2fe-4709-9441-9f5cd7c855ad"/>
-				<textFieldExpression><![CDATA[$F{cuti_tgl_masuk}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cuti_tgl_cuti}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="209" y="-3" width="125" height="20" uuid="b58678f5-78c9-4cc1-8042-d147ef4a1370"/>
-				<textFieldExpression><![CDATA[$F{cuti_tgl_cuti}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cuti_tgl_masuk}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="335" y="-3" width="210" height="32" uuid="9152dac0-cfe3-4545-93a0-59084c3ab080"/>

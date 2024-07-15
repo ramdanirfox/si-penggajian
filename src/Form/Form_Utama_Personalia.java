@@ -101,10 +101,7 @@ public class Form_Utama_Personalia extends javax.swing.JFrame {
         mUtama = new javax.swing.JMenuBar();
         mData = new javax.swing.JMenu();
         dKaryawan = new javax.swing.JMenuItem();
-        dLembur = new javax.swing.JMenuItem();
         dPenggajian = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         mLaporan = new javax.swing.JMenu();
@@ -392,10 +389,12 @@ public class Form_Utama_Personalia extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Selamat Datang");
 
         user.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         user.setForeground(new java.awt.Color(204, 255, 255));
+        user.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user.setText("User");
         user.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -423,15 +422,6 @@ public class Form_Utama_Personalia extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(350, 350, 350))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(user)
-                        .addGap(411, 411, 411))))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -440,18 +430,24 @@ public class Form_Utama_Personalia extends javax.swing.JFrame {
                         .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(70, 70, 70))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(340, 340, 340))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(user)
-                .addGap(19, 19, 19)
+                .addGap(13, 13, 13)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -467,11 +463,11 @@ public class Form_Utama_Personalia extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mDataMouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                mDataMouseEntered(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 mDataMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                mDataMouseEntered(evt);
             }
         });
 
@@ -489,19 +485,6 @@ public class Form_Utama_Personalia extends javax.swing.JFrame {
         });
         mData.add(dKaryawan);
 
-        dLembur.setText("Data Lembur");
-        dLembur.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dLemburMouseClicked(evt);
-            }
-        });
-        dLembur.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dLemburActionPerformed(evt);
-            }
-        });
-        mData.add(dLembur);
-
         dPenggajian.setText("Data Penggajian");
         dPenggajian.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -514,22 +497,6 @@ public class Form_Utama_Personalia extends javax.swing.JFrame {
             }
         });
         mData.add(dPenggajian);
-
-        jMenuItem1.setText("Data Absensi");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        mData.add(jMenuItem1);
-
-        jMenuItem2.setText("Data Cuti");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        mData.add(jMenuItem2);
 
         jMenuItem3.setText("Data Potongan");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -633,10 +600,6 @@ public class Form_Utama_Personalia extends javax.swing.JFrame {
         new Form_Karyawan().setVisible(true);
     }//GEN-LAST:event_dKaryawanActionPerformed
 
-    private void dLemburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dLemburActionPerformed
-        new Form_Lembur().setVisible(true);
-    }//GEN-LAST:event_dLemburActionPerformed
-
     private void dPenggajianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dPenggajianActionPerformed
         new Form_Penggajian().setVisible(true);
     }//GEN-LAST:event_dPenggajianActionPerformed
@@ -648,10 +611,6 @@ public class Form_Utama_Personalia extends javax.swing.JFrame {
     private void dKaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dKaryawanMouseClicked
 
     }//GEN-LAST:event_dKaryawanMouseClicked
-
-    private void dLemburMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dLemburMouseClicked
-
-    }//GEN-LAST:event_dLemburMouseClicked
 
     private void dPenggajianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dPenggajianMouseClicked
         // TODO add your handling code here:
@@ -685,14 +644,6 @@ public class Form_Utama_Personalia extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
        new Form_Tunjangan().setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-      new Form_Kehadiran().setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-      new Form_Cuti().setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
          new Form_Potongan().setVisible(true);
@@ -868,7 +819,6 @@ public class Form_Utama_Personalia extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem dKaryawan;
-    private javax.swing.JMenuItem dLembur;
     private javax.swing.JMenuItem dPenggajian;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
@@ -877,8 +827,6 @@ public class Form_Utama_Personalia extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

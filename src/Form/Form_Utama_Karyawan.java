@@ -94,20 +94,11 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         mUtama = new javax.swing.JMenuBar();
         mData = new javax.swing.JMenu();
-        dKaryawan = new javax.swing.JMenuItem();
         dLembur = new javax.swing.JMenuItem();
-        dPenggajian = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
         mLaporan = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
-        lKaryawan = new javax.swing.JMenuItem();
-        lPenggajian = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Menu Utama");
@@ -263,10 +254,12 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Selamat Datang");
 
         user.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         user.setForeground(new java.awt.Color(204, 255, 255));
+        user.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user.setText("User");
         user.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -294,15 +287,6 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(350, 350, 350))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(user)
-                        .addGap(411, 411, 411))))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,18 +295,26 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
                         .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(70, 70, 70))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23)))
+                .addGap(361, 361, 361))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(7, 7, 7)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(user)
-                .addGap(19, 19, 19)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -346,20 +338,6 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
             }
         });
 
-        dKaryawan.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        dKaryawan.setText("Data Karyawan");
-        dKaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dKaryawanMouseClicked(evt);
-            }
-        });
-        dKaryawan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dKaryawanActionPerformed(evt);
-            }
-        });
-        mData.add(dKaryawan);
-
         dLembur.setText("Data Lembur");
         dLembur.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -372,19 +350,6 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
             }
         });
         mData.add(dLembur);
-
-        dPenggajian.setText("Data Penggajian");
-        dPenggajian.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dPenggajianMouseClicked(evt);
-            }
-        });
-        dPenggajian.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dPenggajianActionPerformed(evt);
-            }
-        });
-        mData.add(dPenggajian);
 
         jMenuItem1.setText("Data Absensi");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -401,22 +366,6 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
             }
         });
         mData.add(jMenuItem2);
-
-        jMenuItem3.setText("Data Potongan");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        mData.add(jMenuItem3);
-
-        jMenuItem4.setText("Data Tunjangan");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        mData.add(jMenuItem4);
 
         mUtama.add(mData);
 
@@ -437,46 +386,6 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
             }
         });
         mLaporan.add(jMenuItem8);
-
-        lKaryawan.setText("Laporan Karyawan");
-        lKaryawan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lKaryawanActionPerformed(evt);
-            }
-        });
-        mLaporan.add(lKaryawan);
-
-        lPenggajian.setText("Laporan Penggajian");
-        lPenggajian.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lPenggajianActionPerformed(evt);
-            }
-        });
-        mLaporan.add(lPenggajian);
-
-        jMenuItem5.setText("Laporan Lembur");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        mLaporan.add(jMenuItem5);
-
-        jMenuItem6.setText("Laporan Cuti");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
-            }
-        });
-        mLaporan.add(jMenuItem6);
-
-        jMenuItem7.setText("Laporan Absen");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
-            }
-        });
-        mLaporan.add(jMenuItem7);
 
         mUtama.add(mLaporan);
 
@@ -500,41 +409,17 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void dKaryawanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dKaryawanActionPerformed
-        new Form_Karyawan().setVisible(true);
-    }//GEN-LAST:event_dKaryawanActionPerformed
-
     private void dLemburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dLemburActionPerformed
         new Form_Lembur().setVisible(true);
     }//GEN-LAST:event_dLemburActionPerformed
-
-    private void dPenggajianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dPenggajianActionPerformed
-        new Form_Penggajian().setVisible(true);
-    }//GEN-LAST:event_dPenggajianActionPerformed
 
     private void mDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mDataMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_mDataMouseClicked
 
-    private void dKaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dKaryawanMouseClicked
-
-    }//GEN-LAST:event_dKaryawanMouseClicked
-
     private void dLemburMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dLemburMouseClicked
 
     }//GEN-LAST:event_dLemburMouseClicked
-
-    private void dPenggajianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dPenggajianMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dPenggajianMouseClicked
-
-    private void lKaryawanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lKaryawanActionPerformed
-        new Lap_Karyawan().setVisible(true);
-    }//GEN-LAST:event_lKaryawanActionPerformed
-
-    private void lPenggajianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lPenggajianActionPerformed
-        new Lap_Penggajian().setVisible(true);
-    }//GEN-LAST:event_lPenggajianActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new Form_Kehadiran().setVisible(true);
@@ -549,10 +434,6 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
         new Form_Cuti().setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-       new Form_Tunjangan().setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
       new Form_Kehadiran().setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -560,10 +441,6 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
       new Form_Cuti().setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-         new Form_Potongan().setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void lapSlipGajiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lapSlipGajiActionPerformed
         // TODO add your handling code here:
@@ -639,21 +516,6 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
    mLaporan.addMouseListener(ml3);
     }//GEN-LAST:event_mLaporanMouseExited
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-        new Lap_Lembur().setVisible(true);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
-        new Lap_Cuti().setVisible(true);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
-        new Lap_Kehadiran().setVisible(true);
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
-
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
                 new Lap_SlipGaji().setVisible(true);
@@ -701,9 +563,7 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem dKaryawan;
     private javax.swing.JMenuItem dLembur;
-    private javax.swing.JMenuItem dPenggajian;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
@@ -712,17 +572,10 @@ public class Form_Utama_Karyawan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JMenuItem lKaryawan;
-    private javax.swing.JMenuItem lPenggajian;
     private javax.swing.JButton lapSlipGaji;
     private javax.swing.JMenu mData;
     private javax.swing.JMenu mLaporan;

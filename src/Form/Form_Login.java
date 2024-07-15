@@ -216,8 +216,12 @@ public class Form_Login extends javax.swing.JFrame {
                 Penggajian_Karyawan.setUserInfo(id, nama, namaDisplay, jabatan, golongan);
                 JOptionPane.showMessageDialog(null, "Login Berhasil!");
                 System.out.println(jabatan+ nama+ id);
-                if (jabatan.equals("Karyawan") || jabatan.equals("Staff IT") || jabatan.equals("Sales")) {
+                if (jabatan.equals("Karyawan") || jabatan.equals("Staff IT") || jabatan.equals("Sales") || jabatan.equals("Manager")) {
                     new Form_Utama_Karyawan().setVisible(true);
+                    this.dispose();
+                }
+                else if (jabatan.equals("Direktur")) {
+                    new Form_Utama_Direktur().setVisible(true);
                     this.dispose();
                 }
                 else {
