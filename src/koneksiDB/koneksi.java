@@ -31,6 +31,26 @@ public class koneksi extends javax.swing.JFrame {
         }
         return conn;
     }
+    
+      public static Connection getKoneksiSemua(){
+        
+        String host = "jdbc:mysql://localhost",
+               user = "root",
+               pass = "";
+        try{
+            try {
+            Class.forName("com.mysql.jdbc.Driver");
+            }
+            catch (Exception e) {
+               JOptionPane.showMessageDialog(null, "Gagal Driver!" + e.getMessage());    
+            }
+         
+            conn = (Connection) DriverManager.getConnection(host,user,pass);                
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, "Gagal Koneksi!" + err.getMessage());
+        }
+        return conn;
+    }
     /**
      * Creates new form koneksi
      */

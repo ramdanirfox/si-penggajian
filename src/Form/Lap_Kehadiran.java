@@ -114,7 +114,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
         });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Exit.gif"))); // NOI18N
-        jButton2.setText("Exit");
+        jButton2.setText("Tutup");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -149,7 +149,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
         });
 
         jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/View.gif"))); // NOI18N
-        jButton11.setText("Search");
+        jButton11.setText("Cari");
         jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton11.addActionListener(new java.awt.event.ActionListener() {
@@ -163,7 +163,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
         jLabel14.setText("Kategori");
 
         jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/gif/16x16/Refresh.gif"))); // NOI18N
-        jButton12.setText("Refresh");
+        jButton12.setText("Segarkan");
         jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton12.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -187,7 +187,7 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
                 .addComponent(jButton11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton12)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,32 +347,14 @@ public class Lap_Kehadiran extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField cr;
-    private javax.swing.JTextField cr1;
-    private javax.swing.JTextField cr2;
     private javax.swing.JTextField cr3;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox<String> ktg;
-    private javax.swing.JComboBox<String> ktg1;
-    private javax.swing.JComboBox<String> ktg2;
     private javax.swing.JComboBox<String> ktgz;
     private javax.swing.JTable tbl;
     // End of variables declaration//GEN-END:variables

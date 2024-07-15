@@ -22,7 +22,7 @@ import penggajian_karyawan.*;
  */
 
 public class Form_Login extends javax.swing.JFrame {
-
+    javax.swing.Timer pewaktu;
     private static Statement st;
 
     /**
@@ -34,6 +34,7 @@ public class Form_Login extends javax.swing.JFrame {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+        fnCekDB();
     }
     MouseListener ml = new MouseAdapter() {
         public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -292,6 +293,32 @@ public class Form_Login extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
+    }
+    
+    private void fnCekDB() {
+        try {
+            String sql = "SHOW DATABASES LIKE 'penggajian'";
+            st = koneksi.getKoneksiSemua().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                String id = rs.getString(1);
+                System.out.println("Available DB " + id);
+                return;
+            }
+            
+            pewaktu = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+                @Override
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        pewaktu.stop();
+                        (new Loading_DB()).setVisible(true);
+                    }
+            });
+            pewaktu.start();
+        }
+        catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Tidak dapat terhubung Database : " + e.getMessage());
+        }
+
     }
 
     private java.awt.Image gambar;
