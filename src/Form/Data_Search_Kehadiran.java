@@ -561,7 +561,7 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
     String tglAkhir = fmtTgl.format(dateMax.getTime());
         String sql = "" +
     " WITH RECURSIVE DateRange AS (" +
-    " SELECT '"+tglAwal+"' AS date" +
+    " SELECT DATE_ADD('"+tglAwal+"', INTERVAL 1 DAY) AS date" +
     " UNION ALL" +
     " SELECT DATE_ADD(date, INTERVAL 1 DAY)" +
     " FROM DateRange" +
@@ -591,7 +591,7 @@ public class Data_Search_Kehadiran extends javax.swing.JFrame {
     " LEFT JOIN (SELECT * FROM kehadiran WHERE karyawanID = "+vIdKry+") k " +
     " ON date = date_format(k.jam_masuk, '%Y-%m-%d')" +
     " LEFT JOIN (SELECT * FROM cuti WHERE karyawanID = "+vIdKry+") c" +
-    " ON date = date_format(c.tgl_cuti, '%Y-%m-%d')" +
+    " ON date BETWEEN date_format(c.tgl_cuti, '%Y-%m-%d') AND DATE_SUB(date_format(c.tgl_masuk, '%Y-%m-%d'), INTERVAL 1 DAY)" +
     " LEFT JOIN (SELECT * FROM lembur WHERE karyawanID = "+vIdKry+") l " +
     " ON date = date_format(l.tanggal_lembur, '%Y-%m-%d')" +
     " ORDER BY date ASC";

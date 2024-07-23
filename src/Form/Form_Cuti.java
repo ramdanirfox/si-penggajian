@@ -158,7 +158,6 @@ private DefaultTableModel model;
         SimpleDateFormat fm = new SimpleDateFormat(tampilan);
         vTglCuti = String.valueOf(fm.format(tgl_cuti.getDate()));
         vTglMasuk = String.valueOf(fm.format(tgl_masuk.getDate()));
-        perbaruiID();
     }
     public void save(){
         loadData();
@@ -172,6 +171,7 @@ private DefaultTableModel model;
         reset();
         nm.requestFocus();
         JOptionPane.showMessageDialog(null, "Data Berhasil DiSimpan!");
+        perbaruiID();
         }catch(SQLException err){
             JOptionPane.showMessageDialog(null, "Data Gagal DiSimpan!");
             reset();
@@ -223,10 +223,12 @@ private DefaultTableModel model;
                    + "tgl_cuti='"+vTglCuti+"',"
                    + "tgl_masuk='"+vTglMasuk+"' where cutiID='"+vcutiID+"'";
         PreparedStatement p = (PreparedStatement)koneksi.getKoneksi().prepareStatement(sql);
+        System.out.println("SQL " + sql);
         p.executeUpdate();
         getData();
         reset();
         nm.requestFocus();
+        perbaruiID();
         JOptionPane.showMessageDialog(null, "Data Berhasil DiUpdate");
         }catch(SQLException err){
             JOptionPane.showMessageDialog(null, "Data Gagal DiUpdate!");
@@ -254,6 +256,7 @@ private DefaultTableModel model;
                 reset();
             } 
         }
+        perbaruiID();
     }
     
   public void itemTerpilih(){                              
